@@ -1,4 +1,4 @@
 export type RootStackParamList = {
-  Home: {},
-  CardsItems: { data: [] }
+  Home: undefined,
+  CardsItems: { data: [] },
 }
