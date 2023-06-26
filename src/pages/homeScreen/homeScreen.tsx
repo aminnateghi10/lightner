@@ -30,16 +30,18 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
-  const [newList, setNewList] = useState(false);
+  const [addNew, setaddNew] = useState<boolean | "newList" | "newCard">(false);
 
   const isDarkMode = useColorScheme() === "dark";
   const list = useSelector((state: RootState) => state.cards.list);
   const backgroundStyle = { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter };
 
+  console.log("newList");
+
   let addNewListHandler = () => {
     if (name) {
       dispatch(addNewList(name));
-      setNewList(false);
+      setaddNew(false);
     }
   };
 
@@ -49,36 +51,46 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
         numColumns={3}
         data={list}
         renderItem={({ item }) => <Card navigation={navigation} data={item} />} />
-      <TouchableHighlight style={Styles.addNewList}>
-        <Icon name="plus" size={27} color="black" onPress={() => setNewList(!newList)} />
+      <TouchableHighlight style={Styles.addNewList} onPress={() => setaddNew(!addNew)}>
+        <Icon name="plus" size={27} color="black" />
       </TouchableHighlight>
       {
-        newList ?
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={newList}>
-            <View style={Styles.centeredView}>
-              <View style={Styles.modalView}>
-                <Text>نام لیست جدید خود را وارد کنید</Text>
-                <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} />
-                <View style={{ flexDirection: "row", marginTop: 10 }}>
-                  <TouchableOpacity style={{
-                    margin: 5,
-                    backgroundColor: "rgb(126,118,118)",
-                    padding: 10,
-                    borderRadius: 10
-                  }}>
-                    <Text onPress={() => setNewList(false)}>انصراف</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{ margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10 }}>
-                    <Text style={{ color: "white" }} onPress={addNewListHandler}>ذخیره</Text>
-                  </TouchableOpacity>
-                </View>
+        addNew === true &&
+        <View style={Styles.drapDown}>
+          <TouchableOpacity onPress={() => setaddNew("newList")}>
+            <Text style={Styles.drapDownText}>افزودن لیست جدید</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("AddNewCard")}>
+            <Text style={Styles.drapDownText}>افزودن کارت جدید</Text>
+          </TouchableOpacity>
+        </View>
+      }
+      {
+        addNew === "newList" &&
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={addNew && true}>
+          <View style={Styles.centeredView}>
+            <View style={Styles.modalView}>
+              <Text>نام لیست جدید خود را وارد کنید</Text>
+              <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} />
+              <View style={{ flexDirection: "row", marginTop: 10 }}>
+                <TouchableOpacity style={{
+                  margin: 5,
+                  backgroundColor: "rgb(126,118,118)",
+                  padding: 10,
+                  borderRadius: 10
+                }}>
+                  <Text onPress={() => setaddNew(false)}>انصراف</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10 }}>
+                  <Text style={{ color: "white" }} onPress={addNewListHandler}>ذخیره</Text>
+                </TouchableOpacity>
               </View>
             </View>
-          </Modal>
-          : null
+          </View>
+        </Modal>
       }
 
     </View>
@@ -132,5 +144,22 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 50
+  },
+  drapDown: {
+    position: "absolute",
+    backgroundColor: "rgb(199,199,199)",
+    right: 80,
+    bottom: 90,
+    borderRadius: 5
+  },
+  drapDownText: {
+    color: "black",
+    fontSize: 18,
+    marginHorizontal: 7,
+    marginVertical: 6,
+    borderColor: "rgb(75,74,74)",
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10
   }
 });
