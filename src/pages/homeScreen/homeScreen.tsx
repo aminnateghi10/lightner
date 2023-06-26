@@ -1,7 +1,8 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Button,
@@ -17,7 +18,7 @@ import {
 } from "react-native";
 // redux
 import { RootState } from "../../store";
-import { addNewList } from "../../store/cards";
+import {addNewList, initCardsData} from "../../store/cards";
 // components
 import Card from "./components/card";
 import { RootStackParamList } from "../../contracts/rootStackParamList";
@@ -33,10 +34,22 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
   const [addNew, setaddNew] = useState<boolean | "newList" | "newCard">(false);
 
   const isDarkMode = useColorScheme() === "dark";
-  const list = useSelector((state: RootState) => state.cards.list);
+  const cards = useSelector((state: RootState) => state.cards);
   const backgroundStyle = { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter };
 
-  console.log("newList");
+  useEffect(()=>{
+    const getData = async ()=>{
+    const value = await AsyncStorage.getItem('my-data');
+    dispatch(initCardsData(JSON.parse(value)));
+    }
+    getData()
+  },[])
+  useEffect(()=>{
+    const save =async () => {
+      await AsyncStorage.setItem('my-data', JSON.stringify(cards));
+    }
+    save();
+  },[cards])
 
   let addNewListHandler = () => {
     if (name) {
@@ -49,7 +62,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
     <View style={[backgroundStyle, Styles.contener]}>
       <FlatList
         numColumns={3}
-        data={list}
+        data={cards?.list}
         renderItem={({ item }) => <Card navigation={navigation} data={item} />} />
       <TouchableHighlight style={Styles.addNewList} onPress={() => setaddNew(!addNew)}>
         <Icon name="plus" size={27} color="black" />
