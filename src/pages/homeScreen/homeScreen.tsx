@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Button,
@@ -18,7 +18,7 @@ import {
 } from "react-native";
 // redux
 import { RootState } from "../../store";
-import {addNewList, initCardsData} from "../../store/cards";
+import { addNewList, initCardsData } from "../../store/cards";
 // components
 import Card from "./components/card";
 import { RootStackParamList } from "../../contracts/rootStackParamList";
@@ -37,19 +37,19 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
   const cards = useSelector((state: RootState) => state.cards);
   const backgroundStyle = { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter };
 
-  useEffect(()=>{
-    const getData = async ()=>{
-    const value = await AsyncStorage.getItem('my-data');
-    dispatch(initCardsData(JSON.parse(value)));
-    }
-    getData()
-  },[])
-  useEffect(()=>{
-    const save =async () => {
-      await AsyncStorage.setItem('my-data', JSON.stringify(cards));
-    }
+  useEffect(() => {
+    const getData = async () => {
+      const value = await AsyncStorage.getItem("my-data");
+      dispatch(initCardsData(JSON.parse(value ?? "")));
+    };
+    getData();
+  }, []);
+  useEffect(() => {
+    const save = async () => {
+      await AsyncStorage.setItem("my-data", JSON.stringify(cards));
+    };
     save();
-  },[cards])
+  }, [cards]);
 
   let addNewListHandler = () => {
     if (name) {
