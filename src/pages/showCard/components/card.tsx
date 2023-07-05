@@ -10,7 +10,6 @@ import {
     View
 } from "react-native";
 import {Colors} from "react-native/Libraries/NewAppScreen";
-import CoustomModal from "./coustomModal";
 
 const Card = ({data, navigation}: any) => {
 
