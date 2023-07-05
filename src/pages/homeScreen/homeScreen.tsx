@@ -105,7 +105,6 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
           </View>
         </Modal>
       }
-
     </View>
   );
 };

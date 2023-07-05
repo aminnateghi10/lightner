@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, TextInput, TouchableHighlight } from "react-native";
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  TouchableHighlight,
+  Dimensions
+} from "react-native";
 
 import { RootState } from "../../store";
-import Card from "../homeScreen/components/card";
 import { addNewCard } from "../../store/cards";
+import Card from "../homeScreen/components/card";
+import CustomToast from "../../shared/customToast";
 
 const AddNewCard = () => {
   const dispatch = useDispatch();
@@ -13,11 +24,16 @@ const AddNewCard = () => {
   const [listName, setListName] = useState(list[0].name);
   const [newCard, setNewCard] = useState({ persian: "", english: "" });
   const [side, setSide] = useState<"english" | "persian">("english");
+  const windowWidth = Dimensions.get("window").width;
+  console.log(windowWidth);
 
 
   let addNewCardHandler = () => {
+
     if (newCard.persian || newCard.english && listName) {
       dispatch(addNewCard({ newCard, listName }));
+      setNewCard({ english: "", persian: "" });
+      Toast.show({ type: "success", text1: "با موفقیت ثبت شد" });
     }
   };
 
@@ -69,6 +85,7 @@ const AddNewCard = () => {
       <TouchableOpacity style={styles.submit} onPress={addNewCardHandler}>
         <Text style={styles.submitText}>ذخیره</Text>
       </TouchableOpacity>
+      <CustomToast />
     </View>
   );
 };
