@@ -18,7 +18,7 @@ const Card = ({ data, navigation }: PropsInterface) => {
     <View style={Styles.col_3}>
       <TouchableHighlight
         style={[Styles.card, backgroundStyle]}
-        onPress={() => navigation.navigate("CardsItems", { data: data.cards })}>
+        onPress={() => navigation.navigate("CardsItems", { data: data })}>
         <Text style={[Styles.title, textColor]}>{data.name}</Text>
       </TouchableHighlight>
     </View>

@@ -7,12 +7,12 @@ const CardsItems = ({route,navigation}:any) => {
     const isDarkMode = useColorScheme() === 'dark';
     const backgroundStyle = {backgroundColor: isDarkMode ? Colors.darker : Colors.lighter};
     const { data } = route.params;
-    console.log(data ,'mm')
     return (
         <View style={[backgroundStyle, Styles.contener]}>
             <FlatList
-                data={data}
-                renderItem={({item}) => <Card navigation={navigation} data={item}/>}/>
+              contentContainerStyle={{flex:1}}
+              data={data.cards}
+                renderItem={({item}) => <Card navigation={navigation} data={item} listName={data.name}/>}/>
         </View>
     );
 };
@@ -21,10 +21,6 @@ export default CardsItems;
 
 const Styles = StyleSheet.create({
     contener: {
-        height: '100%',
-        justifyContent: "center",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap"
+        flex:1,
     }
 })
