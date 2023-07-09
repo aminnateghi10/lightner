@@ -1,5 +1,5 @@
 export type RootStackParamList = {
   Home: undefined,
-  CardsItems: { data: [] },
+  CardsItems: { listName: string },
   AddNewCard: undefined,
 }

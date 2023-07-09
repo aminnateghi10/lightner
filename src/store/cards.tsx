@@ -43,19 +43,15 @@ export const cardsSlice = createSlice({
         }
         return item;
       });
-      console.log(current(state), "ssssss");
       return state;
     },
     deletCard: (state, { payload }) => {
-      console.log(payload, "payload");
-      console.log(current(state.list));
       state.list = [...state.list.map(item => {
-        if (item.name === payload.listName) {
+        if (item?.name === payload?.listName) {
           return { ...item, cards: item.cards.filter(element => element.id != payload.id) };
         }
         return item;
       })];
-      console.log(current(state));
       return state;
     }
   }
