@@ -2,12 +2,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, useColorScheme, View } from "react-native";
 
 import { deletCard } from "../../../store/cards";
+import { RootStackParamList } from "../../../contracts/rootStackParamList";
 
-const Card = ({ data, navigation, listName }: any) => {
-  console.log(data.id, "caaaaaaaaaaaaaa");
+interface PropsInterface {
+  data:any,
+  navigation:NativeStackNavigationProp<RootStackParamList>,
+  listName:string
+}
+const Card = ({ data, navigation, listName }: PropsInterface) => {
   const dispatch = useDispatch();
   const isDarkMode = useColorScheme() === "dark";
   const colorStyle = { color: isDarkMode ? "black" : "white" };
@@ -23,7 +29,7 @@ const Card = ({ data, navigation, listName }: any) => {
         {
           drapDown &&
           <View style={Styles.drapDown}>
-            <TouchableOpacity onPress={() => console.log("newList")}>
+            <TouchableOpacity onPress={() => navigation.navigate("EditCard", { id:data.id,listName })}>
               <Text style={Styles.drapDownText}>ویرایش</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => dispatch(deletCard({ listName, id: data.id }))}>

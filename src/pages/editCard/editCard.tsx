@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
+import { RouteProp } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   View,
   Text,
@@ -17,11 +19,18 @@ import { RootState } from "../../store";
 import { addNewCard } from "../../store/cards";
 import Card from "../homeScreen/components/card";
 import CustomToast from "../../shared/customToast";
+import { RootStackParamList } from "../../contracts/rootStackParamList";
 
-const AddNewCard = () => {
+interface PropsInterface {
+  navigation: NativeStackNavigationProp<RootStackParamList>,
+  route: RouteProp<RootStackParamList, "EditCard">
+}
+
+const EditCard = ({ route, navigation }: PropsInterface) => {
   const dispatch = useDispatch();
+  const { id, listName: listNameItem } = route.params;
   const list = useSelector((state: RootState) => state.cards.list);
-  const [listName, setListName] = useState(list[0].name);
+  const [listName, setListName] = useState(listNameItem);
   const [newCard, setNewCard] = useState({ persian: "", english: "" });
   const [side, setSide] = useState<"english" | "persian">("english");
   const windowWidth = Dimensions.get("window").width;
@@ -88,7 +97,7 @@ const AddNewCard = () => {
   );
 };
 
-export default AddNewCard;
+export default EditCard;
 
 const styles = StyleSheet.create({
   contener: {
