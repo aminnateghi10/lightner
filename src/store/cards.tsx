@@ -1,19 +1,13 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface CardsState {
-  list: {
-    id: number,
-    name: string,
-    cards: {
-      id: number,
-      persian: string,
-      english: string,
-    }[]
-  }[];
+import {listCardsInterface} from "../contracts/list";
+
+interface CardsStateInterface {
+  list:listCardsInterface[]
 }
 
-const initialState: CardsState = {
+const initialState: CardsStateInterface = {
   list: []
 };
 

@@ -29,6 +29,8 @@ interface PropsInterface {
 const EditCard = ({ route, navigation }: PropsInterface) => {
   const dispatch = useDispatch();
   const { id, listName: listNameItem } = route.params;
+
+  console.log(id , listNameItem , 'dddddddd')
   const list = useSelector((state: RootState) => state.cards.list);
   const [listName, setListName] = useState(listNameItem);
   const [newCard, setNewCard] = useState({ persian: "", english: "" });
