@@ -33,7 +33,7 @@ export const cardsSlice = createSlice({
     addNewCard: (state, { payload }) => {
       state.list = state.list.map((item) => {
         if (item.name == payload.listName) {
-          item.cards = [...item.cards, { ...payload.newCard, id: Date.now() }];
+          item.cards = [...item.cards, { ...payload.newCard}];
         }
         return item;
       });

@@ -29,7 +29,7 @@ const Card = ({ data, navigation, listName }: PropsInterface) => {
         {
           drapDown &&
           <View style={Styles.drapDown}>
-            <TouchableOpacity onPress={() => navigation.navigate("EditCard", { id:data.id,listName })}>
+            <TouchableOpacity onPress={() => navigation.navigate("EditCard", { data,listName })}>
               <Text style={Styles.drapDownText}>ویرایش</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => dispatch(deletCard({ listName, id: data.id }))}>

@@ -1,51 +1,18 @@
-import { useState } from "react";
+import React from "react";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { RouteProp } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  TouchableHighlight,
-  Dimensions
-} from "react-native";
-
-import Card from "../homeScreen/components/card";
-import CustomToast from "../../shared/customToast";
-import { RootStackParamList } from "../../contracts/rootStackParamList";
-// redux
-import { RootState, useAppDispatch } from "../../store";
-import { addNewCard, deletCard } from "../../store/cards";
+import CustomToast from "../shared/customToast";
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
-  route: RouteProp<RootStackParamList, "EditCard">
+  listName:string,
+  setListName:()=>string,
+  list:[],
+  setSide:()=> string,
+  setNewCard:()=>void,
+  newCard:string,
+  addNewCardHandler:()=>void
 }
-
-const EditCard = ({ route, navigation }: PropsInterface) => {
-  const dispatch = useAppDispatch();
-  const { data, listName: listNameItem } = route.params;
-
-  const list = useSelector((state: RootState) => state.cards.list);
-  const [listName, setListName] = useState(listNameItem);
-  const [newCard, setNewCard] = useState({ persian: data.persian, english: data.english, id: data.id });
-  const [side, setSide] = useState<"english" | "persian">("english");
-  const windowWidth = Dimensions.get("window").width;
-
-  let addNewCardHandler = () => {
-    if (newCard.persian || newCard.english && listName) {
-      dispatch(deletCard({ listName: listNameItem, id: data.id }));
-      dispatch(addNewCard({ newCard, listName }));
-      Toast.show({ type: "success", text1: "با موفقیت ویرایش شد" });
-      navigation.goBack();
-    }
-  };
-
+const InnerChangeCard = ({setNewCard,newCard,addNewCardHandler,listName,setListName,list,setSide}:PropsInterface) => {
   return (
     <View style={styles.contener}>
       <Text style={styles.title}>دسته بندی</Text>
@@ -78,7 +45,7 @@ const EditCard = ({ route, navigation }: PropsInterface) => {
               style={styles.input}
               multiline={true}
               numberOfLines={5}
-              placeholder="متن انگلیسی خود را اینجا وارد کنید" />
+              placeholder="لطفا متن انگلیسی خود را اینجا وارد کنید" />
           </View>
           :
           <View>
@@ -88,7 +55,7 @@ const EditCard = ({ route, navigation }: PropsInterface) => {
               style={styles.input}
               multiline={true}
               numberOfLines={5}
-              placeholder="متن فارسی خود را اینجا وارد کنید" />
+              placeholder="لطفا متن فارسی خود را اینجا وارد کنید" />
           </View>
       }
       <TouchableOpacity style={styles.submit} onPress={addNewCardHandler}>
@@ -99,7 +66,7 @@ const EditCard = ({ route, navigation }: PropsInterface) => {
   );
 };
 
-export default EditCard;
+export default InnerChangeCard;
 
 const styles = StyleSheet.create({
   contener: {
