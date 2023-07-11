@@ -24,11 +24,10 @@ const AddNewCard = () => {
   const list = useSelector((state: RootState) => state.cards.list);
   const [listName, setListName] = useState(list[0].name);
   const [newCard, setNewCard] = useState({ persian: "", english: "", id: Date.now() });
-  const [side, setSide] = useState<"english" | "persian">("english");
+
   const windowWidth = Dimensions.get("window").width;
 
   let addNewCardHandler = () => {
-
     if (newCard.persian || newCard.english && listName) {
       dispatch(addNewCard({ newCard, listName }));
       setNewCard({ english: "", persian: "", id: Date.now() });
@@ -36,7 +35,15 @@ const AddNewCard = () => {
     }
   };
 
-  return <InnerChangeCard/>
+  return (
+    <InnerChangeCard
+      btnText="ذخیره"
+      list={list}
+      newCard={newCard}
+      listName={listName}
+      setNewCard={setNewCard}
+      setListName={setListName}
+      sumbitBtn={addNewCardHandler} />);
 };
 
 export default AddNewCard;

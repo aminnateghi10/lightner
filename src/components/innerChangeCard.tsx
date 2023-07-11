@@ -1,18 +1,21 @@
-import React from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import CustomToast from "../shared/customToast";
+import { CardsInterface, listCardsInterface } from "../contracts/list";
 
 interface PropsInterface {
-  listName:string,
-  setListName:()=>string,
-  list:[],
-  setSide:()=> string,
-  setNewCard:()=>void,
-  newCard:string,
-  addNewCardHandler:()=>void
+  listName: string,
+  setListName: Dispatch<SetStateAction<string>>,
+  list: listCardsInterface[],
+  setNewCard: Dispatch<SetStateAction<{ persian: string; english: string; id: number; }>>,
+  newCard: CardsInterface,
+  sumbitBtn: () => void,
+  btnText: string,
 }
-const InnerChangeCard = ({setNewCard,newCard,addNewCardHandler,listName,setListName,list,setSide}:PropsInterface) => {
+
+const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName, list, btnText }: PropsInterface) => {
+  const [side, setSide] = useState<"english" | "persian">("english");
   return (
     <View style={styles.contener}>
       <Text style={styles.title}>دسته بندی</Text>
@@ -58,8 +61,8 @@ const InnerChangeCard = ({setNewCard,newCard,addNewCardHandler,listName,setListN
               placeholder="لطفا متن فارسی خود را اینجا وارد کنید" />
           </View>
       }
-      <TouchableOpacity style={styles.submit} onPress={addNewCardHandler}>
-        <Text style={styles.submitText}>ذخیره</Text>
+      <TouchableOpacity style={styles.submit} onPress={sumbitBtn}>
+        <Text style={styles.submitText}>{btnText}</Text>
       </TouchableOpacity>
       <CustomToast />
     </View>
