@@ -5,4 +5,5 @@ export type RootStackParamList = {
   CardsItems: { listName: string },
   AddNewCard: undefined,
   EditCard: { data: CardsInterface, listName: string },
+  ShowCard: { data: CardsInterface, listName: string }
 }

@@ -23,7 +23,7 @@ const Card = ({ data, navigation, listName }: PropsInterface) => {
   return (
     <TouchableHighlight
       style={[Styles.card, backgroundStyle]}
-      onPress={() => navigation.navigate("ShowCard", { data: data })}>
+      onPress={() => navigation.navigate("ShowCard", { data: data , listName })}>
       <>
         <Icon name="ellipsis-horizontal" size={27} onPress={() => setDrapDown(!drapDown)} style={Styles.icon} />
         {
