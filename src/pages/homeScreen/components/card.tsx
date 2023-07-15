@@ -27,7 +27,7 @@ interface PropsInterface {
 const Card = ({data, navigation}: PropsInterface) => {
     const isDarkMode = useColorScheme() === "dark";
     const dispatch = useAppDispatch();
-    const backgroundStyle = {backgroundColor: isDarkMode ? Colors.lighter : Colors.darker};
+    const backgroundStyle = {backgroundColor: isDarkMode ? Colors.lighter : '#5a5ba2'};
     const textColor = {color: isDarkMode ? "black" : "white"};
 
     const [dropdown, setDropdown] = useState<boolean>(false)
@@ -65,7 +65,7 @@ export default Card;
 
 const Styles = StyleSheet.create({
     col_3: {
-        width: width / 3
+        width: width / 2
     },
     card: {
         margin: 10,
@@ -80,6 +80,7 @@ const Styles = StyleSheet.create({
         position: "absolute",
         top: 8,
         padding: 2,
+        color:'rgb(0,0,0)'
     },
 
     dropDown: {
