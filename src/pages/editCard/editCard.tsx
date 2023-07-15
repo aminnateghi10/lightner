@@ -21,7 +21,7 @@ import InnerChangeCard from "../../components/innerChangeCard";
 import { RootStackParamList } from "../../contracts/rootStackParamList";
 // redux
 import { RootState, useAppDispatch } from "../../store";
-import { addNewCard, deletCard } from "../../store/cards";
+import { addNewCard, deleteCard } from "../../store/cards";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -40,7 +40,7 @@ const EditCard = ({ route, navigation }: PropsInterface) => {
 
   let addNewCardHandler = () => {
     if (newCard.persian || newCard.english && listName) {
-      dispatch(deletCard({ listName: listNameItem, id: data.id }));
+      dispatch(deleteCard({ listName: listNameItem, id: data.id }));
       dispatch(addNewCard({ newCard, listName }));
       Toast.show({ type: "success", text1: "با موفقیت ویرایش شد" });
       navigation.goBack();

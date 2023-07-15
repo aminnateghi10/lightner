@@ -1,5 +1,6 @@
 import Tts from "react-native-tts";
 import { useEffect, useState } from "react";
+import { RouteProp } from "@react-navigation/native";
 import {
   Button,
   FlatList,
@@ -21,8 +22,7 @@ import Card from "./components/card";
 import { RootStackParamList } from "../../contracts/rootStackParamList";
 // reducx
 import { useAppDispatch } from "../../store";
-import { deletCard } from "../../store/cards";
-import { RouteProp } from "@react-navigation/native";
+import { deleteCard } from "../../store/cards";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -44,7 +44,7 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
   }, []);
 
   const deleteHandler = () => {
-    dispatch(deletCard({ listName, id: data.id }));
+    dispatch(deleteCard({ listName, id: data.id }));
     navigation.goBack();
   };
 

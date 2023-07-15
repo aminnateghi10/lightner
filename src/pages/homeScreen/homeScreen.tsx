@@ -63,6 +63,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
       <FlatList
         numColumns={3}
         data={cards?.list}
+        contentContainerStyle={{flex:1}}
         renderItem={({ item }) => <Card navigation={navigation} data={item} />} />
       <TouchableHighlight style={Styles.addNewList} onPress={() => setaddNew(!addNew)}>
         <Icon name="plus" size={27} color="black" />
