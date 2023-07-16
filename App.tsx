@@ -26,9 +26,9 @@ const App = () => {
                 }}>
                     <Stack.Screen name="Home" options={{title:'لایتنر'}} component={HomeScreen}/>
                     <Stack.Screen name="ShowCard" component={ShowCard}/>
-                    <Stack.Screen name="EditCard" component={EditCard}/>
+                    <Stack.Screen name="EditCard" options={{title:'ویرایش کارت'}} component={EditCard}/>
                     <Stack.Screen name="CardsItems" component={CardsItems}/>
-                    <Stack.Screen name="AddNewCard" component={AddNewCard}/>
+                    <Stack.Screen name="AddNewCard" options={{title:'افزودن کارت جدید'}} component={AddNewCard}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

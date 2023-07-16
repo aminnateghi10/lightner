@@ -60,12 +60,13 @@ const HomeScreen = ({navigation}: PropsInterface) => {
 
     return (
         <TouchableWithoutFeedback onPress={() => setaddNew(false)}>
-            <View style={[backgroundStyle, Styles.contener]}>
+            <View style={[backgroundStyle, Styles.container]}>
                 <FlatList
-                    numColumns={3}
+                    numColumns={2}
                     data={cards?.list}
-                    contentContainerStyle={{flex: 1}}
-                    renderItem={({item}) => <Card navigation={navigation} data={item}/>}/>
+                    keyExtractor={item => item.name}
+                    renderItem={({item}) => <Card navigation={navigation} data={item} />}
+                />
                 <TouchableHighlight style={Styles.addNewList} onPress={() => setaddNew(!addNew)}>
                     <Icon name="plus" size={27} color="white"/>
                 </TouchableHighlight>
@@ -88,12 +89,12 @@ const HomeScreen = ({navigation}: PropsInterface) => {
                         visible={addNew && true}>
                         <View style={Styles.centeredView}>
                             <View style={Styles.modalView}>
-                                <Text>نام لیست جدید خود را وارد کنید</Text>
+                                <Text style={{color: 'white'}}>نام لیست جدید خود را وارد کنید</Text>
                                 <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)}/>
                                 <View style={{flexDirection: "row", marginTop: 10}}>
                                     <TouchableOpacity style={{
                                         margin: 5,
-                                        backgroundColor: "rgb(126,118,118)",
+                                        backgroundColor: "rgb(206,200,200)",
                                         padding: 10,
                                         borderRadius: 10
                                     }}>
@@ -116,12 +117,8 @@ const HomeScreen = ({navigation}: PropsInterface) => {
 export default HomeScreen;
 
 const Styles = StyleSheet.create({
-    contener: {
-        height: "100%",
-        justifyContent: "center",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap"
+    container: {
+        flex:1
     },
     addNewList: {
         position: "absolute",
@@ -145,25 +142,13 @@ const Styles = StyleSheet.create({
         marginTop: 22
     },
     modalView: {
-        justifyContent: "center",
+        justifyContent: "space-around",
         alignContent: "center",
-        margin: 20,
-        backgroundColor: "rgb(189,185,185)",
+        backgroundColor: "#5a5ba2",
         borderRadius: 20,
-        width: 340,
-        height: 200,
+        width: 300,
+        height: 180,
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: {
-            elevation: 5000,
-            shadowColor: 'red',
-        }
     },
     dropDown: {
         position: "absolute",
@@ -171,9 +156,15 @@ const Styles = StyleSheet.create({
         right: 70,
         bottom: 70,
         borderRadius: 8,
-        elevation: 300,
-        borderWidth:1,
-        borderColor:'#5a5ba2'
+        shadowColor: '#000000',
+        shadowOpacity: 2,
+        shadowRadius: 10,
+        shadowOffset: {
+            height: 100,
+            width: 500
+        },
+        borderWidth: 1,
+        borderColor: '#5a5ba2'
     },
     dropDownText: {
         color: "black",
@@ -183,7 +174,7 @@ const Styles = StyleSheet.create({
         borderColor: "#5a5ba2",
         borderBottomWidth: 1,
         padding: 8,
-        paddingHorizontal:3,
+        paddingHorizontal: 3,
         borderRadius: 10
     }
 });
