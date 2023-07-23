@@ -22,7 +22,10 @@ const App = () => {
                     headerTitleAlign: "center",
                     statusBarHidden: true,
                     headerStyle: styles.headerStyle,
-                    headerTintColor:'#ffffff'
+                    headerTintColor:'#ffffff',
+                   headerTitleStyle:{
+                       fontFamily: "Vazir-Medium-FD-WOL",
+                   }
                 }}>
                     <Stack.Screen name="Home" options={{title:'لایتنر'}} component={HomeScreen}/>
                     <Stack.Screen name="ShowCard" component={ShowCard}/>
@@ -41,6 +44,7 @@ const styles = StyleSheet.create({
     headerStyle: {
         backgroundColor: '#5a5ba2',
         color:'#b2b3d8',
-        borderRadius:80
+        borderRadius:80,
+        fontFamily: "Vazir-Medium-FD-WOL",
     },
 })

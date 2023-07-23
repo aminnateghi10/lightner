@@ -3,6 +3,8 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-nativ
 import { Picker } from "@react-native-picker/picker";
 import CustomToast from "../shared/customToast";
 import { CardsInterface, listCardsInterface } from "../contracts/list";
+import MyText from "../shared/myText";
+import MyTextInput from "../shared/myTextInput";
 
 interface PropsInterface {
   listName: string,
@@ -18,31 +20,32 @@ const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName
   const [side, setSide] = useState<"english" | "persian">("english");
   return (
     <View style={styles.contener}>
-      <Text style={styles.title}>دسته بندی</Text>
+      <MyText style={styles.title}>دسته بندی</MyText>
       <View style={styles.pickerContener}>
         <Picker
           mode="dropdown"
           selectedValue={listName}
+          itemStyle={{color:'red'}}
           onValueChange={(itemValue) => setListName(itemValue)}>
-          {list.map(item => <Picker.Item key={item.id} label={item.name} value={item.name} />)}
+          {list.map(item => <Picker.Item key={item.id} fontFamily="Vazir-Medium-FD-WOL" label={item.name} value={item.name} />)}
         </Picker>
       </View>
       <View style={{ flexDirection: "row", marginTop: 10 }}>
         <TouchableOpacity
           onPress={() => setSide("persian")}
           style={[styles.tabTitleCard, { borderBottomColor: side === "persian" ? "rgba(0,124,255,0.44)" : "rgb(129,127,127)" }]}>
-          <Text style={styles.tabTitle}>پشت کارت</Text>
+          <MyText style={styles.tabTitle}>پشت کارت</MyText>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setSide("english")}
           style={[styles.tabTitleCard, { borderBottomColor: side === "english" ? "rgba(0,124,255,0.44)" : "rgb(129,127,127)" }]}>
-          <Text style={styles.tabTitle}>روی کارت</Text>
+          <MyText style={styles.tabTitle}>روی کارت</MyText>
         </TouchableOpacity>
       </View>
       {
         side === "english" ?
           <View>
-            <TextInput
+            <MyTextInput
               value={newCard.english}
               onChangeText={(e) => setNewCard({ ...newCard, english: e })}
               style={styles.input}

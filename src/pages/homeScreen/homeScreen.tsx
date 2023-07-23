@@ -22,6 +22,7 @@ import {addNewList, initCardsData} from "../../store/cards";
 // components
 import Card from "./components/card";
 import {RootStackParamList} from "../../contracts/rootStackParamList";
+import MyText from "../../shared/myText";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -74,10 +75,10 @@ const HomeScreen = ({navigation}: PropsInterface) => {
                     addNew === true &&
                     <View style={Styles.dropDown}>
                         <TouchableOpacity onPress={() => setaddNew("newList")}>
-                            <Text style={Styles.dropDownText}>افزودن لیست جدید</Text>
+                            <MyText style={Styles.dropDownText}>افزودن لیست جدید</MyText>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate("AddNewCard")}>
-                            <Text style={Styles.dropDownText}>افزودن کارت جدید</Text>
+                            <MyText style={Styles.dropDownText}>افزودن کارت جدید</MyText>
                         </TouchableOpacity>
                     </View>
                 }
@@ -89,7 +90,7 @@ const HomeScreen = ({navigation}: PropsInterface) => {
                         visible={addNew && true}>
                         <View style={Styles.centeredView}>
                             <View style={Styles.modalView}>
-                                <Text style={{color: 'white'}}>نام لیست جدید خود را وارد کنید</Text>
+                                <MyText style={{color: 'white'}}>نام لیست جدید خود را وارد کنید</MyText>
                                 <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)}/>
                                 <View style={{flexDirection: "row", marginTop: 10}}>
                                     <TouchableOpacity style={{
@@ -98,11 +99,11 @@ const HomeScreen = ({navigation}: PropsInterface) => {
                                         padding: 10,
                                         borderRadius: 10
                                     }}>
-                                        <Text onPress={() => setaddNew(false)}>انصراف</Text>
+                                        <MyText onPress={() => setaddNew(false)}>انصراف</MyText>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         style={{margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10}}>
-                                        <Text style={{color: "white"}} onPress={addNewListHandler}>ذخیره</Text>
+                                        <MyText style={{color: "white"}} onPress={addNewListHandler}>ذخیره</MyText>
                                     </TouchableOpacity>
                                 </View>
                             </View>

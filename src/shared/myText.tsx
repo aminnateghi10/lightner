@@ -1,6 +1,6 @@
-import {StyleSheet, Text, TextInputProps} from "react-native";
+import {StyleSheet, Text, TextProps} from "react-native";
 
-const MyText = (Props: TextInputProps) => {
+const MyText = (Props: TextProps) => {
     return (
         <Text {...Props} style={[Styles.customText, Props.style]}>{Props.children}</Text>
     );

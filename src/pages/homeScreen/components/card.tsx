@@ -16,6 +16,7 @@ import {RootStackParamList} from "../../../contracts/rootStackParamList";
 import {useState} from "react";
 import {deleteCard, deleteList} from "../../../store/cards";
 import {useAppDispatch} from "../../../store";
+import MyText from "../../../shared/myText";
 
 const {width} = Dimensions.get("window");
 
@@ -43,17 +44,17 @@ const Card = ({data, navigation}: PropsInterface) => {
                         onPress={() => setDropdown(!dropdown)}
                         style={Styles.icon}
                         name="md-ellipsis-vertical-sharp"/>
-                    <Text style={[Styles.title, textColor]}>{data.name}</Text>
+                    <MyText style={[Styles.title, textColor]}>{data.name}</MyText>
                 </>
             </TouchableHighlight>
             {
                 dropdown &&
                 <View style={Styles.dropDown}>
                     <TouchableOpacity onPress={() => console.log('edig')}>
-                        <Text style={Styles.dropDownText}>ویرایش</Text>
+                        <MyText style={Styles.dropDownText}>ویرایش</MyText>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => dispatch(deleteList(data.name))}>
-                        <Text style={Styles.dropDownText}>حذف</Text>
+                        <MyText style={Styles.dropDownText}>حذف</MyText>
                     </TouchableOpacity>
                 </View>
             }

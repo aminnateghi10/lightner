@@ -34,7 +34,8 @@ const CardsItems = ({route, navigation}: any) => {
         <View style={[backgroundStyle, Styles.container]}>
             <FlatList
                 data={list?.cards}
-                style={{flex:2}}
+                // style={{flex:2}}
+                // contentContainerStyle={{flex:1}}
                 renderItem={({item}) => <Card navigation={navigation} data={item} listName={list?.name ?? ''}/>}/>
         </View>
     );
