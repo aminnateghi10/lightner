@@ -1,0 +1,85 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Vazir-Bold-FD-WOL.eot",
+      "sha1": "9edb35b7b546e0b223c35516d1273c02804a9060"
+    },
+    {
+      "path": "assets/fonts/Vazir-Bold-FD-WOL.ttf",
+      "sha1": "b2deb38c541ed24827690772055dee336e256723"
+    },
+    {
+      "path": "assets/fonts/Vazir-Bold-FD-WOL.woff",
+      "sha1": "8460cbed2dbad441f535844cc9b59c2fdd120837"
+    },
+    {
+      "path": "assets/fonts/Vazir-Bold-FD-WOL.woff2",
+      "sha1": "03662753f935b1fdbfa034a051c18f8f589bc3c6"
+    },
+    {
+      "path": "assets/fonts/Vazir-FD-WOL.eot",
+      "sha1": "bb986f3415f254724630379047cf56fbeb11f8be"
+    },
+    {
+      "path": "assets/fonts/Vazir-FD-WOL.ttf",
+      "sha1": "64e1c27f72fa0a5c029cbbec68e9de945d75b9a8"
+    },
+    {
+      "path": "assets/fonts/Vazir-FD-WOL.woff",
+      "sha1": "94b9717d09ecb1b916c11c26d1894bd7e7b89b08"
+    },
+    {
+      "path": "assets/fonts/Vazir-FD-WOL.woff2",
+      "sha1": "e47f74b98ff8f07ad95004a7871636e3863fe9a5"
+    },
+    {
+      "path": "assets/fonts/Vazir-Light-FD-WOL.eot",
+      "sha1": "5fa16f8bcda1d4a891ad5cb9b468f5e9e07f136b"
+    },
+    {
+      "path": "assets/fonts/Vazir-Light-FD-WOL.ttf",
+      "sha1": "7c16ddaec6b4857c75bfab26bc9206410e5444bf"
+    },
+    {
+      "path": "assets/fonts/Vazir-Light-FD-WOL.woff",
+      "sha1": "9610cc9635cf55376326995c0a2d1f9a23e40141"
+    },
+    {
+      "path": "assets/fonts/Vazir-Light-FD-WOL.woff2",
+      "sha1": "0df847e53ac53e28bc55f752ab595267be7a72f8"
+    },
+    {
+      "path": "assets/fonts/Vazir-Medium-FD-WOL.eot",
+      "sha1": "913b0da78c91d18ee1e8a20760893af258dbb312"
+    },
+    {
+      "path": "assets/fonts/Vazir-Medium-FD-WOL.ttf",
+      "sha1": "59ae69b914a8ba525ec3f0e7df70d29bd9de4658"
+    },
+    {
+      "path": "assets/fonts/Vazir-Medium-FD-WOL.woff",
+      "sha1": "edee970cedecfbb6758544ae3a29412f149d8459"
+    },
+    {
+      "path": "assets/fonts/Vazir-Medium-FD-WOL.woff2",
+      "sha1": "adfd715f28f659edf4112372840a032b8a7851ff"
+    },
+    {
+      "path": "assets/fonts/Vazir-Thin-FD-WOL.eot",
+      "sha1": "31abcbd73ac90146e1f497b0ae83b3f4c100abcd"
+    },
+    {
+      "path": "assets/fonts/Vazir-Thin-FD-WOL.ttf",
+      "sha1": "dbfd1295644ffd2ff5e721fe95e758dd64183fb9"
+    },
+    {
+      "path": "assets/fonts/Vazir-Thin-FD-WOL.woff",
+      "sha1": "f4a6273f9b77857d55eeb736ba616e377e69fa69"
+    },
+    {
+      "path": "assets/fonts/Vazir-Thin-FD-WOL.woff2",
+      "sha1": "c26d21583cfba44baa02aef896c97ca9a8694f5c"
+    }
+  ]
+}
