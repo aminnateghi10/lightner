@@ -1,4 +1,5 @@
 import {Colors} from "react-native/Libraries/NewAppScreen";
+import ArrowLeft from "react-native-vector-icons/AntDesign";
 import {FlatList, StyleSheet, Text, useColorScheme, View} from "react-native";
 
 import Card from "./components/card";
@@ -16,16 +17,20 @@ const CardsItems = ({route, navigation}: any) => {
     navigation.setOptions({
         header: () => (
             <View style={Styles.headerContainer}>
-                <Text style={Styles.headerTitle}>
-                    دسته: {listName}
-                </Text>
-                <Text style={{
-                    marginHorizontal: 10,
-                    padding: 4,
-                    backgroundColor: '#007bff',
-                    borderRadius: 5,
-                    color:'white'
-                }}>{list?.cards.length}</Text>
+                <ArrowLeft style={{textAlign:'left'}} name="arrowleft" size={27} color="white"
+                           onPress={()=>navigation.goBack()}/>
+                <View style={{flexDirection:"row-reverse",alignItems:'center'}}>
+                    <Text style={Styles.headerTitle}>
+                        دسته: {listName}
+                    </Text>
+                    <Text style={{
+                        marginHorizontal: 10,
+                        padding: 4,
+                        backgroundColor: '#007bff',
+                        borderRadius: 5,
+                        color:'white'
+                    }}>{list?.cards.length}</Text>
+                </View>
             </View>
         )
     })
@@ -48,12 +53,12 @@ const Styles = StyleSheet.create({
         flex: 1
     },
     headerContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection:'row',
+        justifyContent: 'space-between',
         backgroundColor: '#5a5ba2',
         height: 55,
+        padding:12,
         borderColor: 'red',
-        flexDirection: 'row-reverse',
     },
     headerTitle: {
         color: 'white',
