@@ -32,7 +32,7 @@ const CardsItems = ({route, navigation}: any) => {
                     }}>{list?.cards.length}</Text>
                 </View>
             </View>
-        )
+        ),
     })
 
     return (
