@@ -16,12 +16,12 @@ import {
 } from "react-native";
 
 import Card from "../homeScreen/components/card";
-import CustomToast from "../../shared/customToast";
-import InnerChangeCard from "../../components/innerChangeCard";
-import { RootStackParamList } from "../../contracts/rootStackParamList";
+import CustomToast from "../../../shared/customToast";
+import InnerChangeCard from "../../../components/innerChangeCard";
+import { RootStackParamList } from "../../../contracts/rootStackParamList";
 // redux
-import { RootState, useAppDispatch } from "../../store";
-import { addNewCard, deleteCard } from "../../store/cards";
+import { RootState, useAppDispatch } from "../../../store";
+import { addNewCard, deleteCard } from "../../../store/cards";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RootStackParamList>,

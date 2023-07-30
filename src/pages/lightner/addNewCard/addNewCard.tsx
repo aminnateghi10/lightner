@@ -13,11 +13,9 @@ import {
   Dimensions
 } from "react-native";
 
-import { RootState } from "../../store";
-import { addNewCard } from "../../store/cards";
-import Card from "../homeScreen/components/card";
-import CustomToast from "../../shared/customToast";
-import InnerChangeCard from "../../components/innerChangeCard";
+import { RootState } from "../../../store";
+import { addNewCard } from "../../../store/cards";
+import InnerChangeCard from "../../../components/innerChangeCard";
 
 const AddNewCard = () => {
   const dispatch = useDispatch();

@@ -3,8 +3,8 @@ import ArrowLeft from "react-native-vector-icons/AntDesign";
 import {FlatList, StyleSheet, Text, useColorScheme, View} from "react-native";
 
 import Card from "./components/card";
-import cards from "../../store/cards";
-import {RootState, useAppSelector} from "../../store";
+import cards from "../../../store/cards";
+import {RootState, useAppSelector} from "../../../store";
 
 const CardsItems = ({route, navigation}: any) => {
     const {listName} = route.params;

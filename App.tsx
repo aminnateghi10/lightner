@@ -1,19 +1,20 @@
 import {Provider} from "react-redux";
 import {StyleSheet} from "react-native";
 import BoxIcon from "react-native-vector-icons/Feather";
+import SettingIcon from "react-native-vector-icons/AntDesign";
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 import {store} from "./src/store";
 
-import ShowCard from "./src/pages/showCard/showCard";
-import EditCard from "./src/pages/editCard/editCard";
-import HomeScreen from "./src/pages/homeScreen/homeScreen";
-import AddNewCard from "./src/pages/addNewCard/addNewCard";
-import CardsItems from "./src/pages/CardsItems/cardsItems";
+import ShowCard from "./src/pages/lightner/showCard/showCard";
+import EditCard from "./src/pages/lightner/editCard/editCard";
+import HomeScreen from "./src/pages/lightner/homeScreen/homeScreen";
+import AddNewCard from "./src/pages/lightner/addNewCard/addNewCard";
+import CardsItems from "./src/pages/lightner/CardsItems/cardsItems";
 
-import {Text, View} from 'react-native';
+import SettingPage from "./src/pages/setting/SettingPage";
 
 function LightnerTab() {
     const Stack = createNativeStackNavigator();
@@ -34,14 +35,6 @@ function LightnerTab() {
             <Stack.Screen name="CardsItems" component={CardsItems}/>
             <Stack.Screen name="AddNewCard" options={{title: 'افزودن کارت جدید'}} component={AddNewCard}/>
         </Stack.Navigator>
-    );
-}
-
-function SettingsTab() {
-    return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Settings!</Text>
-        </View>
     );
 }
 
@@ -66,7 +59,14 @@ const App = () => {
                             title: "لایتنر",
                             tabBarIcon: ({color, size}) => <BoxIcon name="box" color={color} size={size}/>
                         }}/>
-                    <Tab.Screen name="Settings" options={{title: "تست"}} component={SettingsTab}/>
+                    <Tab.Screen
+                        name="Settings"
+                        component={SettingPage}
+                        options={{
+                            title: "تنظیمات",
+                            tabBarIcon: ({color, size}) => <SettingIcon name="setting" color={color} size={size}/>
+                        }}
+                    />
                 </Tab.Navigator>
             </NavigationContainer>
         </Provider>

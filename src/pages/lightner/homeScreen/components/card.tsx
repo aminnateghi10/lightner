@@ -1,22 +1,20 @@
 import {
     Dimensions,
     StyleSheet,
-    Text,
     TouchableHighlight,
     useColorScheme,
     View,
     TouchableOpacity,
-    Modal, TextInput
 } from "react-native";
+import {useState} from "react";
 import {Colors} from "react-native/Libraries/NewAppScreen";
 import EllipsisVertical from "react-native-vector-icons/Ionicons";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 
-import {RootStackParamList} from "../../../contracts/rootStackParamList";
-import {useState} from "react";
-import {deleteCard, deleteList} from "../../../store/cards";
-import {useAppDispatch} from "../../../store";
-import MyText from "../../../shared/myText";
+import {RootStackParamList} from "../../../../contracts/rootStackParamList";
+import {deleteCard, deleteList} from "../../../../store/cards";
+import {useAppDispatch} from "../../../../store";
+import MyText from "../../../../shared/myText";
 
 const {width} = Dimensions.get("window");
 

@@ -5,11 +5,9 @@ import {Colors} from "react-native/Libraries/NewAppScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {
-    Button,
     FlatList,
     Modal,
     StyleSheet,
-    Text,
     TextInput,
     TouchableHighlight,
     TouchableOpacity, TouchableWithoutFeedback,
@@ -17,12 +15,12 @@ import {
     View
 } from "react-native";
 // redux
-import {RootState} from "../../store";
-import {addNewList, initCardsData} from "../../store/cards";
+import {RootState} from "../../../store";
+import {addNewList, initCardsData} from "../../../store/cards";
 // components
 import Card from "./components/card";
-import {RootStackParamList} from "../../contracts/rootStackParamList";
-import MyText from "../../shared/myText";
+import {RootStackParamList} from "../../../contracts/rootStackParamList";
+import MyText from "../../../shared/myText";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
