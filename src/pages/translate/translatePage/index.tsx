@@ -1,65 +1,130 @@
-import React, { useState } from 'react';
-import {Text, TouchableHighlight} from "react-native";
+import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity, View} from "react-native";
+// Icons
+import CloseIcon from "react-native-vector-icons/AntDesign";
+import ArrowRightIcon from "react-native-vector-icons/AntDesign";
+import TranslateIcon from "react-native-vector-icons/MaterialIcons";
+
+import MyText from "../../../shared/myText";
+import {translate} from "../../../utils/translate";
+import MyTextInput from "../../../shared/myTextInput";
 
 const TranslatePage = () => {
     const [translation, setTranslation] = useState('');
+    const [textToTranslation, setTextToTranslation] = useState<string>('');
+    const [translationIcon, setTranslationIcon] = useState<boolean>(false);
+    const [translatedLang, setTranslatedLang] = useState<'en' | 'fa'>('en');
 
 
-    const translate = (source, target, text) => {
-        const url =
-            'https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=es-ES&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e';
-        const fields = {
-            sl: encodeURIComponent(source),
-            tl: encodeURIComponent(target),
-            q: encodeURIComponent(text),
-        };
-
-        const requestOptions = {
-            method: 'POST',
-            body: Object.keys(fields)
-                .map((key) => `${key}=${fields[key]}`)
-                .join('&'),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        };
-
-        fetch(url, requestOptions)
-            .then((response) => response.json())
-            .then((data) => {
-                const translation = getSentencesFromJSON(data);
-                setTranslation(translation);
-            })
-            .catch((error) => {
-                console.error('Translation error:', error);
-            });
+    const handleTranslate = async () => {
+        const source = translatedLang;
+        const target = translatedLang === "en" ? "fa" : 'en';
+        const text = textToTranslation;
+        try {
+            let res: any = await translate(source, target, text);
+            setTranslationIcon(false);
+            setTranslation(res?.sentences);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const getSentencesFromJSON = (json) => {
-        const sentencesArray = json.sentences || [];
+    const handleClose = () => {
+        setTextToTranslation('');
+        setTranslation('');
+    }
 
-        const dict = json.dict || null;
-        let sentences = '';
-
-        sentencesArray.forEach((s) => {
-            if (s.trans) {
-                sentences += s.trans;
-            }
-        });
-
-        return { sentences, dict };
-    };
-
-    const handleTranslate = () => {
-        const source = 'fa';
-        const target = 'en';
-        const text = "سلام ";
-        translate(source, target, text);
-    };
+    const changeTranslatedLang = () => {
+        setTranslatedLang((prev) => {
+            if (prev === 'en') return 'fa';
+            else return 'en';
+        })
+    }
 
     return (
-        <TouchableHighlight onPress={handleTranslate}><Text>Google Translate Component</Text></TouchableHighlight>
+        <View>
+            <View style={Styles.container}>
+                <View style={Styles.header}><MyText style={Styles.headerTitle}>ترجمه</MyText></View>
+                <View
+                    style={[Styles.languageChangeBox, {flexDirection: `${translatedLang == 'en' ? 'row-reverse' : 'row'}`}]}>
+                    <View><MyText>فارسی</MyText></View>
+                    <TouchableOpacity onPress={changeTranslatedLang}>
+                        <ArrowRightIcon name="arrowright" size={25}/>
+                    </TouchableOpacity>
+                    <View><MyText>انگلیسی</MyText></View>
+                </View>
+                <View style={Styles.languageTypeBox}>
+                    {
+                        textToTranslation &&
+                        <CloseIcon name="close" style={{marginLeft: 5}} size={24} onPress={handleClose}/>
+                    }
+                    <MyTextInput placeholder="متن خود را وارد کنید..." value={textToTranslation}
+                                 onChangeText={(e) => {
+                                     setTextToTranslation(e);
+                                     setTranslationIcon(true);
+                                 }}/>
+                    {
+                        translationIcon &&
+                        <TouchableOpacity style={Styles.translationIcon} onPress={handleTranslate}>
+                            <MyText style={{color: 'rgb(255,255,255)'}}>ترجمه</MyText>
+                            <TranslateIcon name="translate" color='rgb(255,255,255)' size={25}/>
+                        </TouchableOpacity>
+                    }
+                </View>
+            </View>
+            {
+                translation &&
+                <View style={Styles.answerBox}>
+                    <MyText>{translation}</MyText>
+                </View>
+            }
+
+        </View>
     );
 };
 
 export default TranslatePage;
+
+const Styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'rgb(255,255,255)',
+        elevation: 30
+    },
+    header: {
+        flexDirection: "row",
+        justifyContent: 'center'
+    },
+    headerTitle: {
+        fontSize: 18,
+    },
+    languageChangeBox: {
+        width: "100%",
+        justifyContent: 'space-around',
+        marginTop: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgb(169,169,169)',
+        paddingBottom: 12,
+        marginBottom: 5,
+    },
+    languageTypeBox: {
+        paddingBottom: 20
+    },
+    translationIcon: {
+        flexDirection: 'row-reverse',
+        backgroundColor: 'rgb(0,130,255)',
+        width: 65,
+        height: 46,
+        marginRight: 10,
+        justifyContent: 'center',
+        borderRadius: 20,
+        padding: 10
+    },
+    answerBox: {
+        marginTop: 15,
+        marginHorizontal: 6,
+        backgroundColor: 'rgb(255,255,255)',
+        paddingVertical: 30,
+        paddingHorizontal: 10,
+        elevation: 30
+    }
+})
