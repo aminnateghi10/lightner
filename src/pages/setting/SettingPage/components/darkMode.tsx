@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Modal, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
@@ -22,6 +23,7 @@ const DarkMode = () => {
           visible={true}>
           <View style={Styles.centeredView}>
             <View style={Styles.modalView}>
+              <BouncyCheckbox onPress={(isChecked: boolean) => {}} />
               <View style={{flexDirection:'row',justifyContent:'space-around',width:'100%'}}>
                 <TouchableOpacity style={{
                   margin: 5,
