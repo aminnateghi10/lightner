@@ -2,6 +2,7 @@ import {Provider} from "react-redux";
 import {StyleSheet} from "react-native";
 import BoxIcon from "react-native-vector-icons/Feather";
 import SettingIcon from "react-native-vector-icons/AntDesign";
+import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -15,6 +16,7 @@ import AddNewCard from "./src/pages/lightner/addNewCard/addNewCard";
 import CardsItems from "./src/pages/lightner/CardsItems/cardsItems";
 
 import SettingPage from "./src/pages/setting/SettingPage";
+import TranslatePage from "./src/pages/translate/translatePage";
 
 function LightnerTab() {
     const Stack = createNativeStackNavigator();
@@ -40,11 +42,12 @@ function LightnerTab() {
 
 const App = () => {
     const Tab = createBottomTabNavigator();
-
     return (
         <Provider store={store}>
             <NavigationContainer>
-                <Tab.Navigator screenOptions={{
+                <Tab.Navigator
+                    initialRouteName="LightnerTab"
+                    screenOptions={{
                     headerShown: false,
                     tabBarLabelStyle: {
                         fontFamily: "Vazir-Medium-FD-WOL",
@@ -53,11 +56,19 @@ const App = () => {
                     tabBarStyle: {height: 47}
                 }}>
                     <Tab.Screen
+                        name="translate"
+                        component={TranslatePage}
+                        options={{
+                            title: "مترجم",
+                            tabBarIcon: ({color, size}) => <TranslateIcon name="translate" color={color} size={size}/>
+                        }}
+                    />
+                    <Tab.Screen
                         name="LightnerTab"
                         component={LightnerTab}
                         options={{
                             title: "لایتنر",
-                            tabBarIcon: ({color, size}) => <BoxIcon name="box" color={color} size={size}/>
+                            tabBarIcon: ({color, size}) => <BoxIcon name="box" color={color} size={size}/>,
                         }}/>
                     <Tab.Screen
                         name="Settings"
