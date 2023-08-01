@@ -6,7 +6,7 @@ import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, useColorScheme, View} from "react-native";
 
 import {deleteCard} from "../../../../store/cards";
-import {RootStackParamList} from "../../../../contracts/rootStackParamList";
+import {RootStackParamList} from "../../../../contracts/rootParamList";
 
 interface PropsInterface {
     data: any,

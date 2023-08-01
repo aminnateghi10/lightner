@@ -11,7 +11,7 @@ import {Colors} from "react-native/Libraries/NewAppScreen";
 import EllipsisVertical from "react-native-vector-icons/Ionicons";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 
-import {RootStackParamList} from "../../../../contracts/rootStackParamList";
+import {RootStackParamList} from "../../../../contracts/rootParamList";
 import {deleteCard, deleteList} from "../../../../store/cards";
 import {useAppDispatch} from "../../../../store";
 import MyText from "../../../../shared/myText";

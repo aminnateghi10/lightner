@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
 import ArrowRightIcon from "react-native-vector-icons/AntDesign";
@@ -11,8 +12,13 @@ import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
 import MyText from "../../../shared/myText";
 import {translate} from "../../../utils/translate";
 import MyTextInput from "../../../shared/myTextInput";
+import {RootStackParamList} from "../../../contracts/rootParamList";
 
-const TranslatePage = () => {
+interface PropsInterface {
+    navigation: NativeStackNavigationProp<RootStackParamList>,
+}
+
+const TranslatePage = ({navigation}: PropsInterface) => {
     const [translation, setTranslation] = useState('');
     const [textToTranslation, setTextToTranslation] = useState<string>('');
     const [translationIcon, setTranslationIcon] = useState<boolean>(false);
@@ -39,6 +45,7 @@ const TranslatePage = () => {
 
     const handleSaveToLightner = () => {
         //     push to add card page
+        navigation.navigate()
     }
 
     const copyToClipboard = () => Clipboard.setString(translation);

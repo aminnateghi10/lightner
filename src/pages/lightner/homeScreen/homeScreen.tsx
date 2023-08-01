@@ -19,7 +19,7 @@ import {RootState} from "../../../store";
 import {addNewList, initCardsData} from "../../../store/cards";
 // components
 import Card from "./components/card";
-import {RootStackParamList} from "../../../contracts/rootStackParamList";
+import {RootStackParamList} from "../../../contracts/rootParamList";
 import MyText from "../../../shared/myText";
 
 interface PropsInterface {

@@ -19,7 +19,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import Card from "./components/card";
-import { RootStackParamList } from "../../../contracts/rootStackParamList";
+import { RootStackParamList } from "../../../contracts/rootParamList";
 // reducx
 import { useAppDispatch } from "../../../store";
 import { deleteCard } from "../../../store/cards";

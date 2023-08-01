@@ -18,7 +18,7 @@ import {
 import Card from "../homeScreen/components/card";
 import CustomToast from "../../../shared/customToast";
 import InnerChangeCard from "../../../components/innerChangeCard";
-import { RootStackParamList } from "../../../contracts/rootStackParamList";
+import { RootStackParamList } from "../../../contracts/rootParamList";
 // redux
 import { RootState, useAppDispatch } from "../../../store";
 import { addNewCard, deleteCard } from "../../../store/cards";
