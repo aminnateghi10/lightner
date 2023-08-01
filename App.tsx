@@ -48,13 +48,14 @@ const App = () => {
                 <Tab.Navigator
                     initialRouteName="LightnerTab"
                     screenOptions={{
-                    headerShown: false,
-                    tabBarLabelStyle: {
-                        fontFamily: "Vazir-Medium-FD-WOL",
-                        color: 'black',
-                    },
-                    tabBarStyle: {height: 47}
-                }}>
+                        headerShown: false,
+                        tabBarLabelStyle: {
+                            fontFamily: "Vazir-Medium-FD-WOL",
+                            color: 'black',
+                        },
+                        tabBarStyle: {height: 47},
+                        tabBarHideOnKeyboard: true,
+                    }}>
                     <Tab.Screen
                         name="translate"
                         component={TranslatePage}
