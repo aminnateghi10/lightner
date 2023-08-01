@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
 import ArrowRightIcon from "react-native-vector-icons/AntDesign";
 import TranslateIcon from "react-native-vector-icons/MaterialIcons";
+import CopyOutlineIcon from "react-native-vector-icons/Ionicons";
+import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
 
 import MyText from "../../../shared/myText";
 import {translate} from "../../../utils/translate";
@@ -33,6 +36,12 @@ const TranslatePage = () => {
         setTextToTranslation('');
         setTranslation('');
     }
+
+    const handleSaveToLightner = () => {
+        //     push to add card page
+    }
+
+    const copyToClipboard = () => Clipboard.setString(translation);
 
     const changeTranslatedLang = () => {
         setTranslatedLang((prev) => {
@@ -76,6 +85,15 @@ const TranslatePage = () => {
                 translation &&
                 <View style={Styles.answerBox}>
                     <MyText>{translation}</MyText>
+                    <View style={{flexDirection: "row", marginTop: 10}}>
+                        <CopyOutlineIcon
+                            size={23}
+                            color="#01a4f5"
+                            name="copy-outline"
+                            style={{marginRight: 5}}
+                            onPress={copyToClipboard}/>
+                        <BoxOpenIcon onPress={handleSaveToLightner} name="box-open" color="#01a4f5" size={21}/>
+                    </View>
                 </View>
             }
 
