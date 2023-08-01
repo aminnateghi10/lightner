@@ -44,8 +44,11 @@ const TranslatePage = ({navigation}: PropsInterface) => {
     }
 
     const handleSaveToLightner = () => {
-        //     push to add card page
-        navigation.navigate()
+        if (translatedLang === "en") {
+            navigation.navigate("AddNewCard", {data: {english:textToTranslation, persian: translation, id: Date.now()}});
+        } else {
+            navigation.navigate("AddNewCard", {data: {english:translation, persian: textToTranslation, id: Date.now()}});
+        }
     }
 
     const copyToClipboard = () => Clipboard.setString(translation);

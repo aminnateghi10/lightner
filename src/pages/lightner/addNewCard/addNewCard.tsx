@@ -1,47 +1,46 @@
-import { useState } from "react";
-import { Picker } from "@react-native-picker/picker";
-import { useDispatch, useSelector } from "react-redux";
-import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import Toast from "react-native-toast-message";
 import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  TouchableHighlight,
-  Dimensions
+    Dimensions
 } from "react-native";
 
-import { RootState } from "../../../store";
-import { addNewCard } from "../../../store/cards";
+import {RootState} from "../../../store";
+import {addNewCard} from "../../../store/cards";
 import InnerChangeCard from "../../../components/innerChangeCard";
+import {RouteProp} from "@react-navigation/native";
+import {RootStackParamList} from "../../../contracts/rootParamList";
 
-const AddNewCard = () => {
-  const dispatch = useDispatch();
-  const list = useSelector((state: RootState) => state.cards.list);
-  const [listName, setListName] = useState(list[0].name);
-  const [newCard, setNewCard] = useState({ persian: "", english: "", id: Date.now() });
+interface PropsInterface {
+    route: RouteProp<RootStackParamList, "AddNewCard">
+}
 
-  const windowWidth = Dimensions.get("window").width;
+const AddNewCard = ({route}: PropsInterface) => {
+    const dispatch = useDispatch();
+    const initialState = route.params;
+    const list = useSelector((state: RootState) => state.cards.list);
+    const [listName, setListName] = useState(list[0].name);
+    const [newCard, setNewCard] = useState(initialState?.data ?? {persian: "", english: "", id: Date.now()});
 
-  let addNewCardHandler = () => {
-    if (newCard.persian || newCard.english && listName) {
-      dispatch(addNewCard({ newCard, listName }));
-      setNewCard({ english: "", persian: "", id: Date.now() });
-      Toast.show({ type: "success", text1: "با موفقیت ثبت شد" });
-    }
-  };
+    const windowWidth = Dimensions.get("window").width;
 
-  return (
-    <InnerChangeCard
-      btnText="ذخیره"
-      list={list}
-      newCard={newCard}
-      listName={listName}
-      setNewCard={setNewCard}
-      setListName={setListName}
-      sumbitBtn={addNewCardHandler} />);
+    let addNewCardHandler = () => {
+        if (newCard.persian || newCard.english && listName) {
+            dispatch(addNewCard({newCard, listName}));
+            setNewCard({english: "", persian: "", id: Date.now()});
+            Toast.show({type: "success", text1: "با موفقیت ثبت شد"});
+        }
+    };
+
+    return (
+        <InnerChangeCard
+            btnText="ذخیره"
+            list={list}
+            newCard={newCard}
+            listName={listName}
+            setNewCard={setNewCard}
+            setListName={setListName}
+            sumbitBtn={addNewCardHandler}/>);
 };
 
 export default AddNewCard;
