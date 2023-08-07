@@ -10,5 +10,6 @@ export type RootStackParamList = {
 export type RootTabParamList = {
     LightnerTab: RootStackParamList,
     Settings: undefined,
-    translate: undefined
+    translate: undefined,
+    Robot: undefined,
 }

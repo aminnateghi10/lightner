@@ -3,6 +3,7 @@ import {StyleSheet} from "react-native";
 import BoxIcon from "react-native-vector-icons/Feather";
 import SettingIcon from "react-native-vector-icons/AntDesign";
 import TranslateIcon from "react-native-vector-icons/MaterialIcons";
+import RobotIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -15,6 +16,7 @@ import HomeScreen from "./src/pages/lightner/homeScreen/homeScreen";
 import AddNewCard from "./src/pages/lightner/addNewCard/addNewCard";
 import CardsItems from "./src/pages/lightner/CardsItems/cardsItems";
 
+import RobotPage from "./src/pages/robot/robotPage";
 import SettingPage from "./src/pages/setting/SettingPage";
 import TranslatePage from "./src/pages/translate/translatePage";
 
@@ -77,6 +79,14 @@ const App = () => {
                         options={{
                             title: "تنظیمات",
                             tabBarIcon: ({color, size}) => <SettingIcon name="setting" color={color} size={size}/>
+                        }}
+                    />
+                    <Tab.Screen
+                        name="Robot"
+                        component={RobotPage}
+                        options={{
+                            title: "ربات",
+                            tabBarIcon: ({color, size}) => <RobotIcon name="robot" color={color} size={size}/>
                         }}
                     />
                 </Tab.Navigator>
