@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, StyleSheet, TouchableOpacity, View} from "react-native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
@@ -20,12 +20,14 @@ interface PropsInterface {
 
 const TranslatePage = ({navigation}: PropsInterface) => {
     const [translation, setTranslation] = useState('');
+    const [loading, setLoading] = useState(false);
     const [textToTranslation, setTextToTranslation] = useState<string>('');
     const [translationIcon, setTranslationIcon] = useState<boolean>(false);
     const [translatedLang, setTranslatedLang] = useState<'en' | 'fa'>('en');
 
 
     const handleTranslate = async () => {
+        setLoading(true);
         const source = translatedLang;
         const target = translatedLang === "en" ? "fa" : 'en';
         const text = textToTranslation;
@@ -35,6 +37,8 @@ const TranslatePage = ({navigation}: PropsInterface) => {
             setTranslation(res?.sentences);
         } catch (err) {
             console.log(err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,9 +49,21 @@ const TranslatePage = ({navigation}: PropsInterface) => {
 
     const handleSaveToLightner = () => {
         if (translatedLang === "en") {
-            navigation.navigate("AddNewCard", {data: {english:textToTranslation, persian: translation, id: Date.now()}});
+            navigation.navigate("AddNewCard", {
+                data: {
+                    english: textToTranslation,
+                    persian: translation,
+                    id: Date.now()
+                }
+            });
         } else {
-            navigation.navigate("AddNewCard", {data: {english:translation, persian: textToTranslation, id: Date.now()}});
+            navigation.navigate("AddNewCard", {
+                data: {
+                    english: translation,
+                    persian: textToTranslation,
+                    id: Date.now()
+                }
+            });
         }
     }
 
@@ -85,8 +101,15 @@ const TranslatePage = ({navigation}: PropsInterface) => {
                     {
                         translationIcon &&
                         <TouchableOpacity style={Styles.translationIcon} onPress={handleTranslate}>
-                            <MyText style={{color: 'rgb(255,255,255)'}}>ترجمه</MyText>
-                            <TranslateIcon name="translate" color='rgb(255,255,255)' size={25}/>
+                            {loading ?
+                                <ActivityIndicator size="small" color="#ffffff"/>
+                                :
+                                <>
+                                    <MyText style={{color: 'rgb(255,255,255)'}}> ترجمه</MyText>
+                                    <TranslateIcon name="translate" color='rgb(255,255,255)' size={25}/>
+                                </>
+                            }
+
                         </TouchableOpacity>
                     }
                 </View>

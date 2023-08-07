@@ -74,19 +74,19 @@ const App = () => {
                             tabBarIcon: ({color, size}) => <BoxIcon name="box" color={color} size={size}/>,
                         }}/>
                     <Tab.Screen
-                        name="Settings"
-                        component={SettingPage}
-                        options={{
-                            title: "تنظیمات",
-                            tabBarIcon: ({color, size}) => <SettingIcon name="setting" color={color} size={size}/>
-                        }}
-                    />
-                    <Tab.Screen
                         name="Robot"
                         component={RobotPage}
                         options={{
                             title: "ربات",
                             tabBarIcon: ({color, size}) => <RobotIcon name="robot" color={color} size={size}/>
+                        }}
+                    />
+                    <Tab.Screen
+                        name="Settings"
+                        component={SettingPage}
+                        options={{
+                            title: "تنظیمات",
+                            tabBarIcon: ({color, size}) => <SettingIcon name="setting" color={color} size={size}/>
                         }}
                     />
                 </Tab.Navigator>
