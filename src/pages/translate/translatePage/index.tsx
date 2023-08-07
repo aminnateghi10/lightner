@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Toast from "react-native-toast-message";
 import Clipboard from '@react-native-clipboard/clipboard';
 import {ActivityIndicator, StyleSheet, TouchableOpacity, View} from "react-native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -12,6 +13,7 @@ import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
 import MyText from "../../../shared/myText";
 import {translate} from "../../../utils/translate";
 import MyTextInput from "../../../shared/myTextInput";
+import CustomToast from "../../../shared/customToast";
 import {RootStackParamList} from "../../../contracts/rootParamList";
 
 interface PropsInterface {
@@ -67,7 +69,11 @@ const TranslatePage = ({navigation}: PropsInterface) => {
         }
     }
 
-    const copyToClipboard = () => Clipboard.setString(translation);
+    const copyToClipboard = () => {
+        Clipboard.setString(translation);
+        Toast.show({type: "success", text1:'متن کپی شد.',visibilityTime:500});
+
+    }
 
     const changeTranslatedLang = () => {
         setTranslatedLang((prev) => {
@@ -129,7 +135,7 @@ const TranslatePage = ({navigation}: PropsInterface) => {
                     </View>
                 </View>
             }
-
+            <CustomToast/>
         </View>
     );
 };
