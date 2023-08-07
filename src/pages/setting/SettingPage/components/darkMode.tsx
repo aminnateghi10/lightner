@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Modal, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View} from "react-native";
+import {Modal, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from "react-native";
 
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,10 +11,10 @@ import CustomToast from "../../../../shared/customToast";
 const DarkMode = () => {
     const [show, setShow] = useState<boolean>(false);
     const [activeBox, setActiveBox] = useState('automatic');
-    const changeModeHandler = async() => {
-        await AsyncStorage.setItem('ThemeMode',activeBox);
+    const changeModeHandler = async () => {
+        await AsyncStorage.setItem('ThemeMode', activeBox);
         setShow(false);
-        Toast.show({ type: "success", text1: 'تم با موفقیت تغییر کرد.' });
+        Toast.show({type: "success", text1: 'تم با موفقیت تغییر کرد.'});
     }
 
     const listCheckBox = [
@@ -84,7 +84,7 @@ const DarkMode = () => {
                     </View>
                 </Modal>
             }
-            <CustomToast />
+            <CustomToast/>
         </>
     );
 };

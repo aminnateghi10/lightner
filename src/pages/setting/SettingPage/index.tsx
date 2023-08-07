@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
+import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 
 import MyText from "../../../shared/myText";
-import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 import DarkMode from "./components/darkMode";
 
 

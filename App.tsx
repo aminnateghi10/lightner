@@ -1,10 +1,11 @@
 import {Provider} from "react-redux";
-import {StyleSheet} from "react-native";
+import {useEffect, useState} from "react";
+import {StyleSheet, useColorScheme} from "react-native";
 import BoxIcon from "react-native-vector-icons/Feather";
 import SettingIcon from "react-native-vector-icons/AntDesign";
 import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import RobotIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import {NavigationContainer} from "@react-navigation/native";
+import {DarkTheme, DefaultTheme, NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
@@ -19,6 +20,8 @@ import CardsItems from "./src/pages/lightner/CardsItems/cardsItems";
 import RobotPage from "./src/pages/robot/robotPage";
 import SettingPage from "./src/pages/setting/SettingPage";
 import TranslatePage from "./src/pages/translate/translatePage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {CustomDarkTheme, CustomDefaultTheme} from "./src/utils/themeMode";
 
 function LightnerTab() {
     const Stack = createNativeStackNavigator();
@@ -43,10 +46,22 @@ function LightnerTab() {
 }
 
 const App = () => {
+    const scheme = useColorScheme();
     const Tab = createBottomTabNavigator();
+    const [theme, setTheme] = useState<string>('light');
+
+    useEffect(() => {
+        AsyncStorage.getItem('ThemeMode').then(res => {
+            if (res) {
+                if (res === 'light') setTheme('light');
+                if (res === 'dark') setTheme('dark');
+                if (res === 'automatic') setTheme(scheme ?? 'light')
+            }
+        });
+    }, [])
     return (
         <Provider store={store}>
-            <NavigationContainer>
+            <NavigationContainer theme={theme === 'dark' ? CustomDarkTheme : CustomDefaultTheme}>
                 <Tab.Navigator
                     initialRouteName="LightnerTab"
                     screenOptions={{
