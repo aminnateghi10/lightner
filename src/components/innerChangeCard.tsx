@@ -55,7 +55,7 @@ const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName
           </View>
           :
           <View>
-            <TextInput
+            <MyTextInput
               value={newCard.persian}
               onChangeText={(e) => setNewCard({ ...newCard, persian: e })}
               style={styles.input}
