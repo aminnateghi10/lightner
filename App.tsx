@@ -48,20 +48,10 @@ function LightnerTab() {
 const App = () => {
     const scheme = useColorScheme();
     const Tab = createBottomTabNavigator();
-    const [theme, setTheme] = useState<string>('light');
 
-    useEffect(() => {
-        AsyncStorage.getItem('ThemeMode').then(res => {
-            if (res) {
-                if (res === 'light') setTheme('light');
-                if (res === 'dark') setTheme('dark');
-                if (res === 'automatic') setTheme(scheme ?? 'light')
-            }
-        });
-    }, [])
     return (
         <Provider store={store}>
-            <NavigationContainer theme={theme === 'dark' ? CustomDarkTheme : CustomDefaultTheme}>
+            <NavigationContainer theme={scheme === "dark" ? CustomDarkTheme : CustomDefaultTheme}>
                 <Tab.Navigator
                     initialRouteName="LightnerTab"
                     screenOptions={{
