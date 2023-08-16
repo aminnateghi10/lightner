@@ -15,6 +15,7 @@ import {translate} from "../../../utils/translate";
 import MyTextInput from "../../../shared/myTextInput";
 import CustomToast from "../../../shared/customToast";
 import {RootStackParamList} from "../../../contracts/rootParamList";
+import MyCard from "../../../shared/myCard";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -84,7 +85,7 @@ const TranslatePage = ({navigation}: PropsInterface) => {
 
     return (
         <View>
-            <View style={Styles.container}>
+            <MyCard style={Styles.container}>
                 <View style={Styles.header}><MyText style={Styles.headerTitle}>ترجمه</MyText></View>
                 <View
                     style={[Styles.languageChangeBox, {flexDirection: `${translatedLang == 'en' ? 'row-reverse' : 'row'}`}]}>
@@ -119,10 +120,10 @@ const TranslatePage = ({navigation}: PropsInterface) => {
                         </TouchableOpacity>
                     }
                 </View>
-            </View>
+            </MyCard>
             {
                 translation &&
-                <View style={Styles.answerBox}>
+                <MyCard style={Styles.answerBox}>
                     <MyText>{translation}</MyText>
                     <View style={{flexDirection: "row", marginTop: 10}}>
                         <CopyOutlineIcon
@@ -133,7 +134,7 @@ const TranslatePage = ({navigation}: PropsInterface) => {
                             onPress={copyToClipboard}/>
                         <BoxOpenIcon onPress={handleSaveToLightner} name="box-open" color="#01a4f5" size={21}/>
                     </View>
-                </View>
+                </MyCard>
             }
             <CustomToast/>
         </View>
@@ -144,7 +145,6 @@ export default TranslatePage;
 
 const Styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgb(255,255,255)',
         elevation: 30
     },
     header: {
@@ -159,7 +159,7 @@ const Styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginTop: 15,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgb(169,169,169)',
+        borderBottomColor: 'rgb(50,50,50)',
         paddingBottom: 12,
         marginBottom: 5,
     },
@@ -179,7 +179,6 @@ const Styles = StyleSheet.create({
     answerBox: {
         marginTop: 15,
         marginHorizontal: 6,
-        backgroundColor: 'rgb(255,255,255)',
         paddingVertical: 30,
         paddingHorizontal: 10,
         elevation: 30

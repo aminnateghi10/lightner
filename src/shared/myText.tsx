@@ -11,6 +11,6 @@ export default MyText;
 const Styles = StyleSheet.create({
     customText: {
         fontFamily: "Vazir-Medium-FD-WOL",
-        color: 'rgb(0,0,0)'
+        // color: 'rgb(0,0,0)'
     }
 });

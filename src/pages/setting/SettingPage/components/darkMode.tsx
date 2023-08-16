@@ -96,7 +96,7 @@ const Styles = StyleSheet.create({
         flexDirection: "row-reverse",
         justifyContent: "space-between",
         margin: 10,
-        backgroundColor: "#f6f6f6",
+        backgroundColor: "rgb(48,48,48)",
         padding: 12,
         borderRadius: 5,
         shadowColor: "#000",
