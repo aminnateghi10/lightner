@@ -1,4 +1,5 @@
 import {Theme} from "@react-navigation/native";
+import {Colors} from "./colors";
 
 
 export const CustomDefaultTheme: Theme = {
@@ -16,11 +17,11 @@ export const CustomDefaultTheme: Theme = {
 export const CustomDarkTheme: Theme = {
     dark: true,
     colors: {
-        primary: 'rgb(10, 132, 255)',
-        background: 'rgb(31, 31, 31)',
-        card: 'rgb(18, 18, 18)',
+        primary: Colors.primary,
+        background: Colors.background,
+        card: Colors.card,
         text: 'rgb(235, 235, 235)',
-        border: 'rgb(50, 50, 50)',
+        border: 'rgb(141,130,130)',
         notification: 'rgb(255, 69, 58)',
     },
 };

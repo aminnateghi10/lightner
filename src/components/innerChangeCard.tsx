@@ -5,6 +5,7 @@ import CustomToast from "../shared/customToast";
 import { CardsInterface, listCardsInterface } from "../contracts/list";
 import MyText from "../shared/myText";
 import MyTextInput from "../shared/myTextInput";
+import {Colors} from "../constants/colors";
 
 interface PropsInterface {
   listName: string,
@@ -27,7 +28,7 @@ const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName
           selectedValue={listName}
           itemStyle={{color:'red'}}
           onValueChange={(itemValue) => setListName(itemValue)}>
-          {list.map(item => <Picker.Item key={item.id} fontFamily="Vazir-Medium-FD-WOL" label={item.name} value={item.name} />)}
+          {list.map(item => <Picker.Item key={item.id} label={item.name} value={item.name} />)}
         </Picker>
       </View>
       <View style={{ flexDirection: "row", marginTop: 10 }}>
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   pickerContener: {
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: Colors.border
   },
   tabTitleCard: {
     marginTop: 10,
@@ -97,10 +98,9 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     fontSize: 18,
-    color: "rgb(0,0,0)"
   },
   input: {
-    borderColor: "rgb(0,0,0)",
+    borderColor: Colors.border,
     borderWidth: 1,
     borderRadius: 10,
     height: 100,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   submit: {
-    backgroundColor: "rgba(0,45,227,0.84)",
+    backgroundColor: Colors.button,
     position: "absolute",
     height: 60,
     width: "100%",

@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import {useState} from "react";
-import {Colors} from "react-native/Libraries/NewAppScreen";
+import {Colors} from "../../../../constants/colors";
 import EllipsisVertical from "react-native-vector-icons/Ionicons";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 
@@ -26,15 +26,13 @@ interface PropsInterface {
 const Card = ({data, navigation}: PropsInterface) => {
     const isDarkMode = useColorScheme() === "dark";
     const dispatch = useAppDispatch();
-    const backgroundStyle = {backgroundColor: isDarkMode ? Colors.lighter : '#5a5ba2'};
-    const textColor = {color: isDarkMode ? "black" : "white"};
 
     const [dropdown, setDropdown] = useState<boolean>(false)
 
     return (
         <View style={Styles.col_3}>
             <TouchableHighlight
-                style={[Styles.card, backgroundStyle]}
+                style={Styles.card}
                 onPress={() => navigation.navigate("CardsItems", {listName: data.name})}>
                 <>
                     <EllipsisVertical
@@ -42,7 +40,7 @@ const Card = ({data, navigation}: PropsInterface) => {
                         onPress={() => setDropdown(!dropdown)}
                         style={Styles.icon}
                         name="md-ellipsis-vertical-sharp"/>
-                    <MyText style={[Styles.title, textColor]}>{data.name}</MyText>
+                    <MyText style={Styles.title}>{data.name}</MyText>
                 </>
             </TouchableHighlight>
             {
@@ -70,7 +68,8 @@ const Styles = StyleSheet.create({
         margin: 10,
         padding: 10,
         paddingVertical: 30,
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor:Colors.card,
     },
     title: {
         textAlign: "center"
@@ -79,7 +78,7 @@ const Styles = StyleSheet.create({
         position: "absolute",
         top: 8,
         padding: 2,
-        color:'rgb(0,0,0)'
+        // color:'rgb(0,0,0)'
     },
 
     dropDown: {

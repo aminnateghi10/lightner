@@ -1,6 +1,6 @@
-import {Colors} from "react-native/Libraries/NewAppScreen";
+import {Colors} from "../../../constants/colors";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
-import {FlatList, StyleSheet, Text, useColorScheme, View} from "react-native";
+import {FlatList, StyleSheet, Text, View} from "react-native";
 
 import Card from "./components/card";
 import cards from "../../../store/cards";
@@ -8,9 +8,6 @@ import {RootState, useAppSelector} from "../../../store";
 
 const CardsItems = ({route, navigation}: any) => {
     const {listName} = route.params;
-
-    const isDarkMode = useColorScheme() === "dark";
-    const backgroundStyle = {backgroundColor: isDarkMode ? Colors.darker : Colors.lighter};
 
     const cards = useAppSelector(state => state.cards);
     let list = cards.list.find(item => item.name == listName);
@@ -20,13 +17,11 @@ const CardsItems = ({route, navigation}: any) => {
                 <ArrowLeft style={{textAlign:'left'}} name="arrowleft" size={27} color="white"
                            onPress={()=>navigation.goBack()}/>
                 <View style={{flexDirection:"row-reverse",alignItems:'center'}}>
-                    <Text style={Styles.headerTitle}>
-                        دسته: {listName}
-                    </Text>
+                    <Text style={Styles.headerTitle}>دسته: {listName}</Text>
                     <Text style={{
                         marginHorizontal: 10,
                         padding: 4,
-                        backgroundColor: '#007bff',
+                        backgroundColor: Colors,
                         borderRadius: 5,
                         color:'white'
                     }}>{list?.cards.length}</Text>
@@ -36,7 +31,7 @@ const CardsItems = ({route, navigation}: any) => {
     })
 
     return (
-        <View style={[backgroundStyle, Styles.container]}>
+        <View style={Styles.container}>
             <FlatList
                 data={list?.cards}
                 // style={{flex:2}}
@@ -55,7 +50,7 @@ const Styles = StyleSheet.create({
     headerContainer: {
         flexDirection:'row',
         justifyContent: 'space-between',
-        backgroundColor: '#5a5ba2',
+        backgroundColor: Colors.card,
         height: 55,
         padding:12,
         borderColor: 'red',

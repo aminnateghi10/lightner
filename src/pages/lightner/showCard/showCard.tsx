@@ -2,12 +2,9 @@ import Tts from "react-native-tts";
 import { useEffect, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import {
-  Button,
-  FlatList,
   Modal,
   StyleSheet,
-  Text, TextInput,
-  TouchableHighlight,
+  Text,
   TouchableOpacity,
   useColorScheme,
   View
@@ -15,14 +12,15 @@ import {
 import Edit from "react-native-vector-icons/Feather";
 import Refresh from "react-native-vector-icons/Ionicons";
 import Delete from "react-native-vector-icons/AntDesign";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+import { Colors } from "../../../constants/colors";
 import Card from "./components/card";
 import { RootStackParamList } from "../../../contracts/rootParamList";
 // reducx
 import { useAppDispatch } from "../../../store";
 import { deleteCard } from "../../../store/cards";
+import MyText from "../../../shared/myText";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -31,8 +29,6 @@ interface PropsInterface {
 
 const ShowCard = ({ route, navigation }: PropsInterface) => {
   const dispatch = useAppDispatch();
-  const isDarkMode = useColorScheme() === "dark";
-  const backgroundStyle = { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter };
   const { data, listName } = route.params;
   const [lang, setLang] = useState(true);
   const [show, setShow] = useState(false);
@@ -51,7 +47,7 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
   return (
     <View style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
       <TouchableOpacity style={Styles.card} onPress={() => setLang(!lang)}>
-        <Text style={{ fontSize: 30, color: "rgb(0,0,0)" }}>{lang ? data.english : data.persian}</Text>
+        <MyText style={{ fontSize: 30 }}>{lang ? data.english : data.persian}</MyText>
         {
           lang &&
           <View style={Styles.sayAgainCard}>
@@ -88,7 +84,7 @@ export default ShowCard;
 
 const Styles = StyleSheet.create({
   card: {
-    backgroundColor: "rgba(0,132,255,0.43)",
+    backgroundColor: Colors.card,
     width: "80%",
     height: "80%",
     borderRadius: 20,
@@ -103,7 +99,7 @@ const Styles = StyleSheet.create({
     flexDirection: "row"
   },
   icon: {
-    backgroundColor: "rgb(255,255,255)",
+    backgroundColor: Colors.background,
     padding: 10,
     marginHorizontal: 5,
     borderRadius: 50

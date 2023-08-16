@@ -1,5 +1,4 @@
 import {Provider} from "react-redux";
-import {useEffect, useState} from "react";
 import {StyleSheet, useColorScheme} from "react-native";
 import BoxIcon from "react-native-vector-icons/Feather";
 import SettingIcon from "react-native-vector-icons/AntDesign";
@@ -20,8 +19,7 @@ import CardsItems from "./src/pages/lightner/CardsItems/cardsItems";
 import RobotPage from "./src/pages/robot/robotPage";
 import SettingPage from "./src/pages/setting/SettingPage";
 import TranslatePage from "./src/pages/translate/translatePage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {CustomDarkTheme, CustomDefaultTheme} from "./src/utils/themeMode";
+import {CustomDarkTheme, CustomDefaultTheme} from "./src/constants/themeMode";
 
 function LightnerTab() {
     const Stack = createNativeStackNavigator();
@@ -37,7 +35,7 @@ function LightnerTab() {
             }
         }}>
             <Stack.Screen name="Home" options={{title: 'لایتنر'}} component={HomeScreen}/>
-            <Stack.Screen name="ShowCard" component={ShowCard}/>
+            <Stack.Screen name="ShowCard" options={{title: 'نمایش کارت'}} component={ShowCard}/>
             <Stack.Screen name="EditCard" options={{title: 'ویرایش کارت'}} component={EditCard}/>
             <Stack.Screen name="CardsItems" component={CardsItems}/>
             <Stack.Screen name="AddNewCard" options={{title: 'افزودن کارت جدید'}} component={AddNewCard}/>
@@ -58,7 +56,6 @@ const App = () => {
                         headerShown: false,
                         tabBarLabelStyle: {
                             fontFamily: "Vazir-Medium-FD-WOL",
-                            color: 'black',
                         },
                         tabBarStyle: {height: 47},
                         tabBarHideOnKeyboard: true,
@@ -104,7 +101,7 @@ export default App;
 
 const styles = StyleSheet.create({
     headerStyle: {
-        backgroundColor: '#5a5ba2',
+        // backgroundColor: '#5a5ba2',
         color: '#b2b3d8',
         borderRadius: 80,
         fontFamily: "Vazir-Medium-FD-WOL",

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
-import {Colors} from "react-native/Libraries/NewAppScreen";
+import {Colors} from "../../../constants/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {
@@ -19,8 +19,8 @@ import {RootState} from "../../../store";
 import {addNewList, initCardsData} from "../../../store/cards";
 // components
 import Card from "./components/card";
-import {RootStackParamList} from "../../../contracts/rootParamList";
 import MyText from "../../../shared/myText";
+import {RootStackParamList} from "../../../contracts/rootParamList";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -30,7 +30,7 @@ const HomeScreen = ({navigation}: PropsInterface) => {
     const dispatch = useDispatch();
 
     const [name, setName] = useState("");
-    const [addNew, setaddNew] = useState<boolean | "newList" | "newCard">(false);
+    const [addNew, setAddNew] = useState<boolean | "newList" | "newCard">(false);
 
     const isDarkMode = useColorScheme() === "dark";
     const cards = useSelector((state: RootState) => state.cards);
@@ -53,26 +53,25 @@ const HomeScreen = ({navigation}: PropsInterface) => {
     let addNewListHandler = () => {
         if (name) {
             dispatch(addNewList(name));
-            setaddNew(false);
+            setAddNew(false);
         }
     };
 
     return (
-        <TouchableWithoutFeedback onPress={() => setaddNew(false)}>
+        <TouchableWithoutFeedback onPress={() => setAddNew(false)}>
             <View style={[backgroundStyle, Styles.container]}>
                 <FlatList
                     numColumns={2}
                     data={cards?.list}
                     keyExtractor={item => item.name}
-                    renderItem={({item}) => <Card navigation={navigation} data={item} />}
-                />
-                <TouchableHighlight style={Styles.addNewList} onPress={() => setaddNew(!addNew)}>
+                    renderItem={({item}) => <Card navigation={navigation} data={item} />}/>
+                <TouchableHighlight style={Styles.addNewList} onPress={() => setAddNew(!addNew)}>
                     <Icon name="plus" size={27} color="white"/>
                 </TouchableHighlight>
                 {
                     addNew === true &&
                     <View style={Styles.dropDown}>
-                        <TouchableOpacity onPress={() => setaddNew("newList")}>
+                        <TouchableOpacity onPress={() => setAddNew("newList")}>
                             <MyText style={Styles.dropDownText}>افزودن لیست جدید</MyText>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate("AddNewCard")}>
@@ -97,7 +96,7 @@ const HomeScreen = ({navigation}: PropsInterface) => {
                                         padding: 10,
                                         borderRadius: 10
                                     }}>
-                                        <MyText onPress={() => setaddNew(false)}>انصراف</MyText>
+                                        <MyText onPress={() => setAddNew(false)}>انصراف</MyText>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         style={{margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10}}>
@@ -125,7 +124,7 @@ const Styles = StyleSheet.create({
         right: 20,
         padding: 15,
         borderRadius: 50,
-        backgroundColor: "#7778b7"
+        backgroundColor: Colors.button
     },
     addNewListInput: {
         borderColor: "rgb(0,0,0)",

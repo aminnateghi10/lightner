@@ -1,9 +1,11 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
-import {Colors} from "react-native/Libraries/NewAppScreen";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, useColorScheme, View} from "react-native";
+
+import MyText from "../../../../shared/myText";
+import {Colors} from "../../../../constants/colors";
 
 import {deleteCard} from "../../../../store/cards";
 import {RootStackParamList} from "../../../../contracts/rootParamList";
@@ -16,20 +18,18 @@ interface PropsInterface {
 
 const Card = ({data, navigation, listName}: PropsInterface) => {
     const dispatch = useDispatch();
-    const isDarkMode = useColorScheme() === "dark";
-    const colorStyle = {color: isDarkMode ? "black" : "white"};
-    const backgroundStyle = {backgroundColor: isDarkMode ? Colors.lighter : "#5a5ba2"};
+
     const [dropDown, setDropDown] = useState(false);
 
     return (
         <View style={{position:"relative"}}>
             <TouchableHighlight
-                style={[Styles.card, backgroundStyle]}
+                style={Styles.card}
                 onPress={() => navigation.navigate("ShowCard", {data: data, listName})}>
                 <>
                     <Icon name="ellipsis-horizontal" size={27} onPress={() => setDropDown(!dropDown)}
                           style={Styles.icon}/>
-                    <Text style={[Styles.title, colorStyle]}>{data.english}</Text>
+                    <MyText style={[Styles.title]}>{data.english}</MyText>
                 </>
             </TouchableHighlight>
             {
@@ -54,7 +54,8 @@ const Styles = StyleSheet.create({
         marginHorizontal: 8,
         paddingVertical: 25,
         borderRadius: 15,
-        marginVertical: 10
+        marginVertical: 10,
+        backgroundColor:Colors.card
     },
     title: {
         textAlign: "center"

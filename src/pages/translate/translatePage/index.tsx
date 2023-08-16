@@ -16,6 +16,7 @@ import MyTextInput from "../../../shared/myTextInput";
 import CustomToast from "../../../shared/customToast";
 import {RootStackParamList} from "../../../contracts/rootParamList";
 import MyCard from "../../../shared/myCard";
+import {Colors} from "../../../constants/colors";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -112,8 +113,8 @@ const TranslatePage = ({navigation}: PropsInterface) => {
                                 <ActivityIndicator size="small" color="#ffffff"/>
                                 :
                                 <>
-                                    <MyText style={{color: 'rgb(255,255,255)'}}> ترجمه</MyText>
-                                    <TranslateIcon name="translate" color='rgb(255,255,255)' size={25}/>
+                                    <MyText> ترجمه</MyText>
+                                    <TranslateIcon name="translate" size={25}/>
                                 </>
                             }
 
@@ -159,7 +160,7 @@ const Styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginTop: 15,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgb(50,50,50)',
+        borderBottomColor: Colors.border,
         paddingBottom: 12,
         marginBottom: 5,
     },
