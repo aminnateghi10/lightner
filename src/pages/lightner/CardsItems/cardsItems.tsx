@@ -3,8 +3,8 @@ import ArrowLeft from "react-native-vector-icons/AntDesign";
 import {FlatList, StyleSheet, Text, View} from "react-native";
 
 import Card from "./components/card";
-import cards from "../../../store/cards";
-import {RootState, useAppSelector} from "../../../store";
+import {useAppSelector} from "../../../store";
+import MyText from "../../../shared/myText";
 
 const CardsItems = ({route, navigation}: any) => {
     const {listName} = route.params;
@@ -14,17 +14,16 @@ const CardsItems = ({route, navigation}: any) => {
     navigation.setOptions({
         header: () => (
             <View style={Styles.headerContainer}>
-                <ArrowLeft style={{textAlign:'left'}} name="arrowleft" size={27} color="white"
+                <ArrowLeft style={{textAlign:'left'}} name="arrowleft" size={27}
                            onPress={()=>navigation.goBack()}/>
                 <View style={{flexDirection:"row-reverse",alignItems:'center'}}>
-                    <Text style={Styles.headerTitle}>دسته: {listName}</Text>
-                    <Text style={{
+                    <MyText style={Styles.headerTitle}>دسته: {listName}</MyText>
+                    <MyText style={{
                         marginHorizontal: 10,
                         padding: 4,
-                        backgroundColor: Colors,
+                        backgroundColor: Colors.button,
                         borderRadius: 5,
-                        color:'white'
-                    }}>{list?.cards.length}</Text>
+                    }}>{list?.cards.length}</MyText>
                 </View>
             </View>
         ),
@@ -56,7 +55,6 @@ const Styles = StyleSheet.create({
         borderColor: 'red',
     },
     headerTitle: {
-        color: 'white',
         fontSize: 18
     },
 });

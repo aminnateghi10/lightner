@@ -29,7 +29,6 @@ function LightnerTab() {
             headerTitleAlign: "center",
             statusBarHidden: true,
             headerStyle: styles.headerStyle,
-            headerTintColor: '#ffffff',
             headerTitleStyle: {
                 fontFamily: "Vazir-Medium-FD-WOL",
             }
@@ -101,7 +100,6 @@ export default App;
 
 const styles = StyleSheet.create({
     headerStyle: {
-        // backgroundColor: '#5a5ba2',
         color: '#b2b3d8',
         borderRadius: 80,
         fontFamily: "Vazir-Medium-FD-WOL",
