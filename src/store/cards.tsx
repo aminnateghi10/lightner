@@ -33,7 +33,15 @@ export const cardsSlice = createSlice({
         addNewCard: (state, {payload}) => {
             state.list = state.list.map((item) => {
                 if (item.name == payload.listName) {
-                    item.cards = [...item.cards, {...payload.newCard}];
+                    item.cards = [...item.cards, {
+                        ...payload.newCard,
+                        date_added: new Date(),
+                        browsing_time:Date.now(),
+                        browsing_count: 0,
+                        correct_review: 0,
+                        wrong_review: 0,
+                        level: 1,
+                    }];
                 }
                 return item;
             });
