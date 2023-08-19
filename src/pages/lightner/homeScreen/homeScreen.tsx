@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import type {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {
     FlatList,
-    Modal,
+    Modal, SafeAreaView,
     StyleSheet,
     TextInput,
     TouchableHighlight,
@@ -21,6 +21,7 @@ import {addNewList, initCardsData} from "../../../store/cards";
 import Card from "./components/card";
 import MyText from "../../../shared/myText";
 import {RootStackParamList} from "../../../contracts/rootParamList";
+import BrowseBar from "./components/browseBar";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -58,58 +59,60 @@ const HomeScreen = ({navigation}: PropsInterface) => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={() => setAddNew(false)}>
-            <View style={[backgroundStyle, Styles.container]}>
-                <FlatList
-                    numColumns={2}
-                    data={cards?.list}
-                    keyExtractor={item => item.name}
-                    renderItem={({item}) => <Card navigation={navigation} data={item} />}/>
-                <TouchableHighlight style={Styles.addNewList} onPress={() => setAddNew(!addNew)}>
-                    <Icon name="plus" size={27} color="white"/>
-                </TouchableHighlight>
-                {
-                    addNew === true &&
-                    <View style={Styles.dropDown}>
-                        <TouchableOpacity onPress={() => setAddNew("newList")}>
-                            <MyText style={Styles.dropDownText}>افزودن لیست جدید</MyText>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate("AddNewCard")}>
-                            <MyText style={Styles.dropDownText}>افزودن کارت جدید</MyText>
-                        </TouchableOpacity>
-                    </View>
-                }
-                {
-                    addNew === "newList" &&
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={addNew && true}>
-                        <View style={Styles.centeredView}>
-                            <View style={Styles.modalView}>
-                                <MyText style={{color: 'white'}}>نام لیست جدید خود را وارد کنید</MyText>
-                                <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)}/>
-                                <View style={{flexDirection: "row", marginTop: 10}}>
-                                    <TouchableOpacity style={{
-                                        margin: 5,
-                                        backgroundColor: "rgb(206,200,200)",
-                                        padding: 10,
-                                        borderRadius: 10
-                                    }}>
-                                        <MyText onPress={() => setAddNew(false)}>انصراف</MyText>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={{margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10}}>
-                                        <MyText style={{color: "white"}} onPress={addNewListHandler}>ذخیره</MyText>
-                                    </TouchableOpacity>
+        <SafeAreaView style={{flex:1}}>
+            <BrowseBar/>
+            <TouchableWithoutFeedback onPress={() => setAddNew(false)}>
+                <View style={[backgroundStyle, Styles.container]}>
+                    <FlatList
+                        numColumns={2}
+                        data={cards?.list}
+                        keyExtractor={item => item.name}
+                        renderItem={({item}) => <Card navigation={navigation} data={item} />}/>
+                    <TouchableHighlight style={Styles.addNewList} onPress={() => setAddNew(!addNew)}>
+                        <Icon name="plus" size={27} color="white"/>
+                    </TouchableHighlight>
+                    {
+                        addNew === true &&
+                        <View style={Styles.dropDown}>
+                            <TouchableOpacity onPress={() => setAddNew("newList")}>
+                                <MyText style={Styles.dropDownText}>افزودن لیست جدید</MyText>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("AddNewCard")}>
+                                <MyText style={Styles.dropDownText}>افزودن کارت جدید</MyText>
+                            </TouchableOpacity>
+                        </View>
+                    }
+                    {
+                        addNew === "newList" &&
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={addNew && true}>
+                            <View style={Styles.centeredView}>
+                                <View style={Styles.modalView}>
+                                    <MyText style={{color: 'white'}}>نام لیست جدید خود را وارد کنید</MyText>
+                                    <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)}/>
+                                    <View style={{flexDirection: "row", marginTop: 10}}>
+                                        <TouchableOpacity style={{
+                                            margin: 5,
+                                            backgroundColor: "rgb(206,200,200)",
+                                            padding: 10,
+                                            borderRadius: 10
+                                        }}>
+                                            <MyText onPress={() => setAddNew(false)}>انصراف</MyText>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={{margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10}}>
+                                            <MyText style={{color: "white"}} onPress={addNewListHandler}>ذخیره</MyText>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    </Modal>
-                }
-            </View>
-        </TouchableWithoutFeedback>
-
+                        </Modal>
+                    }
+                </View>
+            </TouchableWithoutFeedback>
+        </SafeAreaView>
     );
 };
 export default HomeScreen;

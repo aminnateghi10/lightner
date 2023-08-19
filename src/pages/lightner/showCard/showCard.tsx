@@ -50,6 +50,7 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
                 end={{x: 1, y: 0}}
                 colors={['rgb(114,72,72)', 'rgb(0,178,0)']}
                 style={Styles.chartProgress}>
+                <MyText>نمودار پیشرفت</MyText>
                 <Text style={{position: 'absolute', left: `${data.level*13}%`, width: 50, bottom: -4}}>
                     <DoubleArrowRight name="angle-double-right" size={30} color="blue"/>
                 </Text>
@@ -147,7 +148,11 @@ const Styles = StyleSheet.create({
         borderRadius: 10
     },
     chartProgress: {
-        height: 20,
+        height: 22,
         position: 'relative',
+        justifyContent:'center',
+        flexDirection:'row',
+        alignItems:'center',
+        alignContent:'center'
     },
 });
