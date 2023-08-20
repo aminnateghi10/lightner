@@ -70,7 +70,6 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
         let newNowData = {
             ...nowData,
             browsing_time: browsingTime,
-            date_added: new Date(),
             browsing_count: nowData.browsing_count + 1,
             correct_review: nowData.correct_review + 1,
             level: nowData.level + 1,
@@ -86,6 +85,22 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
     }
 
     const iDontKnow = () => {
+        let browsingTime = new Date().setHours(24);
+        let newNowData = {
+            ...nowData,
+            browsing_time: browsingTime,
+            browsing_count: nowData.browsing_count + 1,
+            wrong_review: nowData.wrong_review + 1,
+            level: 1,
+        }
+        dispatch(cardLevelUpgrade(newNowData));
+        setLang(true);
+        if (data.cards.length - 1 <= count) {
+            Toast.show({type: "success", text1: "مرور به پایان رسید."});
+            setTimeout(() => {
+                navigation.goBack();
+            }, 2000)
+        } else setCount(count + 1);
     };
 
     return (
