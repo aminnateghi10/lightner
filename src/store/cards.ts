@@ -61,19 +61,15 @@ export const cardsSlice = createSlice({
             return state;
         },
         cardLevelUpgrade: (state, {payload}) => {
-            console.log(current(state), 'tss')
             state.list = [...state.list.map(item => {
                 return {
                     ...item,
                     cards: [...item?.cards.map((element => {
-                        console.log(current(element), 'ed')
-                        console.log(payload, 22)
                         if (element.id === payload.id) return payload;
                         else return element
                     }))]
                 }
             })];
-            console.log(current(state), 'tow')
             return state;
         },
 

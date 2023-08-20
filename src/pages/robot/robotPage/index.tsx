@@ -26,7 +26,6 @@ const RobotPage = () => {
             const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', requestOptions);
             const data = await response.json();
 
-            console.log(data,'ddd')
 
             // Append the response from the API to the chat history
             // const newChatEntry = {
