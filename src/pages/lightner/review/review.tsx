@@ -22,6 +22,7 @@ import {useAppDispatch} from "../../../store";
 import MyText from "../../../shared/myText";
 import Toast from "react-native-toast-message";
 import CustomToast from "../../../shared/customToast";
+import {cardLevelUpgrade} from "../../../store/cards";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -48,20 +49,44 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
     };
 
     const iKnow = () => {
+        let browsingTime;
+        switch (nowData.level) {
+            case 1 :
+                browsingTime = new Date().setHours(2 * 24);
+                break;
+            case 2 :
+                browsingTime = new Date().setHours(4 * 24);
+                break;
+            case 3 :
+                browsingTime = new Date().setHours(8 * 24);
+                break;
+            case 4 :
+                browsingTime = new Date().setHours(15 * 24);
+                break;
+            default:
+                Date.now();
+                break;
+        }
+        let newNowData = {
+            ...nowData,
+            browsing_time: browsingTime,
+            date_added: new Date(),
+            browsing_count: nowData.browsing_count + 1,
+            correct_review: nowData.correct_review + 1,
+            level: nowData.level + 1,
+        }
+        dispatch(cardLevelUpgrade(newNowData));
+        setLang(true);
         if (data.cards.length - 1 <= count) {
             Toast.show({type: "success", text1: "مرور به پایان رسید."});
             setTimeout(() => {
                 navigation.goBack();
             }, 2000)
-        } else {
-            setLang(true);
-            setCount(count + 1);
-        }
-    };
+        } else setCount(count + 1);
+    }
+
     const iDontKnow = () => {
     };
-
-    console.log(nowData, 'nowData')
 
     return (
         <SafeAreaView>

@@ -36,7 +36,7 @@ export const cardsSlice = createSlice({
                     item.cards = [...item.cards, {
                         ...payload.newCard,
                         date_added: new Date(),
-                        browsing_time:Date.now(),
+                        browsing_time: Date.now(),
                         browsing_count: 0,
                         correct_review: 0,
                         wrong_review: 0,
@@ -59,11 +59,28 @@ export const cardsSlice = createSlice({
         deleteList: (state, {payload}) => {
             state.list = [...state.list.filter(item => item.name !== payload)];
             return state;
-        }
+        },
+        cardLevelUpgrade: (state, {payload}) => {
+            console.log(current(state), 'tss')
+            state.list = [...state.list.map(item => {
+                return {
+                    ...item,
+                    cards: [...item?.cards.map((element => {
+                        console.log(current(element), 'ed')
+                        console.log(payload, 22)
+                        if (element.id === payload.id) return payload;
+                        else return element
+                    }))]
+                }
+            })];
+            console.log(current(state), 'tow')
+            return state;
+        },
+
     }
 });
 
 // Action creators are generated for each case reducer function
-export const {initCardsData, addNewList, addNewCard, deleteCard, deleteList} = cardsSlice.actions;
+export const {initCardsData, addNewList, addNewCard, deleteCard, deleteList, cardLevelUpgrade} = cardsSlice.actions;
 
 export default cardsSlice.reducer;

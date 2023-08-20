@@ -14,6 +14,7 @@ interface PropsInterface {
 }
 
 const BrowseBar = ({navigation}: PropsInterface) => {
+
     const cards = useSelector((state: RootState) => state.cards);
     const browseList = cards?.list.map(item => {
         return item.cards.filter(element => element.browsing_time <= Date.now());
