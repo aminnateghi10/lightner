@@ -1,27 +1,38 @@
 import {useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import CardsOutlineIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import {RootState} from "../../../../store";
 import MyCard from "../../../../shared/myCard";
 import MyText from "../../../../shared/myText";
 import {Colors} from "../../../../constants/colors";
-import {RootState} from "../../../../store";
+import {RootStackParamList} from "../../../../contracts/rootParamList";
 
-const BrowseBar = () => {
+interface PropsInterface {
+    navigation: NativeStackNavigationProp<RootStackParamList>
+}
 
-
+const BrowseBar = ({navigation}: PropsInterface) => {
     const cards = useSelector((state: RootState) => state.cards);
-    console.log(cards)
     const browseList = cards?.list.map(item => {
         return item.cards.filter(element => element.browsing_time <= Date.now());
     });
-    let singleBrowseList = browseList.map(item => [...item]);
-    console.log(singleBrowseList,'browseList')
+    const singleBrowseList: any = {
+        cards: [],
+        name: 'مرور'
+    };
+    let newBrowseList = browseList.map(item => item.map(element => singleBrowseList.cards.push(element)));
     return (
         <MyCard style={Styles.container}>
-            <MyText style={Styles.browseButton} onPress={() => console.log('yyyy')}>مرور</MyText>
+            {
+                singleBrowseList.cards.length ?
+                    <MyText style={Styles.browseButton}
+                            onPress={() => navigation.navigate("Review", {data: singleBrowseList})}>مرور</MyText>
+                    : <View/>
+            }
             <View style={{flexDirection: 'row'}}>
-                <MyText>{`${browseList.length} کارت برای مرور کردن دارید.`}</MyText>
+                <MyText>{`${singleBrowseList?.cards?.length} کارت برای مرور کردن دارید.`}</MyText>
                 <CardsOutlineIcon name="cards-outline" size={27}/>
             </View>
         </MyCard>

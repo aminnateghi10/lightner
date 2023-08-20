@@ -15,6 +15,7 @@ import EditCard from "./src/pages/lightner/editCard/editCard";
 import HomeScreen from "./src/pages/lightner/homeScreen/homeScreen";
 import AddNewCard from "./src/pages/lightner/addNewCard/addNewCard";
 import CardsItems from "./src/pages/lightner/CardsItems/cardsItems";
+import Review from "./src/pages/lightner/review/review";
 
 import RobotPage from "./src/pages/robot/robotPage";
 import SettingPage from "./src/pages/setting/SettingPage";
@@ -36,6 +37,7 @@ function LightnerTab() {
             <Stack.Screen name="Home" options={{title: 'لایتنر'}} component={HomeScreen}/>
             <Stack.Screen name="ShowCard" options={{title: 'نمایش کارت'}} component={ShowCard}/>
             <Stack.Screen name="EditCard" options={{title: 'ویرایش کارت'}} component={EditCard}/>
+            <Stack.Screen name="Review" options={{title: 'جعبه لایتنر'}} component={Review}/>
             <Stack.Screen name="CardsItems" component={CardsItems}/>
             <Stack.Screen name="AddNewCard" options={{title: 'افزودن کارت جدید'}} component={AddNewCard}/>
         </Stack.Navigator>

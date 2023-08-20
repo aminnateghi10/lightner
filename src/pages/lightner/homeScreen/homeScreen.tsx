@@ -60,7 +60,7 @@ const HomeScreen = ({navigation}: PropsInterface) => {
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <BrowseBar/>
+            <BrowseBar navigation={navigation}/>
             <TouchableWithoutFeedback onPress={() => setAddNew(false)}>
                 <View style={[backgroundStyle, Styles.container]}>
                     <FlatList

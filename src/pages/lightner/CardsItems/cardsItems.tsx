@@ -1,6 +1,6 @@
 import {Colors} from "../../../constants/colors";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import {FlatList, StyleSheet, View} from "react-native";
 
 import Card from "./components/card";
 import {useAppSelector} from "../../../store";
@@ -33,8 +33,6 @@ const CardsItems = ({route, navigation}: any) => {
         <View style={Styles.container}>
             <FlatList
                 data={list?.cards}
-                // style={{flex:2}}
-                // contentContainerStyle={{flex:1}}
                 renderItem={({item}) => <Card navigation={navigation} data={item} listName={list?.name ?? ''}/>}/>
         </View>
     );
