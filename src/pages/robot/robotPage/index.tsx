@@ -1,62 +1,99 @@
 import React, {useState} from 'react';
-import {View, TextInput, Button, Text} from 'react-native';
+import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
+import axios from 'axios';
+import {StyleSheet} from 'react-native';
 
+const ChatScreen = () => {
+  const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
-const RobotPage = () => {
-    const [inputText, setInputText] = useState('');
-    const [chatHistory, setChatHistory] = useState([]);
+  const sendMessage = async (message: string) => {
+    setIsTyping(true);
+    try {
+      const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          messages: [
+            {
+              role: 'user',
+              content: message,
+            },
+          ],
+          model: 'gpt-3.5-turbo',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${'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'}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
 
-    const handleMessageSubmit = async () => {
-        try {
-            // Make a POST request to the GPT API endpoint with the user's message
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    Authorization: 'Bearer YOUR_API_KEY', // Replace with your OpenAI API key
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    prompt: inputText,
-                    max_tokens: 50, // Adjust the number of tokens as needed
-                    temperature: 0.6, // Adjust the temperature parameter as needed
-                    n: 1
-                })
-            };
+      return response.data.choices[0].message.content;
+    } catch (err) {
+      console.log(err, 'api call error');
+    }
+    finally {
+      setIsTyping(false);
+    }
+  };
 
-            const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', requestOptions);
-            const data = await response.json();
+  const onSend = async (newMessages = []) => {
 
+    setMessages(prev => GiftedChat.append(prev, newMessages));
 
-            // Append the response from the API to the chat history
-            // const newChatEntry = {
-            //     role: 'ai',
-            //     content: response.data.choices[0].text.trim()
-            // };
-            // setChatHistory([...chatHistory, newChatEntry]);
+    const response = await sendMessage(newMessages[0].text);
+    const chatMessage = [
+      {
+        _id: Math.random().toString(36).substring(7),
+        text: response,
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'GPT-3.5-turbo',
+          // avatar: require('../assets/chatgptlogo.png'),
+        },
+      },
+    ];
 
-            // Clear the input text
-            setInputText('');
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-    return (
-        <View>
-            {/* Render chat history */}
-            {chatHistory.map((entry, index) => (
-                <Text key={index}>{`${entry.role}: ${entry.content}`}</Text>
-            ))}
+    setMessages(prev => GiftedChat.append(prev, chatMessage));
+  };
 
-            {/* Render chat input */}
-            <TextInput
-                value={inputText}
-                onChangeText={(text) => setInputText(text)}
-            />
+  const user = {
+    _id: 1,
+    name: 'Developer',
+    // avatar: require('../assets/profile.jpeg'),
+  };
 
-            {/* Render submit button */}
-            <Button title="Send" onPress={handleMessageSubmit}/>
-        </View>
-    );
+  const renderInputToolbar = props => {
+    return <InputToolbar {...props} containerStyle={styles.input} />;
+  };
+
+  return (
+    <GiftedChat
+      messages={messages}
+      onSend={onSend}
+      user={user}
+      placeholder={'پیام'}
+      showUserAvatar={true}
+      showAvatarForEveryMessage={true}
+      isTyping={isTyping}
+      renderInputToolbar={renderInputToolbar}
+      messagesContainerStyle={styles.messageContainer}
+    />
+  );
 };
 
-export default RobotPage;
+export default ChatScreen;
+
+const styles = StyleSheet.create({
+  messageContainer: {
+    paddingBottom: 16,
+  },
+  input: {
+    borderColor: 'transparent',
+    justifyContent:'center',
+    borderWidth: 0,
+    borderRadius: 4,
+  },
+});
