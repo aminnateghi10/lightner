@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import type {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {
     FlatList,
-    Modal, SafeAreaView,
+    Modal, SafeAreaView, ScrollView,
     StyleSheet,
     TextInput,
     TouchableHighlight,
@@ -31,6 +31,7 @@ const HomeScreen = ({navigation}: PropsInterface) => {
     const dispatch = useDispatch();
 
     const [name, setName] = useState("");
+    const [dropdown, setDropdown] = useState(null);
     const [addNew, setAddNew] = useState<boolean | "newList" | "newCard">(false);
 
     const isDarkMode = useColorScheme() === "dark";
@@ -61,13 +62,15 @@ const HomeScreen = ({navigation}: PropsInterface) => {
     return (
         <SafeAreaView style={{flex:1}}>
             <BrowseBar navigation={navigation}/>
-            <TouchableWithoutFeedback onPress={() => setAddNew(false)}>
+            <TouchableWithoutFeedback onPress={() => {setAddNew(false);setDropdown(null)}}>
                 <View style={[backgroundStyle, Styles.container]}>
-                    <FlatList
-                        numColumns={2}
-                        data={cards?.list}
-                        keyExtractor={item => item.name}
-                        renderItem={({item}) => <Card navigation={navigation} data={item} />}/>
+                    <ScrollView contentContainerStyle={{flexDirection:'row',flexWrap:'wrap'}}>
+                        {
+                            cards.list.map((item , index)=>(
+                              <Card key={index} index={index} navigation={navigation} data={item} dropdown={dropdown} setDropdown={setDropdown}/>
+                            ))
+                        }
+                    </ScrollView>
                     <TouchableHighlight style={Styles.addNewList} onPress={() => setAddNew(!addNew)}>
                         <Icon name="plus" size={27} color="white"/>
                     </TouchableHighlight>

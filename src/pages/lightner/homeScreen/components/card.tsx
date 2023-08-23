@@ -20,31 +20,30 @@ const {width} = Dimensions.get("window");
 
 interface PropsInterface {
     data: any,
-    navigation: NativeStackNavigationProp<RootStackParamList>
+    navigation: NativeStackNavigationProp<RootStackParamList>,
+    index:number,
 }
 
-const Card = ({data, navigation}: PropsInterface) => {
+const Card = ({data,index ,navigation , dropdown , setDropdown}: PropsInterface) => {
     const isDarkMode = useColorScheme() === "dark";
     const dispatch = useAppDispatch();
 
-    const [dropdown, setDropdown] = useState<boolean>(false)
-
     return (
-        <View style={Styles.col_3}>
+        <View style={[Styles.col_3,{zIndex:-index}]}>
             <TouchableHighlight
                 style={Styles.card}
                 onPress={() => navigation.navigate("CardsItems", {listName: data.name})}>
                 <>
                     <EllipsisVertical
                         size={27}
-                        onPress={() => setDropdown(!dropdown)}
+                        onPress={() => setDropdown(data.id)}
                         style={Styles.icon}
                         name="md-ellipsis-vertical-sharp"/>
                     <MyText style={Styles.title}>{data.name}</MyText>
                 </>
             </TouchableHighlight>
             {
-                dropdown &&
+              dropdown === data.id &&
                 <View style={Styles.dropDown}>
                     <TouchableOpacity onPress={() => console.log('edig')}>
                         <MyText style={Styles.dropDownText}>ویرایش</MyText>
@@ -78,14 +77,13 @@ const Styles = StyleSheet.create({
         position: "absolute",
         top: 8,
         padding: 2,
-        // color:'rgb(0,0,0)'
     },
 
     dropDown: {
         position: "absolute",
         backgroundColor: "rgb(199,199,199)",
-        left: 55,
-        top: 28,
+        left: 40,
+        top: 20,
         borderRadius: 8,
         zIndex: 3
     },
