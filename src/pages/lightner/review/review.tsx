@@ -22,7 +22,7 @@ import {useAppDispatch} from "../../../store";
 import MyText from "../../../shared/myText";
 import Toast from "react-native-toast-message";
 import CustomToast from "../../../shared/customToast";
-import {cardLevelUpgrade} from "../../../store/cards";
+import { cardLevelUpgrade, deleteCardWithID } from "../../../store/cards";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -43,9 +43,10 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
         Tts.speak(nowData.english);
     }, []);
 
-    const deleteHandler = () => {
-        // dispatch(deleteCard({data.name, id: nowData.id}));
-        navigation.goBack();
+    const deleteHandler = async () => {
+        await dispatch(deleteCardWithID({id: nowData.id}));
+        goToNext();
+        setShow(false);
     };
 
     const iKnow = () => {
@@ -76,6 +77,10 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
         }
         dispatch(cardLevelUpgrade(newNowData));
         setLang(true);
+        goToNext();
+    }
+
+    const goToNext = ()=>{
         if (data.cards.length - 1 <= count) {
             Toast.show({type: "success", text1: "مرور به پایان رسید."});
             setTimeout(() => {

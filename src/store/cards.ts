@@ -56,6 +56,12 @@ export const cardsSlice = createSlice({
             })];
             return state;
         },
+        deleteCardWithID: (state, {payload}) => {
+            state.list = [...state.list.map(item => {
+                    return {...item, cards: item.cards.filter(element => element.id != payload.id)};
+            })];
+            return state;
+        },
         deleteList: (state, {payload}) => {
             state.list = [...state.list.filter(item => item.name !== payload)];
             return state;
@@ -77,6 +83,6 @@ export const cardsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {initCardsData, addNewList, addNewCard, deleteCard, deleteList, cardLevelUpgrade} = cardsSlice.actions;
+export const {initCardsData, addNewList, addNewCard, deleteCard, deleteList, cardLevelUpgrade,deleteCardWithID} = cardsSlice.actions;
 
 export default cardsSlice.reducer;
