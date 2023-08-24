@@ -16,24 +16,27 @@ interface PropsInterface {
     listName: string
 }
 
-const Card = ({data, navigation, listName}: PropsInterface) => {
+const Card = ({data, navigation, listName,index , setDropDown , dropDown}: PropsInterface) => {
     const dispatch = useDispatch();
 
-    const [dropDown, setDropDown] = useState(false);
+    const toggleDropDown = ()=>{
+        if (data.id === dropDown)setDropDown(null);
+        else setDropDown(data.id);
+    }
 
     return (
-        <View style={{position:"relative"}}>
+        <View style={{position:"relative",zIndex:-index}}>
             <TouchableHighlight
                 style={Styles.card}
                 onPress={() => navigation.navigate("ShowCard", {data: data, listName})}>
                 <>
-                    <Icon name="ellipsis-horizontal" size={27} onPress={() => setDropDown(!dropDown)}
+                    <Icon name="ellipsis-horizontal" size={27} onPress={toggleDropDown}
                           style={Styles.icon}/>
                     <MyText style={[Styles.title]}>{data.english}</MyText>
                 </>
             </TouchableHighlight>
             {
-                dropDown &&
+              data.id === dropDown &&
                 <View style={Styles.dropDown}>
                             <TouchableOpacity onPress={() => navigation.navigate("EditCard", {data, listName})}>
                                 <Text style={Styles.dropDownText}>ویرایش</Text>
@@ -70,7 +73,8 @@ const Styles = StyleSheet.create({
     },
     dropDown: {
         position: 'absolute',
-        top: 10,
+        top: 20,
+        left:60,
         marginTop: 10,
         backgroundColor: '#EAEAEA',
         zIndex: 999,

@@ -64,7 +64,7 @@ const HomeScreen = ({navigation}: PropsInterface) => {
             <BrowseBar navigation={navigation}/>
             <TouchableWithoutFeedback onPress={() => {setAddNew(false);setDropdown(null)}}>
                 <View style={[backgroundStyle, Styles.container]}>
-                    <ScrollView contentContainerStyle={{flexDirection:'row',flexWrap:'wrap'}}>
+                    <ScrollView contentContainerStyle={{flexDirection:'row',flexWrap:'wrap',paddingBottom:80}}>
                         {
                             cards.list.map((item , index)=>(
                               <Card key={index} index={index} navigation={navigation} data={item} dropdown={dropdown} setDropdown={setDropdown}/>
