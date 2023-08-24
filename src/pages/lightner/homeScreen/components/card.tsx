@@ -24,9 +24,14 @@ interface PropsInterface {
     index:number,
 }
 
+
 const Card = ({data,index ,navigation , dropdown , setDropdown}: PropsInterface) => {
     const isDarkMode = useColorScheme() === "dark";
     const dispatch = useAppDispatch();
+const toggleDropDown = ()=>{
+    if (dropdown === data.id)setDropdown(null);
+    else setDropdown(data.id);
+}
 
     return (
         <View style={[Styles.col_3,{zIndex:-index}]}>
@@ -36,7 +41,7 @@ const Card = ({data,index ,navigation , dropdown , setDropdown}: PropsInterface)
                 <>
                     <EllipsisVertical
                         size={27}
-                        onPress={() => setDropdown(data.id)}
+                        onPress={toggleDropDown}
                         style={Styles.icon}
                         name="md-ellipsis-vertical-sharp"/>
                     <MyText style={Styles.title}>{data.name}</MyText>
