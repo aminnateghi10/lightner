@@ -22,6 +22,7 @@ import Card from "./components/card";
 import MyText from "../../../shared/myText";
 import {RootStackParamList} from "../../../contracts/rootParamList";
 import BrowseBar from "./components/browseBar";
+import { useTheme } from "../../../context/themeContext";
 
 interface PropsInterface {
     navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -29,7 +30,7 @@ interface PropsInterface {
 
 const HomeScreen = ({navigation}: PropsInterface) => {
     const dispatch = useDispatch();
-
+    const { currentTheme } = useTheme();
     const [name, setName] = useState("");
     const [dropdown, setDropdown] = useState(null);
     const [addNew, setAddNew] = useState<boolean | "newList" | "newCard">(false);
