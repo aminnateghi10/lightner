@@ -8,7 +8,7 @@ const MyCard = (props : ViewProps) => {
 
   const Styles = StyleSheet.create({
     myCard:{
-      // backgroundColor:currentTheme.card,
+      backgroundColor:currentTheme.card,
     }
   })
 
