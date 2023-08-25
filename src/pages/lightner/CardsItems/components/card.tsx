@@ -4,11 +4,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, useColorScheme, View} from "react-native";
 
-import MyText from "../../../../shared/myText";
-import {Colors} from "../../../../constants/colors";
+import MyText from "../../../../shared/myText"
 
 import {deleteCard} from "../../../../store/cards";
 import {RootStackParamList} from "../../../../contracts/rootParamList";
+import { useTheme } from "../../../../context/themeContext";
 
 interface PropsInterface {
     data: any,
@@ -17,6 +17,48 @@ interface PropsInterface {
 }
 
 const Card = ({data, navigation, listName,index , setDropDown , dropDown}: PropsInterface) => {
+    const { currentTheme } = useTheme();
+
+    const Styles = StyleSheet.create({
+        card: {
+            marginHorizontal: 8,
+            paddingVertical: 25,
+            borderRadius: 15,
+            marginVertical: 10,
+            backgroundColor:currentTheme.card
+        },
+        title: {
+            textAlign: "center"
+        },
+        icon: {
+            color: "rgb(0,0,0)",
+            position: "absolute",
+            top: 1,
+            left: 4,
+            padding: 20,
+            zIndex: 2
+        },
+        dropDown: {
+            position: 'absolute',
+            top: 20,
+            left:60,
+            marginTop: 10,
+            backgroundColor: '#EAEAEA',
+            zIndex: 999,
+        },
+        dropDownText: {
+            color: "black",
+            fontSize: 18,
+            marginHorizontal: 7,
+            marginVertical: 6,
+            borderColor: "rgb(75,74,74)",
+            borderWidth: 1,
+            padding: 10,
+            borderRadius: 10,
+            textAlign: "center"
+        }
+    });
+
     const dispatch = useDispatch();
 
     const toggleDropDown = ()=>{
@@ -48,46 +90,9 @@ const Card = ({data, navigation, listName,index , setDropDown , dropDown}: Props
             }
         </View>
     );
+
 };
 
 export default Card;
 
-const Styles = StyleSheet.create({
-    card: {
-        marginHorizontal: 8,
-        paddingVertical: 25,
-        borderRadius: 15,
-        marginVertical: 10,
-        backgroundColor:Colors.card
-    },
-    title: {
-        textAlign: "center"
-    },
-    icon: {
-        color: "rgb(0,0,0)",
-        position: "absolute",
-        top: 1,
-        left: 4,
-        padding: 20,
-        zIndex: 2
-    },
-    dropDown: {
-        position: 'absolute',
-        top: 20,
-        left:60,
-        marginTop: 10,
-        backgroundColor: '#EAEAEA',
-        zIndex: 999,
-    },
-    dropDownText: {
-        color: "black",
-        fontSize: 18,
-        marginHorizontal: 7,
-        marginVertical: 6,
-        borderColor: "rgb(75,74,74)",
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 10,
-        textAlign: "center"
-    }
-});
+

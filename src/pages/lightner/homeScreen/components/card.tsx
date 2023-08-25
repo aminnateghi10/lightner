@@ -15,6 +15,7 @@ import { RootStackParamList } from "../../../../contracts/rootParamList";
 import { deleteCard, deleteList } from "../../../../store/cards";
 import { useAppDispatch } from "../../../../store";
 import MyText from "../../../../shared/myText";
+import { useTheme } from "../../../../context/themeContext";
 
 const { width } = Dimensions.get("window");
 
@@ -25,6 +26,48 @@ interface PropsInterface {
 }
 
 const Card = ({ data, index, navigation, dropdown, setDropdown }: PropsInterface) => {
+  const { currentTheme } = useTheme();
+  const Styles = StyleSheet.create({
+    col_3: {
+      width: width / 2
+    },
+    card: {
+      margin: 10,
+      padding: 10,
+      paddingVertical: 30,
+      borderRadius: 10,
+      // backgroundColor:currentTheme.card
+    },
+    title: {
+      textAlign: "center"
+    },
+    icon: {
+      position: "absolute",
+      top: 8,
+      padding: 2
+    },
+
+    dropDown: {
+      position: "absolute",
+      backgroundColor: "rgb(199,199,199)",
+      left: 40,
+      top: 20,
+      borderRadius: 8,
+      zIndex: 3
+    },
+    dropDownText: {
+      color: "black",
+      fontSize: 18,
+      marginHorizontal: 7,
+      marginVertical: 6,
+      borderColor: "rgb(75,74,74)",
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 10,
+      textAlign: "center"
+    }
+  });
+
   const isDarkMode = useColorScheme() === "dark";
   const dispatch = useAppDispatch();
   const toggleDropDown = () => {
@@ -62,44 +105,3 @@ const Card = ({ data, index, navigation, dropdown, setDropdown }: PropsInterface
 };
 
 export default Card;
-
-const Styles = StyleSheet.create({
-  col_3: {
-    width: width / 2
-  },
-  card: {
-    margin: 10,
-    padding: 10,
-    paddingVertical: 30,
-    borderRadius: 10,
-    backgroundColor: Colors.card
-  },
-  title: {
-    textAlign: "center"
-  },
-  icon: {
-    position: "absolute",
-    top: 8,
-    padding: 2
-  },
-
-  dropDown: {
-    position: "absolute",
-    backgroundColor: "rgb(199,199,199)",
-    left: 40,
-    top: 20,
-    borderRadius: 8,
-    zIndex: 3
-  },
-  dropDownText: {
-    color: "black",
-    fontSize: 18,
-    marginHorizontal: 7,
-    marginVertical: 6,
-    borderColor: "rgb(75,74,74)",
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    textAlign: "center"
-  }
-});

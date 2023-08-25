@@ -1,8 +1,8 @@
-import { StyleSheet, Text, TextInput, TextInputProps } from "react-native";
+import { Keyboard, StyleSheet, Text, TextInput, TextInputProps } from "react-native";
 
 const MyTextInput = (Props: TextInputProps) => {
     return (
-        <TextInput {...Props} style={[Styles.customText, Props.style]}/>
+        <TextInput {...Props} onPressIn={()=> Keyboard.dismiss()}  style={[Styles.customText, Props.style]}/>
     );
 };
 

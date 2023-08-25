@@ -7,8 +7,43 @@ import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 
 import MyText from "../../../../shared/myText";
 import CustomToast from "../../../../shared/customToast";
+import { useTheme } from "../../../../context/themeContext";
 
 const DarkMode = () => {
+    const { currentTheme } = useTheme();
+    const Styles = StyleSheet.create({
+        card: {
+            flexDirection: "row-reverse",
+            justifyContent: "space-between",
+            margin: 10,
+            backgroundColor: currentTheme.card,
+            padding: 12,
+            borderRadius: 5,
+            shadowColor: "#000",
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 0.5,
+            shadowRadius: 2,
+            elevation: 2
+        },
+        centeredView: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 22,
+        },
+        modalView: {
+            justifyContent: "space-around",
+            alignContent: "center",
+            backgroundColor: "#ffffff",
+            borderRadius: 20,
+            width: 300,
+            elevation: 300,
+            height: 200,
+            alignItems: "center",
+        },
+    });
+
+
     const [show, setShow] = useState<boolean>(false);
     const [activeBox, setActiveBox] = useState('automatic');
     const changeModeHandler = async () => {
@@ -90,35 +125,3 @@ const DarkMode = () => {
 };
 
 export default DarkMode;
-
-const Styles = StyleSheet.create({
-    card: {
-        flexDirection: "row-reverse",
-        justifyContent: "space-between",
-        margin: 10,
-        backgroundColor: "rgb(48,48,48)",
-        padding: 12,
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 0.5,
-        shadowRadius: 2,
-        elevation: 2
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22,
-    },
-    modalView: {
-        justifyContent: "space-around",
-        alignContent: "center",
-        backgroundColor: "#ffffff",
-        borderRadius: 20,
-        width: 300,
-        elevation: 300,
-        height: 200,
-        alignItems: "center",
-    },
-});

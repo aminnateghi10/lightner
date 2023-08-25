@@ -2,8 +2,23 @@ import React, {useState} from 'react';
 import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import axios from 'axios';
 import {StyleSheet} from 'react-native';
+import { useTheme } from "../../../context/themeContext";
 
 const ChatScreen = () => {
+
+  const { currentTheme } = useTheme();
+  const styles = StyleSheet.create({
+    messageContainer: {
+      paddingBottom: 16,
+    },
+    input: {
+      borderColor: currentTheme.border,
+      justifyContent:'center',
+      borderWidth: 0,
+      borderRadius: 4,
+    },
+  });
+
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
 
@@ -39,7 +54,7 @@ const ChatScreen = () => {
   };
 
   const onSend = async (newMessages = []) => {
-
+    console.log(currentTheme , 'yesssssssr');
     setMessages(prev => GiftedChat.append(prev, newMessages));
 
     const response = await sendMessage(newMessages[0].text);
@@ -66,7 +81,7 @@ const ChatScreen = () => {
   };
 
   const renderInputToolbar = props => {
-    return <InputToolbar {...props} containerStyle={styles.input} />;
+    return <InputToolbar {...props} containerStyle={styles.input} primaryStyle={{backgroundColor:currentTheme.card}} />;
   };
 
   return (
@@ -85,15 +100,3 @@ const ChatScreen = () => {
 };
 
 export default ChatScreen;
-
-const styles = StyleSheet.create({
-  messageContainer: {
-    paddingBottom: 16,
-  },
-  input: {
-    borderColor: 'transparent',
-    justifyContent:'center',
-    borderWidth: 0,
-    borderRadius: 4,
-  },
-});
