@@ -6,7 +6,7 @@ const ThemeContext = createContext({});
 
 const ThemeProvider = ({ children }) => {
   const scheme = useColorScheme();
-  const currentTheme = scheme === "dark" ? Colors : DarkColors;
+  const currentTheme = scheme === "dark" ? DarkColors : Colors;
 
   return (
     <ThemeContext.Provider value={{ currentTheme }}>

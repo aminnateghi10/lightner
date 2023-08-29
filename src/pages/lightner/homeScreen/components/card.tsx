@@ -36,7 +36,7 @@ const Card = ({ data, index, navigation, dropdown, setDropdown }: PropsInterface
       padding: 10,
       paddingVertical: 30,
       borderRadius: 10,
-      // backgroundColor:currentTheme.card
+      backgroundColor:currentTheme.card
     },
     title: {
       textAlign: "center"
