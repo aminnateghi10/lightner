@@ -4,7 +4,7 @@ import BoxIcon from "react-native-vector-icons/Feather";
 import SettingIcon from "react-native-vector-icons/AntDesign";
 import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import RobotIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -22,8 +22,9 @@ import SettingPage from "./src/pages/setting/SettingPage";
 import TranslatePage from "./src/pages/translate/translatePage";
 import { CustomDarkTheme, CustomDefaultTheme } from "./src/constants/themeMode";
 import ThemeContext from "./src/context/themeContext";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
+import SupportPage from "./src/pages/setting/supportPage";
+import FeedbackPage from "./src/pages/setting/feedbackPage";
 
 function LightnerTab() {
   const Stack = createNativeStackNavigator();
@@ -43,6 +44,18 @@ function LightnerTab() {
       <Stack.Screen name="Review" options={{ title: "جعبه لایتنر" }} component={Review} />
       <Stack.Screen name="CardsItems" component={CardsItems} />
       <Stack.Screen name="AddNewCard" options={{ title: "افزودن کارت جدید" }} component={AddNewCard} />
+    </Stack.Navigator>
+  );
+}
+
+function SettingsTab() {
+  const Stack = createNativeStackNavigator();
+
+  return (
+    <Stack.Navigator initialRouteName="SettingPage" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="SettingPage" component={SettingPage} />
+      <Stack.Screen name="SupportPage" component={SupportPage} />
+      <Stack.Screen name="FeedbackPage" component={FeedbackPage} />
     </Stack.Navigator>
   );
 }
@@ -91,7 +104,7 @@ const App = () => {
             />
             <Tab.Screen
               name="Settings"
-              component={SettingPage}
+              component={SettingsTab}
               options={{
                 title: "تنظیمات",
                 tabBarIcon: ({ color, size }) => <SettingIcon name="setting" color={color} size={size} />
