@@ -41,6 +41,7 @@ export const cardsSlice = createSlice({
                         correct_review: 0,
                         wrong_review: 0,
                         level: 1,
+                        list_name:payload.listName
                     }];
                 }
                 return item;

@@ -129,7 +129,7 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
                                 <Refresh name="refresh" onPress={sayAgain} size={27} color="rgb(0,49,255)"
                                          style={Styles.icon}/>
                                 <Edit name="edit-2" size={27} color="rgb(0,49,255)" style={Styles.icon}
-                                      onPress={() => navigation.navigate("EditCard", {nowData, listName})}/>
+                                      onPress={() => navigation.navigate("EditCard", {data:nowData, listName:nowData.list_name})}/>
                                 <Delete name="delete" size={27} color="rgb(0,49,255)" style={Styles.icon}
                                         onPress={() => setShow(true)}/>
                             </View>
