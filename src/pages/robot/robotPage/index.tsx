@@ -66,7 +66,7 @@ const ChatScreen = () => {
         user: {
           _id: 2,
           name: 'GPT-3.5-turbo',
-          // avatar: require('../assets/chatgptlogo.png'),
+          avatar: require('../../../../assets/img/avatar/botAvatar.png'),
         },
       },
     ];
@@ -77,7 +77,7 @@ const ChatScreen = () => {
   const user = {
     _id: 1,
     name: 'Developer',
-    // avatar: require('../assets/profile.jpeg'),
+    avatar: require('../../../../assets/img/avatar/userAvatar.png'),
   };
 
   const renderInputToolbar = props => {
