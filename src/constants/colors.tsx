@@ -5,7 +5,9 @@ export const Colors = {
   border:"rgb(141,130,130)",
   primary:"rgb(0, 122, 255)",
   background:"rgb(255, 255, 255)",
-  notification:"rgb(255, 59, 48)"
+  notification:"rgb(255, 59, 48)",
+  modalCard:'#f3f3f3',
+  modalBorder:'#eaeaea',
 };
 export const DarkColors = {
   card:"rgb(48, 48, 48)",
@@ -14,5 +16,7 @@ export const DarkColors = {
   border:"rgb(141,130,130)",
   primary:"rgb(10, 132, 255)",
   background:"rgb(31, 31, 31)",
-  notification:"rgb(255, 69, 58)"
+  notification:"rgb(255, 69, 58)",
+  modalCard:'#f3f3f3',
+  modalBorder:'#eaeaea',
 };
