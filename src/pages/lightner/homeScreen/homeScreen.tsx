@@ -48,11 +48,11 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
       backgroundColor: Colors.button
     },
     addNewListInput: {
-      borderColor: "rgb(0,0,0)",
+      borderColor: currentTheme.border,
       borderWidth: 1,
-      width: "80%",
-      borderRadius: 10,
-      marginTop: 10
+      width: "90%",
+      borderRadius: 2,
+      height: 38
     },
     centeredView: {
       flex: 1,
@@ -61,13 +61,14 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
       marginTop: 22
     },
     modalView: {
-      justifyContent: "space-around",
+      justifyContent: "space-between",
       alignContent: "center",
-      backgroundColor: "#5a5ba2",
-      borderRadius: 20,
+      backgroundColor: currentTheme.modalCard,
+      borderRadius: 10,
       width: 300,
-      height: 180,
-      alignItems: "center"
+      height: 160,
+      alignItems: "center",
+      elevation: 3
     },
     dropDown: {
       position: "absolute",
@@ -122,6 +123,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
     if (name) {
       dispatch(addNewList(name));
       setAddNew(false);
+      setName("");
     }
   };
 
@@ -169,20 +171,21 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
               visible={addNew && true}>
               <View style={Styles.centeredView}>
                 <View style={Styles.modalView}>
-                  <MyText style={{ color: "white" }}>نام لیست جدید خود را وارد کنید</MyText>
-                  <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} />
-                  <View style={{ flexDirection: "row", marginTop: 10 }}>
-                    <TouchableOpacity style={{
-                      margin: 5,
-                      backgroundColor: "rgb(206,200,200)",
-                      padding: 10,
-                      borderRadius: 10
-                    }}>
-                      <MyText onPress={() => setAddNew(false)}>انصراف</MyText>
+                  <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید :</MyText>
+                  <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
+                  <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
+                    <TouchableOpacity style={{ width: "50%", height: 40, justifyContent: "center" }}>
+                      <MyText onPress={() => setAddNew(false)}
+                              style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{ margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10 }}>
-                      <MyText style={{ color: "white" }} onPress={addNewListHandler}>ذخیره</MyText>
+                    <TouchableOpacity style={{
+                      width: "50%",
+                      borderLeftColor: currentTheme.modalBorder,
+                      borderLeftWidth: 1,
+                      justifyContent: "center"
+                    }}>
+                      <MyText style={{ textAlign: "center", color: "#3b7edd" }}
+                              onPress={addNewListHandler}>ذخیره</MyText>
                     </TouchableOpacity>
                   </View>
                 </View>
