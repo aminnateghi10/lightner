@@ -33,10 +33,8 @@ function LightnerTab() {
     <Stack.Navigator initialRouteName="Home" screenOptions={{
       headerTitleAlign: "center",
       statusBarHidden: true,
-      headerStyle: styles.headerStyle,
-      headerTitleStyle: {
-        fontFamily: "Vazir-Medium-FD-WOL"
-      }
+      headerStyle: Styles.headerStyle,
+      headerTitleStyle: Styles.headerTitleStyle
     }}>
       <Stack.Screen name="Home" options={{ title: "لایتنر" }} component={HomeScreen} />
       <Stack.Screen name="ShowCard" options={{ title: "نمایش کارت" }} component={ShowCard} />
@@ -52,17 +50,15 @@ function SettingsTab() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="SettingPage"  screenOptions={{
+    <Stack.Navigator initialRouteName="SettingPage" screenOptions={{
       headerTitleAlign: "center",
       statusBarHidden: true,
-      headerStyle: styles.headerStyle,
-      headerTitleStyle: {
-        fontFamily: "Vazir-Medium-FD-WOL"
-      }
+      headerStyle: Styles.headerStyle,
+      headerTitleStyle: Styles.headerTitleStyle
     }}>
-      <Stack.Screen name="SettingPage" options={{title:'تنظیمات'}} component={SettingPage} />
-      <Stack.Screen name="SupportPage" options={{title:'پشتیبانی'}} component={SupportPage} />
-      <Stack.Screen name="FeedbackPage" options={{title:'ارسال بازخورد'}} component={FeedbackPage} />
+      <Stack.Screen name="SettingPage" options={{ title: "تنظیمات" }} component={SettingPage} />
+      <Stack.Screen name="SupportPage" options={{ title: "پشتیبانی" }} component={SupportPage} />
+      <Stack.Screen name="FeedbackPage" options={{ title: "ارسال بازخورد" }} component={FeedbackPage} />
     </Stack.Navigator>
   );
 }
@@ -126,10 +122,14 @@ const App = () => {
 
 export default App;
 
-const styles = StyleSheet.create({
+const Styles = StyleSheet.create({
   headerStyle: {
     color: "#b2b3d8",
     borderRadius: 80,
-    fontFamily: "Vazir-Medium-FD-WOL"
+    fontFamily: "Vazir-Medium-FD-WOL",
+  },
+  headerTitleStyle: {
+    fontFamily: "Vazir-Medium-FD-WOL",
+    fontSize:17
   }
 });
