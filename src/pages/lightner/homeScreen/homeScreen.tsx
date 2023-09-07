@@ -34,7 +34,6 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
   const { currentTheme } = useTheme();
   const dispatch = useDispatch();
 
-
   const Styles = StyleSheet.create({
     container: {
       flex: 1
@@ -171,18 +170,18 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
               visible={addNew && true}>
               <View style={Styles.centeredView}>
                 <View style={Styles.modalView}>
-                  <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید :</MyText>
+                  <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید:</MyText>
                   <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
                   <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
-                    <TouchableOpacity style={{ width: "50%", height: 40, justifyContent: "center" }}>
-                      <MyText onPress={() => setAddNew(false)}
+                    <TouchableOpacity onPress={() => setAddNew(false)} style={{ width: "50%", height: 40, justifyContent: "center"}}>
+                      <MyText
                               style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
                     </TouchableOpacity>
                     <TouchableOpacity style={{
                       width: "50%",
                       borderLeftColor: currentTheme.modalBorder,
                       borderLeftWidth: 1,
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}>
                       <MyText style={{ textAlign: "center", color: "#3b7edd" }}
                               onPress={addNewListHandler}>ذخیره</MyText>
