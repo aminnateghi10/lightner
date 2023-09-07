@@ -52,10 +52,17 @@ function SettingsTab() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="SettingPage" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="SettingPage" component={SettingPage} />
-      <Stack.Screen name="SupportPage" component={SupportPage} />
-      <Stack.Screen name="FeedbackPage" component={FeedbackPage} />
+    <Stack.Navigator initialRouteName="SettingPage"  screenOptions={{
+      headerTitleAlign: "center",
+      statusBarHidden: true,
+      headerStyle: styles.headerStyle,
+      headerTitleStyle: {
+        fontFamily: "Vazir-Medium-FD-WOL"
+      }
+    }}>
+      <Stack.Screen name="SettingPage" options={{title:'تنظیمات'}} component={SettingPage} />
+      <Stack.Screen name="SupportPage" options={{title:'پشتیبانی'}} component={SupportPage} />
+      <Stack.Screen name="FeedbackPage" options={{title:'ارسال بازخورد'}} component={FeedbackPage} />
     </Stack.Navigator>
   );
 }

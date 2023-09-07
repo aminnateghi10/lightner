@@ -19,7 +19,8 @@ const SettingPage = ({ navigation }: PropsInterface) => {
   const { currentTheme } = useTheme();
   const Styles = StyleSheet.create({
     container: {
-      padding: 10
+      padding: 10,
+      paddingTop:5
     },
     information: {
       borderColor: currentTheme.border,
@@ -44,8 +45,12 @@ const SettingPage = ({ navigation }: PropsInterface) => {
       justifyContent: "space-between",
       borderRadius: 5,
       backgroundColor: currentTheme.card,
-      marginTop: 5,
-      padding: 5
+      marginTop: 8,
+      padding: 5,
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
+      elevation: 2,
     }
   });
 
@@ -60,7 +65,7 @@ const SettingPage = ({ navigation }: PropsInterface) => {
             <MyText>ارسال بازخورد</MyText>
           </>
         </TouchableHighlight>
-        <TouchableHighlight style={Styles.card} onPress={() => openURL("mailto:nategit@gmail.com")}>
+        <TouchableHighlight style={Styles.card} onPress={() => openURL("mailto:aminnateghi10@gmail.com")}>
           <>
             <EmailIcon name="email" size={30} />
             <MyText>ارسال ایمیل</MyText>

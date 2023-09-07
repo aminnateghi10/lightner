@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
-import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import axios from 'axios';
 import {StyleSheet} from 'react-native';
+import { useEffect, useState } from "react";
+import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useTheme } from "../../../context/themeContext";
 
 const ChatScreen = () => {
-
   const { currentTheme } = useTheme();
+
   const styles = StyleSheet.create({
     messageContainer: {
       paddingBottom: 16,
@@ -21,6 +23,22 @@ const ChatScreen = () => {
 
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    loadMessages();
+  }, []);
+
+  // Load messages from AsyncStorage
+  const loadMessages = async () => {
+    try {
+      const storedMessages = await AsyncStorage.getItem('chatMessages');
+      if (storedMessages) {
+        setMessages(JSON.parse(storedMessages));
+      }
+    } catch (error) {
+      console.error('Error loading messages from AsyncStorage:', error);
+    }
+  };
 
   const sendMessage = async (message: string) => {
     setIsTyping(true);
@@ -54,10 +72,13 @@ const ChatScreen = () => {
   };
 
   const onSend = async (newMessages = []) => {
-    console.log(currentTheme , 'yesssssssr');
-    setMessages(prev => GiftedChat.append(prev, newMessages));
+    // Append new messages to the current state
+    setMessages((prevMessages) => GiftedChat.append(prevMessages, newMessages));
 
+    // Send the user's message and get a response
     const response = await sendMessage(newMessages[0].text);
+
+    // Create a chat message from the response
     const chatMessage = [
       {
         _id: Math.random().toString(36).substring(7),
@@ -71,7 +92,15 @@ const ChatScreen = () => {
       },
     ];
 
-    setMessages(prev => GiftedChat.append(prev, chatMessage));
+    // Append the chat message to the state
+    setMessages((prevMessages) => GiftedChat.append(prevMessages, chatMessage));
+
+    // Save the updated messages to AsyncStorage
+    try {
+      await AsyncStorage.setItem('chatMessages', JSON.stringify(messages));
+    } catch (error) {
+      console.error('Error saving messages to AsyncStorage:', error);
+    }
   };
 
   const user = {

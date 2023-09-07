@@ -18,6 +18,7 @@ const SettingPage = ({navigation}:PropsInterface) => {
             flexDirection:'row-reverse',
             justifyContent:'space-between',
             margin: 10,
+            marginTop:0,
             padding: 10, borderRadius: 5,
             shadowColor: '#000',
             shadowOffset: {width: 0, height: 2},
