@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
 import Toast from "react-native-toast-message";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
@@ -77,6 +77,22 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
       padding: 5,
       borderBottomWidth: 1,
       marginHorizontal: 10
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      justifyContent: "space-between",
+      alignContent: "center",
+      backgroundColor: currentTheme.modalCard,
+      borderRadius: 10,
+      width: 300,
+      height: 130,
+      alignItems: "center",
+      elevation: 3
     }
   });
 
@@ -86,6 +102,7 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   const [translationIcon, setTranslationIcon] = useState<boolean>(false);
   const [translatedLang, setTranslatedLang] = useState<"en" | "fa">("en");
   const [history, setHistory] = useState<[]>([]);
+  const [deleteHistoryModal, setDeleteHistoryModal] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem("translatorHistory").then(res => {
@@ -162,8 +179,10 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   };
 
   const deleteHistory = async () => {
+    setDeleteHistoryModal(false);
     AsyncStorage.removeItem("translatorHistory");
     setHistory([]);
+
   };
 
   return (
@@ -243,13 +262,44 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
             }
             {
               history.length ?
-                <MyText style={{ textAlign: "center", marginTop: 5, paddingVertical: 8 }} onPress={deleteHistory}>
+                <MyText style={{ textAlign: "center", marginTop: 5, paddingVertical: 8 }}
+                        onPress={() => setDeleteHistoryModal(true)}>
                   حذف کل تاریخچه
                 </MyText> : null
             }
           </View>
       }
       <CustomToast />
+      {
+        deleteHistoryModal &&
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={true}>
+          <View style={Styles.centeredView}>
+            <View style={Styles.modalView}>
+              <View>
+                <MyText style={{ marginTop: 8, color: currentTheme.text, textAlign: "center" }}>تاریخچه ترجمه</MyText>
+                <MyText style={{ marginTop: 10, fontSize: 13 }}>کل تاریخچه پاکسازی شود؟</MyText>
+              </View>
+              <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
+                <TouchableOpacity onPress={() => setDeleteHistoryModal(false)}
+                                  style={{ width: "50%", height: 40, justifyContent: "center" }}>
+                  <MyText style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
+                </TouchableOpacity>
+                <TouchableOpacity style={{
+                  width: "50%",
+                  borderLeftColor: currentTheme.modalBorder,
+                  borderLeftWidth: 1,
+                  justifyContent: "center"
+                }}>
+                  <MyText style={{ textAlign: "center", color: "#3b7edd" }} onPress={deleteHistory}>تایید</MyText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      }
     </View>
   );
 };
