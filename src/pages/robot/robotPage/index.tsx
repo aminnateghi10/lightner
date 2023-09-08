@@ -34,6 +34,30 @@ const ChatScreen = () => {
       const storedMessages = await AsyncStorage.getItem("chatMessages");
       if (storedMessages) {
         setMessages(JSON.parse(storedMessages));
+      } else {
+        const chatMessage = [
+          {
+            _id: Math.random().toString(36).substring(7),
+            text: "برای شروع ارتباط با من از قسمت پایین پیام خود را بفرستید.",
+            createdAt: new Date(),
+            user: {
+              _id: 2,
+              name: "GPT-3.5-turbo",
+              avatar: require("../../../../assets/img/avatar/botAvatar.png")
+            }
+          },
+          {
+            _id: Math.random().toString(36).substring(7),
+            text: "سلام من هوش مصنوعی هستم.😃\nمن توانایی پاسخ به سوالات و درخواست های متنی را دارم و میتوانم در موضوعات گوناگون کمک کنم.همچنین، من می‌توانم به آموزش سریعتر زبان نیز کمک کنم و در تمرین درستی از اصول گرامری و نوشتاری راهنمایی کنم.",
+            createdAt: new Date(),
+            user: {
+              _id: 2,
+              name: "GPT-3.5-turbo",
+              avatar: require("../../../../assets/img/avatar/botAvatar.png")
+            }
+          }
+        ];
+        setMessages((prevMessages) => GiftedChat.append(prevMessages, chatMessage));
       }
     } catch (error) {
       console.error("Error loading messages from AsyncStorage:", error);
