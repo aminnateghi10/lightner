@@ -7,6 +7,7 @@ import { Colors } from "../../../constants/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
+  Alert,
   FlatList,
   Modal, SafeAreaView, ScrollView,
   StyleSheet,
@@ -126,6 +127,18 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
     }
   };
 
+  const addNewCardHandler = () => {
+    if (cards.list.length) navigation.navigate("AddNewCard");
+    else {
+      Alert.alert(
+        "لیستی پیدا نشد!",
+        "لطفا یک لیست اضافه کنید و سپس کارت اضافه کنید.",
+        [{ text: "باشه" }],
+        { cancelable: false }
+      );
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BrowseBar navigation={navigation} />
@@ -154,7 +167,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
                   <AddFolderIcon name="addfolder" size={20} />
                 </>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate("AddNewCard")} style={Styles.dropDownButton}>
+              <TouchableOpacity onPress={addNewCardHandler} style={Styles.dropDownButton}>
                 <>
                   <MyText style={Styles.dropDownText}>افزودن کارت</MyText>
                   <PostAddIcon name="post-add" size={23} />
@@ -173,15 +186,16 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
                   <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید:</MyText>
                   <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
                   <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
-                    <TouchableOpacity onPress={() => setAddNew(false)} style={{ width: "50%", height: 40, justifyContent: "center"}}>
+                    <TouchableOpacity onPress={() => setAddNew(false)}
+                                      style={{ width: "50%", height: 40, justifyContent: "center" }}>
                       <MyText
-                              style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
+                        style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
                     </TouchableOpacity>
                     <TouchableOpacity style={{
                       width: "50%",
                       borderLeftColor: currentTheme.modalBorder,
                       borderLeftWidth: 1,
-                      justifyContent: "center",
+                      justifyContent: "center"
                     }}>
                       <MyText style={{ textAlign: "center", color: "#3b7edd" }}
                               onPress={addNewListHandler}>ذخیره</MyText>

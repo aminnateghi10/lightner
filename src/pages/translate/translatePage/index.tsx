@@ -31,7 +31,7 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
 
   const Styles = StyleSheet.create({
     container: {
-      elevation: 30
+      elevation: 5
     },
     header: {
       flexDirection: "row",
