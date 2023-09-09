@@ -17,6 +17,6 @@ export const DarkColors = {
   primary:"rgb(10, 132, 255)",
   background:"rgb(31, 31, 31)",
   notification:"rgb(255, 69, 58)",
-  modalCard:'#f3f3f3',
-  modalBorder:'#eaeaea',
+  modalCard:'#2c2c2c',
+  modalBorder:'#363638',
 };

@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
     },
     dropDown: {
       position: "absolute",
-      backgroundColor: "white",
+      backgroundColor: currentTheme.modalCard,
       right: 20,
       bottom: 15,
       padding: 7,
