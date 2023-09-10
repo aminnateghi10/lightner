@@ -16,6 +16,7 @@ const DarkMode = () => {
             flexDirection: "row-reverse",
             justifyContent: "space-between",
             margin: 10,
+            marginTop: 0,
             backgroundColor: currentTheme.card,
             padding: 12,
             borderRadius: 5,
