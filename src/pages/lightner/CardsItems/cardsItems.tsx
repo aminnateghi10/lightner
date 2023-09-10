@@ -16,8 +16,7 @@ const CardsItems = ({route, navigation}: any) => {
     navigation.setOptions({
         header: () => (
             <View style={Styles.headerContainer}>
-                <ArrowLeft style={{textAlign:'left'}} name="arrowleft" size={27}
-                           onPress={()=>navigation.goBack()}/>
+                <ArrowLeft style={{textAlign:'left'}} name="arrowleft" size={27} onPress={()=>navigation.goBack()}/>
                 <View style={{flexDirection:"row-reverse",alignItems:'center'}}>
                     <MyText style={Styles.headerTitle}>دسته: {listName}</MyText>
                     <MyText style={{

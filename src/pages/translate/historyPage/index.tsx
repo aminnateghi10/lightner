@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
 import Toast from "react-native-toast-message";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
@@ -11,6 +11,8 @@ import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import CopyOutlineIcon from "react-native-vector-icons/Ionicons";
 import Volume2Icon from "react-native-vector-icons/Feather";
 import HistoryIcon from "react-native-vector-icons/FontAwesome";
+import DeleteEmptyIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import FileText1Icon from "react-native-vector-icons/AntDesign";
 
 import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
 import MyText from "../../../shared/myText";
@@ -22,55 +24,27 @@ import MyCard from "../../../shared/myCard";
 import { Colors } from "../../../constants/colors";
 import { useTheme } from "../../../context/themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ArrowLeft from "react-native-vector-icons/AntDesign";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RootStackParamList>,
 }
 
-const TranslatePage = ({ navigation }: PropsInterface) => {
+const Index = ({ navigation }: PropsInterface) => {
   const { currentTheme } = useTheme();
 
   const Styles = StyleSheet.create({
-    container: {
-      elevation: 5,
-      paddingTop: 10
-    },
-    header: {
+    container: {},
+    headerContainer: {
       flexDirection: "row",
-      justifyContent: "center"
+      justifyContent: "space-between",
+      backgroundColor: Colors.card,
+      height: 55,
+      padding: 12,
+      borderColor: "red"
     },
     headerTitle: {
-      fontSize: 18,
-      color: currentTheme.text
-    },
-    languageChangeBox: {
-      width: "100%",
-      justifyContent: "space-around",
-      marginTop: 15,
-      borderBottomWidth: 1,
-      borderBottomColor: Colors.border,
-      paddingBottom: 12,
-      marginBottom: 5
-    },
-    languageTypeBox: {
-      paddingBottom: 20
-    },
-    translationIcon: {
-      flexDirection: "row-reverse",
-      backgroundColor: "rgb(0,130,255)",
-      width: 65,
-      height: 46,
-      marginRight: 10,
-      justifyContent: "center",
-      borderRadius: 20,
-      padding: 10
-    },
-    answerBox: {
-      marginTop: 15,
-      marginHorizontal: 6,
-      paddingVertical: 30,
-      paddingHorizontal: 10,
-      elevation: 30
+      fontSize: 18
     },
     historyCard: {
       backgroundColor: currentTheme.card,
@@ -95,15 +69,21 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
       height: 130,
       alignItems: "center",
       elevation: 3
-    },
-    history: {
-      top: 13,
-      left: 18,
-      position: "absolute",
-      zIndex: 1,
-      padding: 7
     }
   });
+
+  navigation.setOptions({
+    header: () => (
+      <View style={Styles.headerContainer}>
+        <ArrowLeft style={{ textAlign: "left" }} name="arrowleft" size={27} onPress={() => navigation.goBack()} />
+        <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
+          <MyText style={Styles.headerTitle}>تاریخچه</MyText>
+        </View>
+        <DeleteEmptyIcon name="delete-empty" color="red" size={30} onPress={() => setDeleteHistoryModal(true)} />
+      </View>
+    )
+  });
+
 
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -195,75 +175,10 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   };
 
   return (
-    <View>
-      <MyCard style={Styles.container}>
-        <TouchableOpacity style={Styles.history} onPress={() => navigation.navigate("HistoryPage")}>
-          <HistoryIcon name="history" size={28} />
-        </TouchableOpacity>
-        <View style={Styles.header}>
-          <MyText style={Styles.headerTitle}>ترجمه</MyText>
-        </View>
-        <View
-          style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
-          <View><MyText>فارسی</MyText></View>
-          <TouchableOpacity onPress={changeTranslatedLang}>
-            <ArrowRightIcon name="arrowright" size={25} />
-          </TouchableOpacity>
-          <View><MyText>انگلیسی</MyText></View>
-        </View>
-        <View style={Styles.languageTypeBox}>
-          {
-            textToTranslation &&
-            <View style={{ flexDirection: "row" }}>
-              <CloseIcon name="close" style={{ marginLeft: 5 }} size={24} onPress={handleClose} />
-              {
-                translatedLang === "en" &&
-                <Volume2Icon onPress={() => speak(textToTranslation)} name="volume-2" size={26} />
-              }
-            </View>
-
-          }
-          <MyTextInput placeholder="متن خود را وارد کنید..." value={textToTranslation}
-                       onChangeText={(e) => {
-                         setTextToTranslation(e);
-                         setTranslationIcon(true);
-                       }} />
-          {
-            translationIcon &&
-            <TouchableOpacity style={Styles.translationIcon} onPress={handleTranslate}>
-              {loading ?
-                <ActivityIndicator size="small" color="#ffffff" />
-                :
-                <>
-                  <MyText> ترجمه</MyText>
-                  <TranslateIcon name="translate" size={25} />
-                </>
-              }
-            </TouchableOpacity>
-          }
-        </View>
-      </MyCard>
+    <SafeAreaView>
       {
-        translation ?
-          <MyCard style={Styles.answerBox}>
-            <MyText>{translation}</MyText>
-            <View style={{ flexDirection: "row", marginTop: 10, alignItems: "center" }}>
-              <CopyOutlineIcon
-                size={23}
-                color="#01a4f5"
-                name="copy-outline"
-                style={{ marginRight: 5 }}
-                onPress={copyToClipboard} />
-              <BoxOpenIcon onPress={handleSaveToLightner} style={{ marginRight: 5 }} name="box-open" color="#01a4f5"
-                           size={21} />
-              {
-                translatedLang === "fa" &&
-                <Volume2Icon onPress={() => speak(translation)} name="volume-2" color="#01a4f5" size={26} />
-              }
-            </View>
-          </MyCard>
-          :
-          <View style={{ marginTop: 25 }}>
+        history.length ?
+          <View style={{ marginTop: 10 }}>
             {
               history.map((item, index) => (
                 <TouchableOpacity key={index} style={Styles.historyCard} onPress={() => historyToTranslator(item)}>
@@ -274,16 +189,14 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
                 </TouchableOpacity>
               ))
             }
-            {
-              history.length ?
-                <MyText style={{ textAlign: "center", marginTop: 5, paddingVertical: 8 }}
-                        onPress={() => setDeleteHistoryModal(true)}>
-                  حذف کل تاریخچه
-                </MyText> : null
-            }
+          </View>
+          :
+          <View style={{alignItems:'center',justifyContent:'center',height:'100%'}}>
+            <FileText1Icon name="filetext1" style={{opacity:.4}} size={100}/>
+            <MyText style={{opacity:.6,marginTop:5,fontSize:15}}>لیست خالی است!</MyText>
           </View>
       }
-      <CustomToast />
+
       {
         deleteHistoryModal &&
         <Modal
@@ -314,8 +227,8 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
           </View>
         </Modal>
       }
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default TranslatePage;
+export default Index;

@@ -25,6 +25,7 @@ import ThemeContext from "./src/context/themeContext";
 import { useState } from "react";
 import SupportPage from "./src/pages/setting/supportPage";
 import FeedbackPage from "./src/pages/setting/feedbackPage";
+import HistoryPage from "./src/pages/translate/historyPage";
 
 function LightnerTab() {
   const Stack = createNativeStackNavigator();
@@ -42,6 +43,21 @@ function LightnerTab() {
       <Stack.Screen name="Review" options={{ title: "جعبه لایتنر" }} component={Review} />
       <Stack.Screen name="CardsItems" component={CardsItems} />
       <Stack.Screen name="AddNewCard" options={{ title: "افزودن کارت جدید" }} component={AddNewCard} />
+    </Stack.Navigator>
+  );
+}
+function TranslateTab() {
+  const Stack = createNativeStackNavigator();
+
+  return (
+    <Stack.Navigator screenOptions={{
+      headerTitleAlign: "center",
+      statusBarHidden: true,
+      headerStyle: Styles.headerStyle,
+      headerTitleStyle: Styles.headerTitleStyle
+    }}>
+      <Stack.Screen name="TranslatePage" options={{headerShown:false}} component={TranslatePage} />
+      <Stack.Screen name="HistoryPage" options={{ title: "تاریخچه" }} component={HistoryPage} />
     </Stack.Navigator>
   );
 }
@@ -83,8 +99,8 @@ const App = () => {
               tabBarHideOnKeyboard: true
             }}>
             <Tab.Screen
-              name="translate"
-              component={TranslatePage}
+              name="TranslateTab"
+              component={TranslateTab}
               options={{
                 title: "مترجم",
                 tabBarIcon: ({ color, size }) => <TranslateIcon name="translate" color={color} size={size} />
