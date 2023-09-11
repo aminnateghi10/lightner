@@ -167,55 +167,18 @@ import MyTextInput from "../../../shared/myTextInput";
 const ChatScreen = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const flatList = useRef(null);
-  const API_KEY = "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";
-
-  // const memoizedValue = useMemo(() => {
-  //   // Perform some expensive calculation or return a computed value
-  //   return [...messages.reverse()]
-  // }, [messages]);
-
-  useEffect(() => {
-    const initializeChatGPT = async () => {
-      try {
-        const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            model: "gpt-3.5-turbo",
-            messages: [
-              { role: "system", content: "You are a helpful assistant." }
-            ]
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${API_KEY}`,
-              "Content-Type": "application/json"
-            }
-          }
-        );
-
-        setMessages((prevMessages) => [
-          { role: "system", content: response.data.choices[0].message.content },
-          ...prevMessages
-        ]);
-      } catch (error) {
-        console.error("Failed to initialize ChatGPT", error);
-      }
-    };
-
-    initializeChatGPT();
-  }, []);
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleInputSubmit = async () => {
+    setIsTyping(true);
     setMessages((prevMessages) => [
       { role: "user", content: inputValue },
       ...prevMessages
     ]);
     setInputValue("");
-
     try {
       const response = await axios.post(
-        "https://api.openai.com/v1/chat/cofmpletions",
+        "https://api.openai.com/v1/chat/completions",
         {
           messages: [
             {
@@ -241,25 +204,18 @@ const ChatScreen = () => {
     } catch (err) {
       console.log(err, "api call error");
     } finally {
-      // setIsTyping(false);
+      setIsTyping(false);
     }
   };
 
-  const scrollFlatListToEnd = () => {
-    if (flatList.current) {
-      flatList.current.scrollToEnd({ animated: true });
-    }
-  };
-  const handleInputFocus = () => {
-    scrollFlatListToEnd();
-  };
   const handleInputChange = (text: string) => setInputValue(text);
 
   return (
     <View style={styles.container}>
       <FlatList
         inverted
-        data={messages} contentContainerStyle={styles.messagesContainer} renderItem={({ item }) => (
+        data={messages}
+        contentContainerStyle={styles.messagesContainer} renderItem={({ item }) => (
         <MyText
           style={[
             styles.message,
@@ -269,6 +225,9 @@ const ChatScreen = () => {
           {item.content}
         </MyText>
       )} />
+      {
+        isTyping && <View><MyText>sflasfdj</MyText></View>
+      }
       <View style={styles.inputContainer}>
         <MyTextInput
           value={inputValue}
