@@ -1,5 +1,4 @@
-import { Text, View } from "react-native";
-import Toast, { BaseToast, ErrorToast, InfoToast, SuccessToast } from "react-native-toast-message";
+import Toast, { ErrorToast, InfoToast, SuccessToast } from "react-native-toast-message";
 
 const CustomToast = () => {
   const toastConfig = {

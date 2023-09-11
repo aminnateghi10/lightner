@@ -1,10 +1,11 @@
-import { createContext, useContext } from "react";
-import { Colors, DarkColors } from "../constants/colors";
 import { useColorScheme } from "react-native";
+import { createContext, useContext } from "react";
+
+import { Colors, DarkColors } from "../constants/colors";
 
 const ThemeContext = createContext({});
 
-const ThemeProvider = ({ children }) => {
+const ThemeProvider = ({ children }:any) => {
   const scheme = useColorScheme();
   const currentTheme = scheme === "dark" ? DarkColors : Colors;
 
@@ -17,6 +18,4 @@ const ThemeProvider = ({ children }) => {
 
 export default ThemeProvider;
 
-export const useTheme = () => {
-  return useContext(ThemeContext);
-};
+export const useTheme =():any=> useContext(ThemeContext);

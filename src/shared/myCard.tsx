@@ -1,5 +1,5 @@
 import { StyleSheet, View, ViewProps } from "react-native";
-import {Colors} from "../constants/colors";
+
 import { useTheme } from "../context/themeContext";
 const MyCard = (props : ViewProps) => {
   const { currentTheme } = useTheme();
@@ -8,7 +8,7 @@ const MyCard = (props : ViewProps) => {
     myCard:{
       backgroundColor:currentTheme.card,
     }
-  })
+  });
 
   return <View {...props} style={[props.style,Styles.myCard]}/>
 };
