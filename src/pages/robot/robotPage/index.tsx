@@ -156,41 +156,50 @@
 //
 // export default ChatScreen;
 
+import axios from "axios";
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { View, TextInput, Button, Text, StyleSheet, ScrollView } from 'react-native';
+import { useState, useEffect, useRef,useMemo } from "react";
+import { View, Button, StyleSheet, FlatList, Keyboard } from "react-native";
 
-const ChatGPT = () => {
+import MyText from "../../../shared/myText";
+import MyTextInput from "../../../shared/myTextInput";
+
+const ChatScreen = () => {
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  const API_KEY='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'
+  const [inputValue, setInputValue] = useState("");
+  const flatList = useRef(null);
+  const API_KEY = "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";
+
+  // const memoizedValue = useMemo(() => {
+  //   // Perform some expensive calculation or return a computed value
+  //   return [...messages.reverse()]
+  // }, [messages]);
 
   useEffect(() => {
     const initializeChatGPT = async () => {
       try {
         const response = await axios.post(
-            'https://api.openai.com/v1/chat/completions',
-            {
-              model: 'gpt-3.5-turbo',
-              messages: [
-                { role: 'system', content: 'You are a helpful assistant.' },
-              ],
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${API_KEY}`,
-                'Content-Type': 'application/json',
-              },
+          "https://api.openai.com/v1/chat/completions",
+          {
+            model: "gpt-3.5-turbo",
+            messages: [
+              { role: "system", content: "You are a helpful assistant." }
+            ]
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${API_KEY}`,
+              "Content-Type": "application/json"
             }
+          }
         );
 
         setMessages((prevMessages) => [
-          ...prevMessages,
-          { role: 'system', content: response.data.choices[0].message.content },
+          { role: "system", content: response.data.choices[0].message.content },
+          ...prevMessages
         ]);
       } catch (error) {
-        console.error('Failed to initialize ChatGPT', error);
+        console.error("Failed to initialize ChatGPT", error);
       }
     };
 
@@ -199,150 +208,98 @@ const ChatGPT = () => {
 
   const handleInputSubmit = async () => {
     setMessages((prevMessages) => [
-      ...prevMessages,
-      { role: 'user', content: inputValue },
+      { role: "user", content: inputValue },
+      ...prevMessages
     ]);
-    setInputValue('');
+    setInputValue("");
 
     try {
       const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            messages: [
-              {
-                role: "user",
-                content: inputValue
-              }
-            ],
-            model: "gpt-3.5-turbo"
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${"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"}`,
-              "Content-Type": "application/json"
+        "https://api.openai.com/v1/chat/cofmpletions",
+        {
+          messages: [
+            {
+              role: "user",
+              content: inputValue
             }
+          ],
+          model: "gpt-3.5-turbo"
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${"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"}`,
+            "Content-Type": "application/json"
           }
+        }
       );
 
-      // return response.data.choices[0].message.content;
-
       setMessages((prevMessages) => [
-        ...prevMessages,
-        { role: 'assistant', content: response.data.choices[0].message.content },
+        { role: "assistant", content: response.data.choices[0].message.content },
+        ...prevMessages
       ]);
+      flatList.current.scrollToOffset({ offset: -100, animated: true });
     } catch (err) {
       console.log(err, "api call error");
     } finally {
       // setIsTyping(false);
     }
-
-
-
-
-
-
-
-
-
-    // try {
-    //   const response = await axios.post(
-    //       'https://api.openai.com/v1/chat/completions',
-    //       {
-    //         model: 'gpt-3.5-turbo',
-    //         messages: [
-    //           ...messages,
-    //           { role: 'user', content: inputValue },
-    //         ],
-    //       },
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${API_KEY}`,
-    //           'Content-Type': 'application/json',
-    //         },
-    //       }
-    //   );
-    //
-    //   setMessages((prevMessages) => [
-    //     ...prevMessages,
-    //     { role: 'assistant', content: response.data.choices[0].message.content },
-    //   ]);
-    // } catch (error) {
-    //   console.error('Failed to get a response from ChatGPT', error);
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
   };
 
-
-
-
-
-
-
-
-
-
-
-  const handleInputChange = (text) => {
-    setInputValue(text);
+  const scrollFlatListToEnd = () => {
+    if (flatList.current) {
+      flatList.current.scrollToEnd({ animated: true });
+    }
   };
+  const handleInputFocus = () => {
+    scrollFlatListToEnd();
+  };
+  const handleInputChange = (text: string) => setInputValue(text);
 
   return (
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.messagesContainer}>
-          {messages.map((message, index) => (
-              <Text
-                  key={index}
-                  style={[
-                    styles.message,
-                    { alignSelf: message.role === 'user' ? 'flex-start' : 'flex-end' },
-                  ]}
-              >
-                {message.content}
-              </Text>
-          ))}
-        </ScrollView>
-        <View style={styles.inputContainer}>
-          <TextInput
-              value={inputValue}
-              onChangeText={handleInputChange}
-              style={styles.input}
-              placeholder="Type your message..."
-          />
-          <Button title="Send" onPress={handleInputSubmit} />
-        </View>
+    <View style={styles.container}>
+      <FlatList
+        inverted
+        data={messages} contentContainerStyle={styles.messagesContainer} renderItem={({ item }) => (
+        <MyText
+          style={[
+            styles.message,
+            { alignSelf: item.role === "user" ? "flex-start" : "flex-end" }
+          ]}
+        >
+          {item.content}
+        </MyText>
+      )} />
+      <View style={styles.inputContainer}>
+        <MyTextInput
+          value={inputValue}
+          onChangeText={handleInputChange}
+          style={styles.input}
+          placeholder="پیام"
+        />
+        <Button title="Send" onPress={handleInputSubmit} />
       </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 24,
+    flex: 1
   },
   messagesContainer: {
     flexGrow: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
+    paddingHorizontal: 15
   },
   message: {
     padding: 8,
     marginVertical: 4,
     borderRadius: 8,
-    backgroundColor: '#eee',
+    backgroundColor: "#eee"
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
   },
   input: {
     flex: 1,
@@ -350,8 +307,8 @@ const styles = StyleSheet.create({
     marginRight: 8,
     paddingHorizontal: 8,
     borderRadius: 8,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: "#fff"
+  }
 });
 
-export default ChatGPT;
+export default ChatScreen;
