@@ -16,7 +16,7 @@ import { CustomDarkTheme, CustomDefaultTheme } from "./src/constants/themeMode";
 import Robot from "./src/pages/robot";
 import Setting from "./src/pages/setting";
 import Lightner from "./src/pages/lightner";
-import TranslateTab from "./src/pages/translate";
+import Translate from "./src/pages/translate";
 
 
 
@@ -37,13 +37,13 @@ const App = () => {
               tabBarStyle: { height: 47 },
               tabBarHideOnKeyboard: true
             }}>
-            <Tab.Screen name="TranslateTab" component={TranslateTab}
+            <Tab.Screen name="Translate" component={Translate}
               options={{
                 title: "مترجم",
                 tabBarIcon: ({ color, size }) => <TranslateIcon name="translate" color={color} size={size} />
               }}
             />
-            <Tab.Screen name="LightnerTab" component={Lightner}
+            <Tab.Screen name="Lightner" component={Lightner}
               options={{
                 title: "لایتنر",
                 tabBarIcon: ({ color, size }) => <BoxIcon name="box" color={color} size={size} />
@@ -54,7 +54,7 @@ const App = () => {
                 tabBarIcon: ({ color, size }) => <RobotIcon name="robot" color={color} size={size} />
               }}
             />
-            <Tab.Screen name="Settings" component={Setting}
+            <Tab.Screen name="Setting" component={Setting}
               options={{
                 title: "تنظیمات",
                 tabBarIcon: ({ color, size }) => <SettingIcon name="setting" color={color} size={size} />
