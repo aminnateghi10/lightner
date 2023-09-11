@@ -19,7 +19,7 @@ import MyText from "../../../shared/myText";
 import { translate } from "../../../utils/translate";
 import MyTextInput from "../../../shared/myTextInput";
 import CustomToast from "../../../shared/customToast";
-import { RootStackParamList } from "../../../contracts/rootParamList";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 import MyCard from "../../../shared/myCard";
 import { Colors } from "../../../constants/colors";
 import { useTheme } from "../../../context/themeContext";
@@ -27,7 +27,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
+  navigation: NativeStackNavigationProp<LightnerParamList>,
 }
 
 const Index = ({ navigation }: PropsInterface) => {

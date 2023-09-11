@@ -11,7 +11,7 @@ import { Colors } from "../../../../constants/colors";
 import EllipsisVertical from "react-native-vector-icons/Ionicons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { RootStackParamList } from "../../../../contracts/rootParamList";
+import { LightnerParamList } from "../../../../contracts/rootParamList";
 import { deleteCard, deleteList } from "../../../../store/cards";
 import { useAppDispatch } from "../../../../store";
 import MyText from "../../../../shared/myText";
@@ -21,7 +21,7 @@ const { width } = Dimensions.get("window");
 
 interface PropsInterface {
   data: any,
-  navigation: NativeStackNavigationProp<RootStackParamList>,
+  navigation: NativeStackNavigationProp<LightnerParamList>,
   index: number,
 }
 

@@ -18,14 +18,14 @@ import {
 import Card from "../homeScreen/components/card";
 import CustomToast from "../../../shared/customToast";
 import InnerChangeCard from "../../../components/innerChangeCard";
-import { RootStackParamList } from "../../../contracts/rootParamList";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 // redux
 import { RootState, useAppDispatch } from "../../../store";
 import { addNewCard, deleteCard } from "../../../store/cards";
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
-  route: RouteProp<RootStackParamList, "EditCard">
+  navigation: NativeStackNavigationProp<LightnerParamList>,
+  route: RouteProp<LightnerParamList, "EditCard">
 }
 
 const EditCard = ({ route, navigation }: PropsInterface) => {

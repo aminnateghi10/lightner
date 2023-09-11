@@ -16,7 +16,7 @@ import DoubleArrowRight from "react-native-vector-icons/FontAwesome";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 
 import {Colors} from "../../../constants/colors";
-import {RootStackParamList} from "../../../contracts/rootParamList";
+import {LightnerParamList} from "../../../contracts/rootParamList";
 // reducx
 import {useAppDispatch} from "../../../store";
 import MyText from "../../../shared/myText";
@@ -25,8 +25,8 @@ import CustomToast from "../../../shared/customToast";
 import { cardLevelUpgrade, deleteCardWithID } from "../../../store/cards";
 
 interface PropsInterface {
-    navigation: NativeStackNavigationProp<RootStackParamList>,
-    route: RouteProp<RootStackParamList, "Review">,
+    navigation: NativeStackNavigationProp<LightnerParamList>,
+    route: RouteProp<LightnerParamList, "Review">,
 }
 
 const ShowCard = ({route, navigation}: PropsInterface) => {

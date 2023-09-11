@@ -7,12 +7,12 @@ import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, useColorScheme, 
 import MyText from "../../../../shared/myText"
 
 import {deleteCard} from "../../../../store/cards";
-import {RootStackParamList} from "../../../../contracts/rootParamList";
+import {LightnerParamList} from "../../../../contracts/rootParamList";
 import { useTheme } from "../../../../context/themeContext";
 
 interface PropsInterface {
     data: any,
-    navigation: NativeStackNavigationProp<RootStackParamList>,
+    navigation: NativeStackNavigationProp<LightnerParamList>,
     listName: string
 }
 

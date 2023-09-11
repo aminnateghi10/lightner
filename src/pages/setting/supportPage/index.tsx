@@ -8,11 +8,11 @@ import {  Linking, SafeAreaView, StyleSheet, TouchableHighlight, View } from "re
 import MyText from "../../../shared/myText";
 import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
-import { RootStackParamList } from "../../../contracts/rootParamList";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<RootStackParamList>;
+  navigation: NativeStackNavigationProp<LightnerParamList>;
 }
 
 const SettingPage = ({ navigation }: PropsInterface) => {

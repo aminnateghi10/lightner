@@ -14,7 +14,7 @@ import Refresh from "react-native-vector-icons/Ionicons";
 import Delete from "react-native-vector-icons/AntDesign";
 import DoubleArrowRight from "react-native-vector-icons/FontAwesome";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../contracts/rootParamList";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 // reducx
 import { useAppDispatch } from "../../../store";
 import { deleteCard } from "../../../store/cards";
@@ -22,8 +22,8 @@ import MyText from "../../../shared/myText";
 import { useTheme } from "../../../context/themeContext";
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
-  route: RouteProp<RootStackParamList, "ShowCard">,
+  navigation: NativeStackNavigationProp<LightnerParamList>,
+  route: RouteProp<LightnerParamList, "ShowCard">,
 }
 
 const ShowCard = ({ route, navigation }: PropsInterface) => {

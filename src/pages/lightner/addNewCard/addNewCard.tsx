@@ -9,10 +9,10 @@ import {RootState} from "../../../store";
 import {addNewCard} from "../../../store/cards";
 import InnerChangeCard from "../../../components/innerChangeCard";
 import {RouteProp} from "@react-navigation/native";
-import {RootStackParamList} from "../../../contracts/rootParamList";
+import {LightnerParamList} from "../../../contracts/rootParamList";
 
 interface PropsInterface {
-    route: RouteProp<RootStackParamList, "AddNewCard">
+    route: RouteProp<LightnerParamList, "AddNewCard">
 }
 
 const AddNewCard = ({route}: PropsInterface) => {

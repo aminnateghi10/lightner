@@ -7,10 +7,10 @@ import {RootState} from "../../../../store";
 import MyCard from "../../../../shared/myCard";
 import MyText from "../../../../shared/myText";
 import {Colors} from "../../../../constants/colors";
-import {RootStackParamList} from "../../../../contracts/rootParamList";
+import {LightnerParamList} from "../../../../contracts/rootParamList";
 
 interface PropsInterface {
-    navigation: NativeStackNavigationProp<RootStackParamList>
+    navigation: NativeStackNavigationProp<LightnerParamList>
 }
 
 const BrowseBar = ({navigation}: PropsInterface) => {

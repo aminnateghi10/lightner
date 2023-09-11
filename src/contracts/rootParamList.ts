@@ -1,6 +1,6 @@
 import {CardsInterface, listCardsInterface} from "./list";
 
-export type RootStackParamList = {
+export type LightnerParamList = {
     Home: undefined,
     CardsItems: { listName: string },
     AddNewCard?: { data: CardsInterface },
@@ -9,8 +9,8 @@ export type RootStackParamList = {
     Review: { data: listCardsInterface }
 }
 export type RootTabParamList = {
-    LightnerTab: RootStackParamList,
-    Settings: undefined,
-    translate: undefined,
+    Lightner: LightnerParamList,
+    Setting: undefined,
+    Translate: undefined,
     Robot: undefined,
 }

@@ -23,12 +23,12 @@ import { addNewList, initCardsData } from "../../../store/cards";
 // components
 import Card from "./components/card";
 import MyText from "../../../shared/myText";
-import { RootStackParamList } from "../../../contracts/rootParamList";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 import BrowseBar from "./components/browseBar";
 import { useTheme } from "../../../context/themeContext";
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
+  navigation: NativeStackNavigationProp<LightnerParamList>,
 }
 
 const HomeScreen = ({ navigation }: PropsInterface) => {

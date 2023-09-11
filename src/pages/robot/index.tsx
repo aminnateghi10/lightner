@@ -14,7 +14,7 @@ const Index = () => {
             headerStyle: HeaderStyles.headerStyle,
             headerTitleStyle: HeaderStyles.headerTitleStyle
         }}>
-            <Stack.Screen name="Home" options={{title: "ربات"}} component={RobotPage}/>
+            <Stack.Screen name="RobotPage" options={{title: "ربات"}} component={RobotPage}/>
         </Stack.Navigator>
     );
 }
