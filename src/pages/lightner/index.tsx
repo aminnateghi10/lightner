@@ -1,14 +1,14 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import Review from "../review/review";
-import EditCard from "../editCard/editCard";
-import ShowCard from "../showCard/showCard";
-import HomeScreen from "../homeScreen/homeScreen";
-import CardsItems from "../CardsItems/cardsItems";
-import AddNewCard from "../addNewCard/addNewCard";
-import HeaderStyles from "../../../shared/headerStyles";
+import Review from "./review/review";
+import EditCard from "./editCard/editCard";
+import ShowCard from "./showCard/showCard";
+import HomeScreen from "./homeScreen/homeScreen";
+import CardsItems from "./CardsItems/cardsItems";
+import AddNewCard from "./addNewCard/addNewCard";
+import HeaderStyles from "./../../shared/headerStyles";
 
-const LightnerTab = () => {
+const Index = () => {
     const Stack = createNativeStackNavigator();
 
     return (
@@ -29,4 +29,4 @@ const LightnerTab = () => {
     );
 }
 
-export default LightnerTab;
+export default Index;

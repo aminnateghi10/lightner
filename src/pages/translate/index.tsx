@@ -1,10 +1,10 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import HistoryPage from "../../translate/historyPage";
-import HeaderStyles from "../../../shared/headerStyles";
-import TranslatePage from "../../translate/translatePage";
+import HistoryPage from "../translate/historyPage";
+import HeaderStyles from "../../shared/headerStyles";
+import TranslatePage from "../translate/translatePage";
 
-const TranslateTab = () => {
+const Index = () => {
     const Stack = createNativeStackNavigator();
 
     return (
@@ -21,4 +21,4 @@ const TranslateTab = () => {
     );
 }
 
-export default TranslateTab;
+export default Index;

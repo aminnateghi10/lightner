@@ -1,11 +1,11 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import SettingPage from "../SettingPage";
-import SupportPage from "../supportPage";
-import FeedbackPage from "../feedbackPage";
-import HeaderStyles from "../../../shared/headerStyles";
+import SettingPage from "./SettingPage";
+import SupportPage from "./supportPage";
+import FeedbackPage from "./feedbackPage";
+import HeaderStyles from "../../shared/headerStyles";
 
-const SettingsTab = () => {
+const Index = () => {
     const Stack = createNativeStackNavigator();
     return (
         <Stack.Navigator initialRouteName="SettingPage" screenOptions={{
@@ -22,4 +22,4 @@ const SettingsTab = () => {
     );
 }
 
-export default SettingsTab;
+export default Index;

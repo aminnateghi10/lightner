@@ -13,10 +13,10 @@ import ThemeContext from "./src/context/themeContext";
 import { CustomDarkTheme, CustomDefaultTheme } from "./src/constants/themeMode";
 
 // components
-import SettingsTab from "./src/pages/setting/index";
-import RobotPage from "./src/pages/robot/robotPage";
-import LightnerTab from "./src/pages/lightner/index";
-import TranslateTab from "./src/pages/translate/index";
+import Robot from "./src/pages/robot";
+import Setting from "./src/pages/setting";
+import Lightner from "./src/pages/lightner";
+import TranslateTab from "./src/pages/translate";
 
 
 
@@ -43,18 +43,18 @@ const App = () => {
                 tabBarIcon: ({ color, size }) => <TranslateIcon name="translate" color={color} size={size} />
               }}
             />
-            <Tab.Screen name="LightnerTab" component={LightnerTab}
+            <Tab.Screen name="LightnerTab" component={Lightner}
               options={{
                 title: "لایتنر",
                 tabBarIcon: ({ color, size }) => <BoxIcon name="box" color={color} size={size} />
               }} />
-            <Tab.Screen name="Robot" component={RobotPage}
+            <Tab.Screen name="Robot" component={Robot}
               options={{
                 title: "ربات",
                 tabBarIcon: ({ color, size }) => <RobotIcon name="robot" color={color} size={size} />
               }}
             />
-            <Tab.Screen name="Settings" component={SettingsTab}
+            <Tab.Screen name="Settings" component={Setting}
               options={{
                 title: "تنظیمات",
                 tabBarIcon: ({ color, size }) => <SettingIcon name="setting" color={color} size={size} />
