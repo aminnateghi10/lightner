@@ -30,7 +30,7 @@ const App = () => {
       <ThemeContext>
         <NavigationContainer theme={theme}>
           <Tab.Navigator
-            initialRouteName="LightnerTab"
+            initialRouteName="Lightner"
             screenOptions={{
               headerShown: false,
               tabBarLabelStyle: {fontFamily: "Vazir-Medium-FD-WOL"},
