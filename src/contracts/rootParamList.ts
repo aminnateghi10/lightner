@@ -8,9 +8,20 @@ export type LightnerParamList = {
     ShowCard: { data: CardsInterface, listName: string },
     Review: { data: listCardsInterface }
 }
+
+export type SettingParamList = {
+    SettingPage: undefined,
+    SupportPage: undefined,
+    FeedbackPage: undefined,
+}
+
+export type TranslateParamList = {}
+
+export type RobotParamList = {}
+
 export type RootTabParamList = {
     Lightner: LightnerParamList,
-    Setting: undefined,
-    Translate: undefined,
-    Robot: undefined,
+    Setting: SettingParamList,
+    Translate: TranslateParamList,
+    Robot: RobotParamList,
 }

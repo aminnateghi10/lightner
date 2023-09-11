@@ -4,12 +4,12 @@ import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 import MyText from "../../../shared/myText";
 import DarkMode from "./components/darkMode";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { LightnerParamList } from "../../../contracts/rootParamList";
+import { SettingParamList } from "../../../contracts/rootParamList";
 import { useTheme } from "../../../context/themeContext";
 
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<LightnerParamList>;
+  navigation: NativeStackNavigationProp<SettingParamList>;
 }
 
 const SettingPage = ({ navigation }: PropsInterface) => {

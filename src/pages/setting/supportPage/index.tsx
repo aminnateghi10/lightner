@@ -1,18 +1,16 @@
 import EmailIcon from "react-native-vector-icons/Fontisto";
 import TelegramIcon from "react-native-vector-icons/FontAwesome";
 import FeedbackIcon from "react-native-vector-icons/MaterialIcons";
-import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {  Linking, SafeAreaView, StyleSheet, TouchableHighlight, View } from "react-native";
 
 import MyText from "../../../shared/myText";
-import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
-import { LightnerParamList } from "../../../contracts/rootParamList";
+import {SettingParamList} from "../../../contracts/rootParamList";
 
 
 interface PropsInterface {
-  navigation: NativeStackNavigationProp<LightnerParamList>;
+  navigation: NativeStackNavigationProp<SettingParamList>;
 }
 
 const SettingPage = ({ navigation }: PropsInterface) => {

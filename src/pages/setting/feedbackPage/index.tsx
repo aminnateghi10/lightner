@@ -1,4 +1,3 @@
-import axios from "axios";
 import { StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { GiftedChat, InputToolbar } from "react-native-gifted-chat";

@@ -19,11 +19,11 @@ const Index = () => {
             headerStyle: HeaderStyles.headerStyle,
             headerTitleStyle: HeaderStyles.headerTitleStyle
         }}>
+            <Stack.Screen name="CardsItems" component={CardsItems}/>
             <Stack.Screen name="Home" options={{title: "لایتنر"}} component={HomeScreen}/>
             <Stack.Screen name="ShowCard" options={{title: "نمایش کارت"}} component={ShowCard}/>
             <Stack.Screen name="EditCard" options={{title: "ویرایش کارت"}} component={EditCard}/>
             <Stack.Screen name="Review" options={{title: "جعبه لایتنر"}} component={Review}/>
-            <Stack.Screen name="CardsItems" component={CardsItems}/>
             <Stack.Screen name="AddNewCard" options={{title: "افزودن کارت جدید"}} component={AddNewCard}/>
         </Stack.Navigator>
     );
