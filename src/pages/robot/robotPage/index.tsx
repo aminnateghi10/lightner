@@ -1,16 +1,29 @@
 import axios from "axios";
-import { useState, useEffect, useRef, useMemo } from "react";
-import { View, Button, StyleSheet, FlatList, Keyboard } from "react-native";
+import { useState, useEffect } from "react";
+import { View, StyleSheet, FlatList } from "react-native";
 import SendIcon from "react-native-vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import MyText from "../../../shared/myText";
 import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
 
-const Index = () => {
+import { RobotParamList } from "../../../contracts/rootParamList";
+
+interface PropsInterface {
+  navigation: NativeStackNavigationProp<RobotParamList>,
+}
+
+interface MessagesInterface {
+  role: "bot" | "user",
+  content: string
+}
+
+const Index = ({ navigation }: PropsInterface) => {
   const { currentTheme } = useTheme();
 
-  const styles = StyleSheet.create({
+  const Styles = StyleSheet.create({
     container: {
       flex: 1
     },
@@ -22,8 +35,15 @@ const Index = () => {
     message: {
       padding: 8,
       marginVertical: 4,
-      borderRadius: 8,
-      backgroundColor: "#eee"
+      borderRadius: 8
+    },
+    user: {
+      backgroundColor: "rgb(239,254,221)",
+      alignSelf: "flex-end"
+    },
+    bot: {
+      backgroundColor: currentTheme.card,
+      alignSelf: "flex-start"
     },
     inputContainer: {
       flexDirection: "row",
@@ -35,11 +55,32 @@ const Index = () => {
       height: 40,
       marginRight: 3,
       paddingHorizontal: 8,
-      borderRadius: 8,
+      borderRadius: 8
+    },
+    headerContainer: {
+      alignItems: "center",
+      backgroundColor: currentTheme.card,
+      height: 55,
+      paddingTop: 4
+    },
+    headerTitle: {
+      fontSize: 18
     }
   });
 
-  const [messages, setMessages] = useState([]);
+  navigation.setOptions({
+    header: () => (
+      <View style={Styles.headerContainer}>
+        <MyText style={Styles.headerTitle}>ربات</MyText>
+        {
+          isTyping &&
+          <MyText style={{ fontSize: 12 }}>در حال نوشتن...</MyText>
+        }
+      </View>
+    )
+  });
+
+  const [messages, setMessages] = useState<MessagesInterface[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -48,37 +89,21 @@ const Index = () => {
   }, []);
 
   const loadMessages = async () => {
-    try {
-      const storedMessages = await AsyncStorage.getItem("chatMessages");
-      if (storedMessages) {
-        // setMessages(JSON.parse(storedMessages));
-      } else {
-        const chatMessage = [
-          {
-            _id: Math.random().toString(36).substring(7),
-            text: "برای شروع ارتباط با من از قسمت پایین پیام خود را بفرستید.",
-            createdAt: new Date(),
-            user: {
-              _id: 2,
-              name: "GPT-3.5-turbo",
-              avatar: require("../../../../assets/img/avatar/botAvatar.png")
-            }
-          },
-          {
-            _id: Math.random().toString(36).substring(7),
-            text: "سلام من هوش مصنوعی هستم.😃\nمن توانایی پاسخ به سوالات و درخواست های متنی را دارم و میتوانم در موضوعات گوناگون کمک کنم.همچنین، من می‌توانم به آموزش سریعتر زبان نیز کمک کنم و در تمرین درستی از اصول گرامری و نوشتاری راهنمایی کنم.",
-            createdAt: new Date(),
-            user: {
-              _id: 2,
-              name: "GPT-3.5-turbo",
-              avatar: require("../../../../assets/img/avatar/botAvatar.png")
-            }
-          }
-        ];
-        // setMessages((prevMessages) => GiftedChat.append(prevMessages, chatMessage));
-      }
-    } catch (error) {
-      console.error("Error loading messages from AsyncStorage:", error);
+    const storedMessages = await AsyncStorage.getItem("chatMessages");
+    if (storedMessages) {
+      setMessages(JSON.parse(storedMessages));
+    } else {
+      const chatMessage: MessagesInterface[] = [
+        {
+          content: "برای شروع ارتباط با من از قسمت پایین پیام خود را بفرستید.",
+          role: "bot"
+        },
+        {
+          content: "سلام من هوش مصنوعی هستم.😃\nمن توانایی پاسخ به سوالات و درخواست های متنی را دارم و میتوانم در موضوعات گوناگون کمک کنم.همچنین، من می‌توانم به آموزش سریعتر زبان نیز کمک کنم و در تمرین درستی از اصول گرامری و نوشتاری راهنمایی کنم.",
+          role: "bot"
+        }
+      ];
+      setMessages([...chatMessage, ...messages]);
     }
   };
 
@@ -89,15 +114,7 @@ const Index = () => {
     try {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
-        {
-          messages: [
-            {
-              role: "user",
-              content: inputValue
-            }
-          ],
-          model: "gpt-3.5-turbo"
-        },
+        { messages: [{ role: "user", content: inputValue }], model: "gpt-3.5-turbo" },
         {
           headers: {
             Authorization: `Bearer ${"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"}`,
@@ -105,47 +122,38 @@ const Index = () => {
           }
         }
       );
-
-      setMessages((prevMessages) => [
-        { role: "assistant", content: response.data.choices[0].message.content },
-        ...prevMessages
-      ]);
+      const content = response.data.choices[0].message.content;
+      await AsyncStorage.setItem("chatMessages", JSON.stringify([{ role: "bot", content }, ...messages]));
+      setMessages((prevMessages) => [{ role: "bot", content }, ...prevMessages]);
     } catch (err) {
-
-      setMessages((prevMessages) => [
-        { role: "assistant", content: "لطفا اینترنت خود را برسی کنید" },
-        ...prevMessages
-      ]);
+      const content = "لطفا اینترنت خود را برسی کنید";
+      setMessages((prevMessages) => [{ role: "bot", content }, ...prevMessages]);
     } finally {
       setIsTyping(false);
     }
   };
 
   const handleInputChange = (text: string) => setInputValue(text);
-
   return (
-    <View style={styles.container}>
+    <View style={Styles.container}>
       <FlatList
         inverted
         data={messages}
-        contentContainerStyle={styles.messagesContainer} renderItem={({ item }) => (
+        contentContainerStyle={Styles.messagesContainer} renderItem={({ item }) => (
         <MyText
-          style={[
-            styles.message,
-            { alignSelf: item.role === "user" ? "flex-start" : "flex-end" }
-          ]}
-        >
+          style={[Styles.message, item.role === "user" ? Styles.user : Styles.bot]}>
           {item.content}
         </MyText>
       )} />
-      <View style={styles.inputContainer}>
+      <View style={Styles.inputContainer}>
         <MyTextInput
           value={inputValue}
-          onChangeText={handleInputChange}
-          style={styles.input}
+          style={Styles.input}
           placeholder="پیام"
+          onChangeText={handleInputChange}
         />
-        <SendIcon name="send" color="red" style={{ paddingRight: 10 }} onPress={handleInputSubmit} size={25} />
+        <SendIcon name="send" color={currentTheme.button} style={{ paddingRight: 10 }} onPress={handleInputSubmit}
+                  size={25} />
       </View>
     </View>
   );
