@@ -107,10 +107,17 @@ const Index = ({ navigation }: PropsInterface) => {
     }
   };
 
+  const getTime = () => {
+    var currentDate = new Date();
+    var currentHour = currentDate.getHours();
+    var currentMinute = currentDate.getMinutes();
+    return currentHour + ":" + currentMinute;
+  };
+
   const handleInputSubmit = async () => {
     try {
       setIsTyping(true);
-      setMessages((prevMessages) => [{ role: "user", content: inputValue }, ...prevMessages]);
+      setMessages((prevMessages) => [{ role: "user", content: inputValue, time: getTime() }, ...prevMessages]);
       setInputValue("");
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
@@ -125,12 +132,16 @@ const Index = ({ navigation }: PropsInterface) => {
       const content = await response.data.choices[0].message.content;
 
       setMessages((prevMessages) => {
-        AsyncStorage.setItem("chatMessages", JSON.stringify([{ role: "bot", content }, ...prevMessages]));
-        return [{ role: "bot", content }, ...prevMessages];
+        AsyncStorage.setItem("chatMessages", JSON.stringify([{
+          role: "bot",
+          content,
+          time: getTime()
+        }, ...prevMessages]));
+        return [{ role: "bot", content, time: getTime() }, ...prevMessages];
       });
     } catch (err) {
       const content = "لطفا اینترنت خود را برسی کنید";
-      setMessages((prevMessages) => [{ role: "bot", content }, ...prevMessages]);
+      setMessages((prevMessages) => [{ role: "bot", content, time: getTime() }, ...prevMessages]);
     } finally {
       setIsTyping(false);
     }
@@ -143,10 +154,15 @@ const Index = ({ navigation }: PropsInterface) => {
         inverted
         data={messages}
         contentContainerStyle={Styles.messagesContainer} renderItem={({ item }) => (
-        <MyText
-          style={[Styles.message, item.role === "user" ? Styles.user : Styles.bot]}>
-          {item.content}
-        </MyText>
+        <View style={[Styles.message, item.role === "user" ? Styles.user : Styles.bot]}>
+          <MyText>
+            {item.content}
+          </MyText>
+          <MyText style={{fontSize:10 , textAlign:'right'}}>
+            {item?.time}
+          </MyText>
+        </View>
+
       )} />
       <View style={Styles.inputContainer}>
         <MyTextInput
