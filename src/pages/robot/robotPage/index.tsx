@@ -108,10 +108,10 @@ const Index = ({ navigation }: PropsInterface) => {
   };
 
   const handleInputSubmit = async () => {
-    setIsTyping(true);
-    setMessages((prevMessages) => [{ role: "user", content: inputValue }, ...prevMessages]);
-    setInputValue("");
     try {
+      setIsTyping(true);
+      setMessages((prevMessages) => [{ role: "user", content: inputValue }, ...prevMessages]);
+      setInputValue("");
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         { messages: [{ role: "user", content: inputValue }], model: "gpt-3.5-turbo" },
@@ -122,9 +122,12 @@ const Index = ({ navigation }: PropsInterface) => {
           }
         }
       );
-      const content = response.data.choices[0].message.content;
-      await AsyncStorage.setItem("chatMessages", JSON.stringify([{ role: "bot", content }, ...messages]));
-      setMessages((prevMessages) => [{ role: "bot", content }, ...prevMessages]);
+      const content = await response.data.choices[0].message.content;
+
+      setMessages((prevMessages) => {
+        AsyncStorage.setItem("chatMessages", JSON.stringify([{ role: "bot", content }, ...prevMessages]));
+        return [{ role: "bot", content }, ...prevMessages];
+      });
     } catch (err) {
       const content = "لطفا اینترنت خود را برسی کنید";
       setMessages((prevMessages) => [{ role: "bot", content }, ...prevMessages]);
