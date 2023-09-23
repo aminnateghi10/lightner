@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import cards from './cards'
+import theme from './theme'
 
 export const store = configureStore({
   reducer: {
-    cards
+    cards,
+    theme,
   },
 })
 
