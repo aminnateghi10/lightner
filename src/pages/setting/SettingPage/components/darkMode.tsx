@@ -35,13 +35,10 @@ const DarkMode = () => {
       marginTop: 22
     },
     modalView: {
-      justifyContent: "space-around",
-      alignContent: "center",
-      backgroundColor: "#ffffff",
+      backgroundColor: currentTheme.card,
       borderRadius: 20,
       width: 300,
       elevation: 300,
-      height: 200,
       alignItems: "center"
     }
   });
@@ -80,7 +77,7 @@ const DarkMode = () => {
           visible={true}>
           <View style={Styles.centeredView}>
             <View style={Styles.modalView}>
-              <View style={{ width: "80%", marginVertical: 10 }}>
+              <View style={{ width: "93%", marginVertical: 10 }}>
                 {
                   listCheckBox.map(item => (
                     <TouchableOpacity
@@ -93,15 +90,19 @@ const DarkMode = () => {
                         borderRadius: 50,
                         borderColor: `${item.value === activeBox ? "blue" : "rgb(126,118,118)"}`,
                         borderWidth: 1,
-                        padding: 5,
-                        marginVertical: 3
+                        paddingVertical: 3,
+                        paddingHorizontal:5,
+                        marginVertical: 3,
+                        alignItems:'center'
                       }}>
                       <>
                         <MyText>{item.text}</MyText>
                         <Text style={{
-                          width: 25,
-                          height: 25,
-                          backgroundColor: `${item.value === activeBox ? "blue" : "rgb(199,199,199)"}`,
+                          width: 20,
+                          height: 20,
+                          borderColor: `${item.value === activeBox ? "blue" : "rgb(199,199,199)"}`,
+                          backgroundColor: `${item.value === activeBox ? "blue" : "rgba(0,0,0,0)"}`,
+                          borderWidth:1,
                           borderRadius: 50
                         }}></Text>
                       </>
@@ -109,18 +110,20 @@ const DarkMode = () => {
                   ))
                 }
               </View>
-              <View style={{ flexDirection: "row", justifyContent: "space-around", width: "100%" }}>
-                <TouchableOpacity style={{
-                  margin: 5,
-                  backgroundColor: "rgb(206,200,200)",
-                  padding: 10,
-                  borderRadius: 10
-                }}>
-                  <MyText onPress={() => setShow(false)}>انصراف</MyText>
+              <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
+                <TouchableOpacity onPress={() => setShow(false)}
+                                  style={{ width: "50%", height: 40, justifyContent: "center" }}>
+                  <MyText
+                    style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={{ margin: 5, backgroundColor: "blue", padding: 10, borderRadius: 10 }}>
-                  <MyText style={{ color: "white" }} onPress={changeModeHandler}>ذخیره</MyText>
+                <TouchableOpacity style={{
+                  width: "50%",
+                  borderLeftColor: currentTheme.modalBorder,
+                  borderLeftWidth: 1,
+                  justifyContent: "center"
+                }}>
+                  <MyText style={{ textAlign: "center", color: "#3b7edd" }}
+                          onPress={changeModeHandler}>ذخیره</MyText>
                 </TouchableOpacity>
               </View>
             </View>
