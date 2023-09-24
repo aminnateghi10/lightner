@@ -65,6 +65,7 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
                 browsingTime = new Date().setHours(15 * 24);
                 break;
             default:
+                browsingTime = new Date().setMinutes(10);
                 Date.now();
                 break;
         }
