@@ -1,6 +1,7 @@
 export const Colors = {
   card:"rgb(242, 242, 242)",
   text:"rgb(0,0,0)",
+  darkText:"rgb(235, 235, 235)",
   button:"rgb(52,133,251)",
   border:"rgb(141,130,130)",
   primary:"rgb(0, 122, 255)",
@@ -12,6 +13,7 @@ export const Colors = {
 export const DarkColors = {
   card:"rgb(48, 48, 48)",
   text:"rgb(235, 235, 235)",
+  darkText:"rgb(0,0,0)",
   button:"rgb(52,133,251)",
   border:"rgb(141,130,130)",
   primary:"rgb(10, 132, 255)",

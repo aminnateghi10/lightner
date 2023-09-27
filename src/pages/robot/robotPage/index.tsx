@@ -162,7 +162,6 @@ const Index = ({ navigation }: PropsInterface) => {
             {item?.time}
           </MyText>
         </View>
-
       )} />
       <View style={Styles.inputContainer}>
         <MyTextInput
