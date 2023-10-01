@@ -58,7 +58,7 @@ const CardsItems = ({ route, navigation }: any) => {
           ))
         }
       </ScrollView>
-      <Controller/>
+      <Controller cards={list?.cards} listName={list?.name}/>
     </SafeAreaView>
   );
 };
