@@ -16,13 +16,11 @@ interface PropsInterface {
 }
 
 const Card = ({ data, navigation }: PropsInterface) => {
-  console.log(data, "da");
   const { currentTheme } = useTheme();
   let allLevels = 0;
   data.cards?.forEach(item => allLevels += item.level);
-  const level = allLevels / data.cards.length / 100;
+  const level = allLevels / data.cards.length * 14;
 
-  console.log(level, "levellevellevel");
   const Styles = StyleSheet.create({
     col_3: {
       width: width / 2
@@ -51,7 +49,7 @@ const Card = ({ data, navigation }: PropsInterface) => {
             backgroundColor: "red",
             height: 10,
             borderRadius: 8,
-            width: `${level == NaN ? 0 : level}%`
+            width: `${isNaN(level) ? 0 : level}%`
           }}></MyText>
         </>
       </TouchableHighlight>
