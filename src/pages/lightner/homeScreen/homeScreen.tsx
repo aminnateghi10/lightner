@@ -8,7 +8,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Alert,
-  FlatList,
   Modal, SafeAreaView, ScrollView,
   StyleSheet,
   TextInput,
@@ -145,8 +144,8 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
         <View style={[backgroundStyle, Styles.container]}>
           <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", paddingBottom: 80 }}>
             {
-              cards.list.map((item, index) => (
-                <Card key={index} index={index} navigation={navigation} data={item} />
+              cards.list.map((item) => (
+                <Card navigation={navigation} data={item} />
               ))
             }
           </ScrollView>
