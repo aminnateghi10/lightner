@@ -98,7 +98,6 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
   });
 
   const [name, setName] = useState("");
-  const [dropdown, setDropdown] = useState(null);
   const [addNew, setAddNew] = useState<boolean | "newList" | "newCard">(false);
 
   const isDarkMode = useColorScheme() === "dark";
@@ -142,16 +141,12 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BrowseBar navigation={navigation} />
-      <TouchableWithoutFeedback onPress={() => {
-        setAddNew(false);
-        setDropdown(null);
-      }}>
+      <TouchableWithoutFeedback onPress={() => {setAddNew(false)}}>
         <View style={[backgroundStyle, Styles.container]}>
           <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", paddingBottom: 80 }}>
             {
               cards.list.map((item, index) => (
-                <Card key={index} index={index} navigation={navigation} data={item} dropdown={dropdown}
-                      setDropdown={setDropdown} />
+                <Card key={index} index={index} navigation={navigation} data={item} />
               ))
             }
           </ScrollView>

@@ -1,21 +1,9 @@
-import {
-  Dimensions,
-  StyleSheet,
-  TouchableHighlight,
-  useColorScheme,
-  View,
-  TouchableOpacity
-} from "react-native";
-import { useState } from "react";
-import { Colors } from "../../../../constants/colors";
-import EllipsisVertical from "react-native-vector-icons/Ionicons";
+import { Dimensions, StyleSheet, TouchableHighlight, View, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { LightnerParamList } from "../../../../contracts/rootParamList";
-import { deleteCard, deleteList } from "../../../../store/cards";
-import { useAppDispatch } from "../../../../store";
 import MyText from "../../../../shared/myText";
 import { useTheme } from "../../../../context/themeContext";
+import { LightnerParamList } from "../../../../contracts/rootParamList";
 
 const { width } = Dimensions.get("window");
 
@@ -25,7 +13,7 @@ interface PropsInterface {
   index: number,
 }
 
-const Card = ({ data, index, navigation, dropdown, setDropdown }: PropsInterface) => {
+const Card = ({ data, index, navigation }: PropsInterface) => {
   const { currentTheme } = useTheme();
   const Styles = StyleSheet.create({
     col_3: {
@@ -68,38 +56,15 @@ const Card = ({ data, index, navigation, dropdown, setDropdown }: PropsInterface
     }
   });
 
-  const isDarkMode = useColorScheme() === "dark";
-  const dispatch = useAppDispatch();
-  const toggleDropDown = () => {
-    if (dropdown === data.id) setDropdown(null);
-    else setDropdown(data.id);
-  };
-
   return (
     <View style={[Styles.col_3, { zIndex: -index }]}>
       <TouchableHighlight
         style={Styles.card}
         onPress={() => navigation.navigate("CardsItems", { listName: data.name })}>
         <>
-          <EllipsisVertical
-            size={27}
-            onPress={toggleDropDown}
-            style={Styles.icon}
-            name="md-ellipsis-vertical-sharp" />
           <MyText style={Styles.title}>{data.name}</MyText>
         </>
       </TouchableHighlight>
-      {
-        dropdown === data.id &&
-        <View style={Styles.dropDown}>
-          <TouchableOpacity onPress={() => console.log("edig")}>
-            <MyText style={Styles.dropDownText}>ویرایش</MyText>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => dispatch(deleteList(data.name))}>
-            <MyText style={Styles.dropDownText}>حذف</MyText>
-          </TouchableOpacity>
-        </View>
-      }
     </View>
   );
 };
