@@ -33,15 +33,19 @@ const Index = ({ navigation }: PropsInterface) => {
       paddingHorizontal: 15
     },
     message: {
-      padding: 8,
+      paddingHorizontal:10,
+      paddingVertical:2,
       marginVertical: 4,
-      borderRadius: 8
     },
     user: {
       backgroundColor: "rgb(239,254,221)",
-      alignSelf: "flex-end"
+      alignSelf: "flex-end",
+      borderRadius:15,
+      borderBottomEndRadius:0,
     },
     bot: {
+      borderRadius:15,
+      borderBottomStartRadius:0,
       backgroundColor: currentTheme.card,
       alignSelf: "flex-start"
     },
@@ -115,35 +119,37 @@ const Index = ({ navigation }: PropsInterface) => {
   };
 
   const handleInputSubmit = async () => {
-    try {
-      setIsTyping(true);
-      setMessages((prevMessages) => [{ role: "user", content: inputValue, time: getTime() }, ...prevMessages]);
-      setInputValue("");
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        { messages: [{ role: "user", content: inputValue }], model: "gpt-3.5-turbo" },
-        {
-          headers: {
-            Authorization: `Bearer ${"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"}`,
-            "Content-Type": "application/json"
+    if (inputValue){
+      try {
+        setIsTyping(true);
+        setMessages((prevMessages) => [{ role: "user", content: inputValue, time: getTime() }, ...prevMessages]);
+        setInputValue("");
+        const response = await axios.post(
+          "https://api.openai.com/v1/chat/completions",
+          { messages: [{ role: "user", content: inputValue }], model: "gpt-3.5-turbo" },
+          {
+            headers: {
+              Authorization: `Bearer ${"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"}`,
+              "Content-Type": "application/json"
+            }
           }
-        }
-      );
-      const content = await response.data.choices[0].message.content;
+        );
+        const content = await response.data.choices[0].message.content;
 
-      setMessages((prevMessages) => {
-        AsyncStorage.setItem("chatMessages", JSON.stringify([{
-          role: "bot",
-          content,
-          time: getTime()
-        }, ...prevMessages]));
-        return [{ role: "bot", content, time: getTime() }, ...prevMessages];
-      });
-    } catch (err) {
-      const content = "لطفا اینترنت خود را برسی کنید";
-      setMessages((prevMessages) => [{ role: "bot", content, time: getTime() }, ...prevMessages]);
-    } finally {
-      setIsTyping(false);
+        setMessages((prevMessages) => {
+          AsyncStorage.setItem("chatMessages", JSON.stringify([{
+            role: "bot",
+            content,
+            time: getTime()
+          }, ...prevMessages]));
+          return [{ role: "bot", content, time: getTime() }, ...prevMessages];
+        });
+      } catch (err) {
+        const content = "لطفا اینترنت خود را برسی کنید";
+        setMessages((prevMessages) => [{ role: "bot", content, time: getTime() }, ...prevMessages]);
+      } finally {
+        setIsTyping(false);
+      }
     }
   };
 
@@ -158,7 +164,7 @@ const Index = ({ navigation }: PropsInterface) => {
           <MyText>
             {item.content}
           </MyText>
-          <MyText style={{fontSize:10 , textAlign:'right'}}>
+          <MyText style={{fontSize:9 , textAlign:'right'}}>
             {item?.time}
           </MyText>
         </View>
