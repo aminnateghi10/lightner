@@ -38,7 +38,7 @@ const Index = ({ navigation }: PropsInterface) => {
       marginVertical: 4,
     },
     user: {
-      backgroundColor: "rgb(239,254,221)",
+      backgroundColor: "#2f88d2",
       alignSelf: "flex-end",
       borderRadius:15,
       borderBottomEndRadius:0,
@@ -160,14 +160,29 @@ const Index = ({ navigation }: PropsInterface) => {
         inverted
         data={messages}
         contentContainerStyle={Styles.messagesContainer} renderItem={({ item }) => (
-        <View style={[Styles.message, item.role === "user" ? Styles.user : Styles.bot]}>
-          <MyText>
-            {item.content}
-          </MyText>
-          <MyText style={{fontSize:9 , textAlign:'right'}}>
-            {item?.time}
-          </MyText>
-        </View>
+          <>
+            {
+              item.role === "user" ?
+                <View style={[Styles.message, Styles.user]}>
+                  <MyText style={{color:"#e0ecf4"}}>
+                    {item.content}
+                  </MyText>
+                  <MyText style={{fontSize:9 , textAlign:'right',color:"#e0ecf4"}}>
+                    {item?.time}
+                  </MyText>
+                </View>
+                :
+                <View style={[Styles.message, Styles.bot]}>
+                  <MyText>
+                    {item.content}
+                  </MyText>
+                  <MyText style={{fontSize:9 , textAlign:'right'}}>
+                    {item?.time}
+                  </MyText>
+                </View>
+            }
+
+          </>
       )} />
       <View style={Styles.inputContainer}>
         <MyTextInput
