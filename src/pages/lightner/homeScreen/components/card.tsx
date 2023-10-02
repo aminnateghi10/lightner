@@ -1,12 +1,9 @@
-import { Dimensions, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { Dimensions, StyleSheet, TouchableHighlight, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import MyText from "../../../../shared/myText";
 import { useTheme } from "../../../../context/themeContext";
 import { LightnerParamList } from "../../../../contracts/rootParamList";
-import { length } from "jalali-moment";
-import LinearGradient from "react-native-linear-gradient";
-import DoubleArrowRight from "react-native-vector-icons/FontAwesome";
 
 const { width } = Dimensions.get("window");
 
@@ -28,12 +25,13 @@ const Card = ({ data, navigation }: PropsInterface) => {
     card: {
       margin: 10,
       padding: 10,
-      paddingVertical: 30,
-      borderRadius: 10,
+      paddingBottom: 20,
+      borderRadius: 4,
       backgroundColor: currentTheme.card
     },
     title: {
-      textAlign: "center"
+      textAlign: "center",
+      fontSize:13
     }
   });
 
@@ -44,13 +42,15 @@ const Card = ({ data, navigation }: PropsInterface) => {
         onPress={() => navigation.navigate("CardsItems", { listName: data.name })}>
         <>
           <MyText style={Styles.title}>{data.name}</MyText>
-          <MyText style={Styles.title}>{data.cards.length}</MyText>
-          <MyText style={{
-            backgroundColor: "red",
-            height: 10,
-            borderRadius: 8,
-            width: `${isNaN(level) ? 0 : level}%`
-          }}></MyText>
+          <MyText style={{ textAlign: "right", fontSize: 10,color:currentTheme.text,opacity:.6 }}>{data.cards.length} کارت</MyText>
+          <View style={{ backgroundColor: "white", borderRadius: 8,overflow:"hidden",marginTop:5 }}>
+            <MyText style={{
+              backgroundColor: currentTheme.button,
+              height: 5,
+              width: `${isNaN(level) ? 0 : level}%`
+            }}></MyText>
+          </View>
+
         </>
       </TouchableHighlight>
     </View>
