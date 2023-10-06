@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View,ToastAndroid } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
@@ -166,6 +166,7 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   };
 
   const copyToClipboard = () => {
+    ToastAndroid.show('متن کپی شد', ToastAndroid.SHORT);
     Clipboard.setString(translation);
   };
 
