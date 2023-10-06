@@ -44,7 +44,8 @@ const TabBar = () => {
           headerTitleAlign:"center",
           tabBarLabelStyle: { fontFamily: "Vazir-Medium-FD-WOL" },
           tabBarStyle: { height: 47 },
-          tabBarHideOnKeyboard: true
+          tabBarHideOnKeyboard: true,
+          headerShown:false
         }}>
         <Tab.Screen name="Translate" component={TranslatePage}
                     options={{
