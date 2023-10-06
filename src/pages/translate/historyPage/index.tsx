@@ -78,7 +78,7 @@ const Index = ({ navigation }: PropsInterface) => {
         <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
           <MyText style={Styles.headerTitle}>تاریخچه</MyText>
         </View>
-        <DeleteEmptyIcon name="delete-empty" color="red" size={30} onPress={() => setDeleteHistoryModal(true)} />
+        <DeleteEmptyIcon name="delete-empty" color={currentTheme.textIcon} size={30} onPress={() => setDeleteHistoryModal(true)} />
       </View>
     )
   });
