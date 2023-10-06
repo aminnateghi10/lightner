@@ -54,10 +54,12 @@ const CardsItems = ({ route, navigation }: any) => {
       {
         list?.cards.length ?
           <ScrollView style={Styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
-            list?.cards.map((item, index) => (
-            <Card dropDown={dropDown} setDropDown={setDropDown} index={index} navigation={navigation} data={item}
-                  listName={list?.name ?? ""} />
-            ))
+            {
+              list?.cards.map((item, index) => (
+                <Card dropDown={dropDown} setDropDown={setDropDown} index={index} navigation={navigation} data={item}
+                      listName={list?.name ?? ""} />
+              ))
+            }
           </ScrollView>
           : <EmptyList />
       }
