@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { Modal, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
-import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 
 import MyText from "../../../../shared/myText";
 import { initTheme } from "../../../../store/theme";
-import CustomToast from "../../../../shared/customToast";
 import { useTheme } from "../../../../context/themeContext";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 
@@ -53,7 +51,6 @@ const DarkMode = () => {
     await AsyncStorage.setItem("ThemeMode", activeBox);
     dispatch(initTheme(activeBox));
     setShow(false);
-    Toast.show({ type: "success", text1: "تم با موفقیت تغییر کرد." });
   };
 
   const listCheckBox = [
@@ -130,7 +127,6 @@ const DarkMode = () => {
           </View>
         </Modal>
       }
-      <CustomToast />
     </>
   );
 };

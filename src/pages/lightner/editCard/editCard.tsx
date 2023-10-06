@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { RouteProp } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   View,
@@ -16,7 +15,6 @@ import {
 } from "react-native";
 
 import Card from "../homeScreen/components/card";
-import CustomToast from "../../../shared/customToast";
 import InnerChangeCard from "../../../components/innerChangeCard";
 import { LightnerParamList } from "../../../contracts/rootParamList";
 // redux
@@ -42,7 +40,6 @@ const EditCard = ({ route, navigation }: PropsInterface) => {
     if (newCard.persian || newCard.english && listName) {
       dispatch(deleteCard({ listName: listNameItem, id: data.id }));
       dispatch(addNewCard({ newCard, listName }));
-      Toast.show({ type: "success", text1: "با موفقیت ویرایش شد" });
       navigation.goBack();
     }
   };

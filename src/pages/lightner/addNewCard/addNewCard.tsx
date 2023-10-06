@@ -1,6 +1,5 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import Toast from "react-native-toast-message";
 import {
     Dimensions
 } from "react-native";
@@ -26,16 +25,15 @@ const AddNewCard = ({route}: PropsInterface) => {
 
     let addNewCardHandler = () => {
         if (newCard.persian || newCard.english && listName) {
-            dispatch(addNewCard({newCard, listName}));
+            dispatch(addNewCard({newCard, listName}));Ï
             setNewCard({english: "", persian: "", id: Date.now()});
-            Toast.show({type: "success", text1: "با موفقیت ثبت شد"});
         }
     };
 
     return (
         <InnerChangeCard
             btnText="ذخیره"
-            list={list}
+            list={list}Ï
             newCard={newCard}
             listName={listName}
             setNewCard={setNewCard}

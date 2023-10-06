@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
-import Toast from "react-native-toast-message";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -16,7 +15,6 @@ import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
 import MyText from "../../../shared/myText";
 import { translate } from "../../../utils/translate";
 import MyTextInput from "../../../shared/myTextInput";
-import CustomToast from "../../../shared/customToast";
 import { LightnerParamList } from "../../../contracts/rootParamList";
 import MyCard from "../../../shared/myCard";
 import { Colors } from "../../../constants/colors";
@@ -169,8 +167,6 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
 
   const copyToClipboard = () => {
     Clipboard.setString(translation);
-    Toast.show({ type: "success", text1: "متن کپی شد.", visibilityTime: 500 });
-
   };
 
   const changeTranslatedLang = () => {
@@ -283,7 +279,6 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
             }
           </View>
       }
-      <CustomToast />
       {
         deleteHistoryModal &&
         <Modal

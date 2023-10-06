@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import CustomToast from "../shared/customToast";
 import { CardsInterface, listCardsInterface } from "../contracts/list";
 import MyText from "../shared/myText";
 import MyTextInput from "../shared/myTextInput";
@@ -68,7 +67,6 @@ const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName
       <TouchableOpacity style={styles.submit} onPress={sumbitBtn}>
         <Text style={styles.submitText}>{btnText}</Text>
       </TouchableOpacity>
-      <CustomToast />
     </View>
   );
 };

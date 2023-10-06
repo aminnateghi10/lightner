@@ -20,8 +20,6 @@ import {LightnerParamList} from "../../../contracts/rootParamList";
 // reducx
 import {useAppDispatch} from "../../../store";
 import MyText from "../../../shared/myText";
-import Toast from "react-native-toast-message";
-import CustomToast from "../../../shared/customToast";
 import { cardLevelUpgrade, deleteCardWithID } from "../../../store/cards";
 
 interface PropsInterface {
@@ -83,7 +81,6 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
 
     const goToNext = ()=>{
         if (data.cards.length - 1 <= count) {
-            Toast.show({type: "success", text1: "مرور به پایان رسید."});
             setTimeout(() => {
                 navigation.goBack();
             }, 2000)
@@ -102,7 +99,6 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
         dispatch(cardLevelUpgrade(newNowData));
         setLang(true);
         if (data.cards.length - 1 <= count) {
-            Toast.show({type: "success", text1: "مرور به پایان رسید."});
             setTimeout(() => {
                 navigation.goBack();
             }, 2000)
@@ -171,7 +167,6 @@ const ShowCard = ({route, navigation}: PropsInterface) => {
                     </Modal>
                 }
             </View>
-            <CustomToast/>
         </SafeAreaView>
     );
 };
