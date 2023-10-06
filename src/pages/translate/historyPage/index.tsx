@@ -23,6 +23,7 @@ import { Colors } from "../../../constants/colors";
 import { useTheme } from "../../../context/themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
+import EmptyList from "../../../shared/emptyList";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
@@ -186,11 +187,7 @@ const Index = ({ navigation }: PropsInterface) => {
               ))
             }
           </View>
-          :
-          <View style={{alignItems:'center',justifyContent:'center',height:'100%'}}>
-            <FileText1Icon name="filetext1" style={{opacity:.4}} size={100}/>
-            <MyText style={{opacity:.6,marginTop:5,fontSize:15}}>لیست خالی است!</MyText>
-          </View>
+          :<EmptyList/>
       }
 
       {

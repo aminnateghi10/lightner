@@ -7,6 +7,7 @@ import MyText from "../../../shared/myText";
 import { useAppSelector } from "../../../store";
 import { Colors } from "../../../constants/colors";
 import Controller from "./components/controller";
+import EmptyList from "../../../shared/emptyList";
 
 const CardsItems = ({ route, navigation }: any) => {
   const Styles = StyleSheet.create({
@@ -50,15 +51,17 @@ const CardsItems = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={Styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
-        {
-          list?.cards.map((item, index) => (
+      {
+        list?.cards.length ?
+          <ScrollView style={Styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
+            list?.cards.map((item, index) => (
             <Card dropDown={dropDown} setDropDown={setDropDown} index={index} navigation={navigation} data={item}
                   listName={list?.name ?? ""} />
-          ))
-        }
-      </ScrollView>
-      <Controller cards={list?.cards} listName={list?.name} navigation={navigation}/>
+            ))
+          </ScrollView>
+          : <EmptyList />
+      }
+      <Controller cards={list?.cards} listName={list?.name} navigation={navigation} />
     </SafeAreaView>
   );
 };
