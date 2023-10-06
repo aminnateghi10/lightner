@@ -63,6 +63,15 @@ export const cardsSlice = createSlice({
       })];
       return state;
     },
+    editListName: (state, { payload }) => {
+      state.list = [...state.list.map(item => {
+        if (item.name === payload.oldName) {
+          item.name = payload.newName;
+          return item;
+        } else return item;
+      })];
+      return state;
+    },
     deleteList: (state, { payload }) => {
       state.list = [...state.list.filter(item => item.name !== payload)];
       return state;
@@ -90,6 +99,7 @@ export const {
   addNewCard,
   deleteCard,
   deleteList,
+  editListName,
   cardLevelUpgrade,
   deleteCardWithID
 } = cardsSlice.actions;

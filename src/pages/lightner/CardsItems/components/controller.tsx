@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 // icons
 import Icon from "react-native-vector-icons/AntDesign";
 import Delete from "react-native-vector-icons/AntDesign";
@@ -11,7 +11,7 @@ import FolderEditOutline from "react-native-vector-icons/MaterialCommunityIcons"
 import CardsOutlineIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import MyText from "../../../../shared/myText";
-import { deleteList } from "../../../../store/cards";
+import { deleteList, editListName } from "../../../../store/cards";
 import { useTheme } from "../../../../context/themeContext";
 import MyModal from "../../../../shared/myModal";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -58,6 +58,29 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
     dropDownText: {
       color: currentTheme.text,
       marginLeft: 10
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      justifyContent: "space-between",
+      alignContent: "center",
+      backgroundColor: currentTheme.modalCard,
+      borderRadius: 10,
+      width: 300,
+      height: 160,
+      alignItems: "center",
+      elevation: 3
+    },
+    addNewListInput: {
+      borderColor: currentTheme.border,
+      borderWidth: 1,
+      width: "90%",
+      borderRadius: 2,
+      height: 38
     }
   });
 
@@ -65,6 +88,8 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
 
   const [dropdown, setDropdown] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [name, setName] = useState(listName);
 
   const browseList = cards.filter(element => element.browsing_time <= Date.now());
 
@@ -102,7 +127,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
       {
         dropdown &&
         <View style={Styles.dropDown}>
-          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => console.log("edig")}>
+          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => setEditModal(true)}>
             <>
               <FolderEditOutline style={Styles.dropDownIcon} size={25} name="folder-edit-outline" />
               <MyText style={Styles.dropDownText}>ویرایش نام دسته</MyText>
@@ -134,6 +159,39 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
           cancel={toggleDeleteModal} title="حذف دسته کارت" body="این دسته بندی به همراه کارت های داخل آن حذف شود؟" />
       }
       {/* end delete Modal */}
+
+      {/*  edit Modal*/}
+      {
+        editModal &&
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={true}>
+          <View style={Styles.centeredView}>
+            <View style={Styles.modalView}>
+              <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید:</MyText>
+              <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
+              <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
+                <TouchableOpacity onPress={() => setEditModal(false)}
+                                  style={{ width: "50%", height: 40, justifyContent: "center" }}>
+                  <MyText
+                    style={{ textAlign: "center", color: "#3b7edd" }}>انصراف</MyText>
+                </TouchableOpacity>
+                <TouchableOpacity style={{
+                  width: "50%",
+                  borderLeftColor: currentTheme.modalBorder,
+                  borderLeftWidth: 1,
+                  justifyContent: "center"
+                }}>
+                  <MyText style={{ textAlign: "center", color: "#3b7edd" }}
+                          onPress={() => dispatch(editListName({ oldName: listName, newName: name }))}>ذخیره</MyText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      }
+      {/*  end edit Modal*/}
 
     </View>
   );
