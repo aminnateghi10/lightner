@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 // icons
 import Icon from "react-native-vector-icons/AntDesign";
 import Delete from "react-native-vector-icons/AntDesign";
@@ -91,15 +91,22 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
   const [editModal, setEditModal] = useState(false);
   const [name, setName] = useState(listName);
 
-  const browseList = cards.filter(element => element.browsing_time <= Date.now());
+  const browseList = cards?.filter(element => element.browsing_time <= Date.now());
 
   const toggleDeleteModal = () => {
     setDeleteModal(!deleteModal);
     setDropdown(false);
   };
+
   const deleteListHandler = () => {
     dispatch(deleteList(listName));
     navigation.navigate("Home");
+  };
+
+  const editListNameHandler = () => {
+    dispatch(editListName({ oldName: listName, newName: name }));
+    navigation.navigate("Lightner");
+    ToastAndroid.show('تغییر اسم لیست انجام شد.', ToastAndroid.SHORT);
   };
 
   return (
@@ -118,7 +125,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
       <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexGrow: 8 }}>
         <>
           <MyText style={Styles.textColor}>آماده مرور</MyText>
-          <MyText style={Styles.textColor}>{browseList.length} کارت</MyText>
+          <MyText style={Styles.textColor}>{browseList?.length} کارت</MyText>
           <CardsOutlineIcon name="cards-outline" style={[{ marginLeft: 5 }, Styles.textColor]} size={25} />
         </>
       </TouchableOpacity>
@@ -170,7 +177,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
           <View style={Styles.centeredView}>
             <View style={Styles.modalView}>
               <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید:</MyText>
-              <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
+              <TextInput style={Styles.addNewListInput} value={name} onChangeText={(e) => setName(e)} placeholder="" />
               <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
                 <TouchableOpacity onPress={() => setEditModal(false)}
                                   style={{ width: "50%", height: 40, justifyContent: "center" }}>
@@ -184,7 +191,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
                   justifyContent: "center"
                 }}>
                   <MyText style={{ textAlign: "center", color: "#3b7edd" }}
-                          onPress={() => dispatch(editListName({ oldName: listName, newName: name }))}>ذخیره</MyText>
+                          onPress={editListNameHandler}>ذخیره</MyText>
                 </TouchableOpacity>
               </View>
             </View>
