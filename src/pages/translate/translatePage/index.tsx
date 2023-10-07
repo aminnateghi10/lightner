@@ -5,7 +5,7 @@ import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
-import ArrowRightIcon from "react-native-vector-icons/AntDesign";
+import ArrowSwitchIcon from "react-native-vector-icons/Octicons";
 import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import CopyOutlineIcon from "react-native-vector-icons/Ionicons";
 import Volume2Icon from "react-native-vector-icons/Feather";
@@ -204,7 +204,7 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
           style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
           <View><MyText>فارسی</MyText></View>
           <TouchableOpacity onPress={changeTranslatedLang}>
-            <ArrowRightIcon name="arrowright" size={25} />
+            <ArrowSwitchIcon name="arrow-switch" size={25} />
           </TouchableOpacity>
           <View><MyText>انگلیسی</MyText></View>
         </View>
@@ -232,8 +232,8 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
                 <ActivityIndicator size="small" color="#ffffff" />
                 :
                 <>
-                  <MyText> ترجمه</MyText>
-                  <TranslateIcon name="translate" size={25} />
+                  <MyText style={{color:"white"}}> ترجمه</MyText>
+                  <TranslateIcon name="translate" color="white" size={25} />
                 </>
               }
             </TouchableOpacity>
