@@ -8,8 +8,10 @@ import { useAppSelector } from "../../../store";
 import { Colors } from "../../../constants/colors";
 import Controller from "./components/controller";
 import EmptyList from "../../../shared/emptyList";
+import { useTheme } from "../../../context/themeContext";
 
 const CardsItems = ({ route, navigation }: any) => {
+  const { currentTheme } = useTheme();
   const Styles = StyleSheet.create({
     container: {
       flex: 1
@@ -17,7 +19,7 @@ const CardsItems = ({ route, navigation }: any) => {
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      backgroundColor: Colors.card,
+      backgroundColor:currentTheme.card,
       height: 55,
       padding: 12,
       borderColor: "red"
