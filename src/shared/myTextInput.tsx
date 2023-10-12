@@ -13,7 +13,7 @@ const MyTextInput = (Props: TextInputProps) => {
     });
 
     return (
-        <TextInput {...Props} onPressIn={()=> Keyboard.dismiss()}  style={[Styles.customText, Props.style]}/>
+        <TextInput {...Props} onPressIn={()=> Keyboard.dismiss()} placeholderTextColor={currentTheme.text} style={[Styles.customText, Props.style]}/>
     );
 };
 
