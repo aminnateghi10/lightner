@@ -10,12 +10,6 @@ import SettingIcon from "react-native-vector-icons/AntDesign";
 import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import RobotIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-// components
-import Robot from "../pages/robot";
-import Translate from "../pages/translate";
-import Lightner from "../pages/lightner";
-import Setting from "../pages/setting";
-
 import { initTheme } from "../store/theme";
 import { useAppDispatch, useAppSelector } from "../store";
 import { CustomDarkTheme, CustomDefaultTheme } from "../constants/themeMode";
@@ -45,7 +39,7 @@ const TabBar = () => {
           tabBarLabelStyle: { fontFamily: "Vazir-Medium-FD-WOL" },
           tabBarStyle: { height: 47 },
           tabBarHideOnKeyboard: true,
-          headerShown:false
+          headerShown:false,
         }}>
         <Tab.Screen name="Translate" component={TranslatePage}
                     options={{
@@ -61,6 +55,8 @@ const TabBar = () => {
         <Tab.Screen name="Robot" component={RobotPage}
                     options={{
                       title: "ربات",
+                      headerShown:true,
+                      tabBarStyle:{display:'none'},
                       tabBarIcon: ({ color, size }) => <RobotIcon name="robot" color={color} size={size} />
                     }}
         />

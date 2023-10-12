@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import SendIcon from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import BoxIcon from "react-native-vector-icons/Feather";
+import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 
 import MyText from "../../../shared/myText";
 import MyTextInput from "../../../shared/myTextInput";
@@ -16,8 +18,8 @@ interface PropsInterface {
 }
 
 interface MessagesInterface {
-  role: "bot" | "user",
-  content: string
+  role: "bot" | "user" | "isTyping",
+  content: string,
 }
 
 const Index = ({ navigation }: PropsInterface) => {
@@ -30,29 +32,34 @@ const Index = ({ navigation }: PropsInterface) => {
     messagesContainer: {
       flexGrow: 1,
       justifyContent: "flex-end",
-      paddingHorizontal: 15
+      paddingHorizontal: 14
     },
     message: {
-      paddingHorizontal:10,
-      paddingVertical:2,
-      marginVertical: 4,
+      paddingHorizontal: 12,
+      paddingVertical: 5,
+      marginTop: 6,
+      maxWidth:'90%'
     },
     user: {
-      backgroundColor: "#2f88d2",
+      backgroundColor: "#0076fe",
       alignSelf: "flex-end",
-      borderRadius:15,
-      borderBottomEndRadius:0,
+      borderRadius: 10,
+      borderBottomEndRadius: 0
     },
     bot: {
-      borderRadius:15,
-      borderBottomStartRadius:0,
-      backgroundColor: currentTheme.card,
+      borderRadius: 10,
+      borderBottomStartRadius: 0,
+      backgroundColor: "#eaf4fe",
       alignSelf: "flex-start"
     },
     inputContainer: {
       flexDirection: "row",
       alignItems: "center",
-      backgroundColor: currentTheme.card
+      backgroundColor: currentTheme.card,
+      with: 100,
+      borderRadius: 16,
+      marginTop: 8,
+      margin: 10
     },
     input: {
       flex: 1,
@@ -62,24 +69,27 @@ const Index = ({ navigation }: PropsInterface) => {
       borderRadius: 8
     },
     headerContainer: {
-      alignItems: "center",
+      flexDirection: "row",
       backgroundColor: currentTheme.card,
       height: 55,
-      paddingTop: 4
+      paddingTop: 4,
+      paddingHorizontal: 20,
+      alignItems: "center"
     },
     headerTitle: {
-      fontSize: 18
+      fontSize: 18,
+      flexGrow: 1,
+      textAlign: "center"
     }
   });
 
   navigation.setOptions({
     header: () => (
       <View style={Styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <ArrowLeftIcon name="arrow-left" size={20} style={{ flexGrow: 0 }} color={currentTheme.text} />
+        </TouchableOpacity>
         <MyText style={Styles.headerTitle}>ربات</MyText>
-        {
-          isTyping &&
-          <MyText style={{ fontSize: 12 }}>در حال نوشتن...</MyText>
-        }
       </View>
     )
   });
@@ -119,10 +129,14 @@ const Index = ({ navigation }: PropsInterface) => {
   };
 
   const handleInputSubmit = async () => {
-    if (inputValue){
+    if (inputValue) {
       try {
         setIsTyping(true);
-        setMessages((prevMessages) => [{ role: "user", content: inputValue, time: getTime() }, ...prevMessages]);
+        setMessages((prevMessages) => [{ role: "isTyping", content: inputValue, time: getTime() }, {
+          role: "user",
+          content: inputValue,
+          time: getTime()
+        }, ...prevMessages]);
         setInputValue("");
         const response = await axios.post(
           "https://api.openai.com/v1/chat/completions",
@@ -135,14 +149,14 @@ const Index = ({ navigation }: PropsInterface) => {
           }
         );
         const content = await response.data.choices[0].message.content;
-
         setMessages((prevMessages) => {
+          let newList = prevMessages.filter((item => item.role !== "isTyping"));
           AsyncStorage.setItem("chatMessages", JSON.stringify([{
             role: "bot",
             content,
             time: getTime()
-          }, ...prevMessages]));
-          return [{ role: "bot", content, time: getTime() }, ...prevMessages];
+          }, ...newList]));
+          return [{ role: "bot", content, time: getTime() }, ...newList];
         });
       } catch (err) {
         const content = "لطفا اینترنت خود را برسی کنید";
@@ -160,29 +174,40 @@ const Index = ({ navigation }: PropsInterface) => {
         inverted
         data={messages}
         contentContainerStyle={Styles.messagesContainer} renderItem={({ item }) => (
-          <>
-            {
-              item.role === "user" ?
-                <View style={[Styles.message, Styles.user]}>
-                  <MyText style={{color:"#e0ecf4"}}>
-                    {item.content}
-                  </MyText>
-                  <MyText style={{fontSize:9 , textAlign:'right',color:"#e0ecf4"}}>
-                    {item?.time}
-                  </MyText>
-                </View>
-                :
-                <View style={[Styles.message, Styles.bot]}>
-                  <MyText>
-                    {item.content}
-                  </MyText>
-                  <MyText style={{fontSize:9 , textAlign:'right'}}>
-                    {item?.time}
-                  </MyText>
-                </View>
-            }
-
-          </>
+        <>
+          {
+            item.role === "isTyping" ?
+              <View style={[Styles.message, Styles.bot]}>
+                <Image style={{width: 50, height: 30}} source={require("../../../../assets/gif/loading.gif")}/>
+              </View>
+              :
+              <>
+                {
+                  item.role === "user" ?
+                    <>
+                      <MyText style={{ fontSize: 9, textAlign: "right", opacity: 0.4 }}>
+                        {item?.time}
+                      </MyText>
+                      <View style={[Styles.message, Styles.user]}>
+                        <MyText style={{ color: "#e9eafd" }}>
+                          {item.content}
+                        </MyText>
+                      </View>
+                    </>
+                    :
+                    <>
+                      <MyText style={{ fontSize: 9, textAlign: "left", opacity: 0.4 }}>
+                        {item?.time}
+                      </MyText>
+                      <View style={[Styles.message, Styles.bot]}>
+                        <MyText style={{ color: "#1f2732" }}>
+                          {item.content}
+                        </MyText>
+                      </View>
+                    </>
+                }</>
+          }
+        </>
       )} />
       <View style={Styles.inputContainer}>
         <MyTextInput
