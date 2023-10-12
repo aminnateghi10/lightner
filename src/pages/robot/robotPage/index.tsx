@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, FlatList, TouchableOpacity, Image, ToastAndroid } from "react-native";
 import SendIcon from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -12,6 +12,7 @@ import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
 
 import { RobotParamList } from "../../../contracts/rootParamList";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RobotParamList>,
@@ -102,6 +103,11 @@ const Index = ({ navigation }: PropsInterface) => {
     loadMessages();
   }, []);
 
+  const copyToClipboard = (text) => {
+    ToastAndroid.show('متن کپی شد', ToastAndroid.SHORT);
+    Clipboard.setString(text);
+  };
+
   const loadMessages = async () => {
     const storedMessages = await AsyncStorage.getItem("chatMessages");
     if (storedMessages) {
@@ -187,26 +193,26 @@ const Index = ({ navigation }: PropsInterface) => {
               <>
                 {
                   item.role === "user" ?
-                    <TouchableOpacity>
+                    <>
                       <MyText style={{ fontSize: 9, textAlign: "right", opacity: 0.4 }}>
                         {item?.time}
                       </MyText>
-                      <View style={[Styles.message, Styles.user]}>
+                      <TouchableOpacity style={[Styles.message, Styles.user]} onPress={()=>copyToClipboard(item.content)}>
                         <MyText style={{ color: "#e9eafd" }}>
                           {item.content}
                         </MyText>
-                      </View>
-                    </TouchableOpacity>
+                      </TouchableOpacity>
+                    </>
                     :
                     <>
                       <MyText style={{ fontSize: 9, textAlign: "left", opacity: 0.4 }}>
                         {item?.time}
                       </MyText>
-                      <View style={[Styles.message, Styles.bot]}>
+                      <TouchableOpacity onPress={()=>copyToClipboard(item.content)} style={[Styles.message, Styles.bot]}>
                         <MyText style={{ color: "#1f2732" }}>
                           {item.content}
                         </MyText>
-                      </View>
+                      </TouchableOpacity>
                     </>
                 }</>
           }
