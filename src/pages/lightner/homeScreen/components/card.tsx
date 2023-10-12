@@ -12,7 +12,7 @@ interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
 }
 
-const Card = ({ data, navigation }: PropsInterface) => {
+const Card = ({ data, navigation ,setAddNew}: PropsInterface) => {
   const { currentTheme } = useTheme();
   let allLevels = 0;
   data.cards?.forEach(item => allLevels += item.level);
@@ -35,11 +35,15 @@ const Card = ({ data, navigation }: PropsInterface) => {
     }
   });
 
+  const goToPage = () => {
+    setAddNew(false);
+    navigation.navigate("CardsItems", { listName: data.name });
+  }
   return (
     <View style={Styles.col_3}>
       <TouchableHighlight
         style={Styles.card}
-        onPress={() => navigation.navigate("CardsItems", { listName: data.name })}>
+        onPress={goToPage}>
         <>
           <MyText style={Styles.title}>{data.name}</MyText>
           <MyText style={{ textAlign: "right", fontSize: 10,color:currentTheme.text,opacity:.6 }}>{data.cards.length} کارت</MyText>

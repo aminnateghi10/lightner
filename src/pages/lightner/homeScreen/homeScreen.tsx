@@ -145,7 +145,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
           <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", paddingBottom: 80 }}>
             {
               cards.list.map((item) => (
-                <Card navigation={navigation} data={item} />
+                <Card navigation={navigation} data={item} setAddNew={setAddNew}/>
               ))
             }
           </ScrollView>
