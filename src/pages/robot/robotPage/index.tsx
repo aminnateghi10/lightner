@@ -38,7 +38,7 @@ const Index = ({ navigation }: PropsInterface) => {
       paddingHorizontal: 12,
       paddingVertical: 5,
       marginTop: 6,
-      maxWidth:'90%'
+      maxWidth: "90%"
     },
     user: {
       backgroundColor: "#0076fe",
@@ -159,8 +159,11 @@ const Index = ({ navigation }: PropsInterface) => {
           return [{ role: "bot", content, time: getTime() }, ...newList];
         });
       } catch (err) {
-        const content = "لطفا اینترنت خود را برسی کنید";
-        setMessages((prevMessages) => [{ role: "bot", content, time: getTime() }, ...prevMessages]);
+        const content = "لطفا اینترنت خود را بررسی کنید";
+        setMessages((prevMessages) =>{
+          let newList = prevMessages.filter((item => item.role !== "isTyping"));
+          return [{ role: "bot", content, time: getTime() }, ...newList];
+        })
       } finally {
         setIsTyping(false);
       }
@@ -178,13 +181,13 @@ const Index = ({ navigation }: PropsInterface) => {
           {
             item.role === "isTyping" ?
               <View style={[Styles.message, Styles.bot]}>
-                <Image style={{width: 50, height: 30}} source={require("../../../../assets/gif/loading.gif")}/>
+                <Image style={{ width: 50, height: 30 }} source={require("../../../../assets/gif/loading.gif")} />
               </View>
               :
               <>
                 {
                   item.role === "user" ?
-                    <>
+                    <TouchableOpacity>
                       <MyText style={{ fontSize: 9, textAlign: "right", opacity: 0.4 }}>
                         {item?.time}
                       </MyText>
@@ -193,7 +196,7 @@ const Index = ({ navigation }: PropsInterface) => {
                           {item.content}
                         </MyText>
                       </View>
-                    </>
+                    </TouchableOpacity>
                     :
                     <>
                       <MyText style={{ fontSize: 9, textAlign: "left", opacity: 0.4 }}>
@@ -216,8 +219,11 @@ const Index = ({ navigation }: PropsInterface) => {
           placeholder="پیام"
           onChangeText={handleInputChange}
         />
-        <SendIcon name="send" color={currentTheme.button} style={{ paddingRight: 10 }} onPress={handleInputSubmit}
-                  size={25} />
+        {
+          isTyping ? <Image style={{ width: 40, height: 40 }} source={require("../../../../assets/gif/smallLoading.gif")} /> :
+            <SendIcon name="send" color={currentTheme.button} style={{ paddingRight: 10 }} onPress={handleInputSubmit}
+                      size={25} />
+        }
       </View>
     </View>
   );
