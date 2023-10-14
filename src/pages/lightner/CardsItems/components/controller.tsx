@@ -11,7 +11,7 @@ import FolderEditOutline from "react-native-vector-icons/MaterialCommunityIcons"
 import CardsOutlineIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import MyText from "../../../../shared/myText";
-import { deleteList, editListName } from "../../../../store/cards";
+import { deleteList, editListName, removeAllCards } from "../../../../store/cards";
 import { useTheme } from "../../../../context/themeContext";
 import MyModal from "../../../../shared/myModal";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -89,6 +89,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
   const [dropdown, setDropdown] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [removeAllCardsModal, setRemoveAllCardsModal] = useState(false);
   const [name, setName] = useState(listName);
 
   const browseList = cards?.filter(element => element.browsing_time <= Date.now());
@@ -101,6 +102,10 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
   const deleteListHandler = () => {
     dispatch(deleteList(listName));
     navigation.navigate("Home");
+  };
+  const removeAllCardsModalHandler = () => {
+    dispatch(removeAllCards(listName));
+    setRemoveAllCardsModal(false)
   };
 
   const editListNameHandler = () => {
@@ -147,12 +152,11 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
               <MyText style={Styles.dropDownText}>حذف دسته</MyText>
             </>
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => dispatch(deleteList(listName))}>
+          <TouchableOpacity style={Styles.dropDownBtn} onPress={()=>setRemoveAllCardsModal(true)}>
             <>
               <Delete style={Styles.dropDownIcon} name="delete" size={20} />
               <MyText style={Styles.dropDownText}>حذف همه کارت ها</MyText>
             </>
-
           </TouchableOpacity>
         </View>
       }
@@ -166,6 +170,15 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
           cancel={toggleDeleteModal} title="حذف دسته کارت" body="این دسته بندی به همراه کارت های داخل آن حذف شود؟" />
       }
       {/* end delete Modal */}
+
+      {/* Remove all cards  Modal */}
+      {
+        removeAllCardsModal &&
+        <MyModal
+          submit={removeAllCardsModalHandler}
+          cancel={()=>setRemoveAllCardsModal(false)} title="حذف همه کارت ها" body="همه کارت های داخل جعبه حذف شود؟" />
+      }
+      {/* end Remove all cards Modal */}
 
       {/*  edit Modal*/}
       {

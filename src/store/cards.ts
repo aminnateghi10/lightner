@@ -76,6 +76,17 @@ export const cardsSlice = createSlice({
       state.list = [...state.list.filter(item => item.name !== payload)];
       return state;
     },
+    removeAllCards: (state, { payload }) => {
+      state.list = [...state.list.map(item => {
+        if (item.name === payload) {
+          item.cards = [];
+          return item;
+        } else {
+          return item;
+        }
+      })];
+      return state;
+    },
     cardLevelUpgrade: (state, { payload }) => {
       state.list = [...state.list.map(item => {
         return {
@@ -99,6 +110,7 @@ export const {
   addNewCard,
   deleteCard,
   deleteList,
+  removeAllCards,
   editListName,
   cardLevelUpgrade,
   deleteCardWithID
