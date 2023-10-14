@@ -25,7 +25,7 @@ const AddNewCard = ({route}: PropsInterface) => {
 
     let addNewCardHandler = () => {
         if (newCard.persian || newCard.english && listName) {
-            dispatch(addNewCard({newCard, listName}));Ï
+            dispatch(addNewCard({newCard, listName}));
             setNewCard({english: "", persian: "", id: Date.now()});
         }
     };
