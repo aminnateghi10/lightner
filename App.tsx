@@ -1,42 +1,37 @@
+import { useEffect } from "react";
 import { Provider } from "react-redux";
-import messaging from '@react-native-firebase/messaging';
 
 import Router from "./src/router";
 import { store } from "./src/store";
 import ThemeContext from "./src/context/themeContext";
-import { useEffect } from "react";
-import { Alert } from 'react-native';
+import usePushNotification from "./src/components/pushNotification";
 
 const App = () => {
+  const {
+    requestUserPermission,
+    getFCMToken,
+    listenToBackgroundNotifications,
+    listenToForegroundNotifications,
+    onNotificationOpenedAppFromBackground,
+    onNotificationOpenedAppFromQuit
+  } = usePushNotification();
 
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    const listenToNotifications = () => {
+      try {
+        getFCMToken();
+        requestUserPermission();
+        onNotificationOpenedAppFromQuit();
+        listenToBackgroundNotifications();
+        listenToForegroundNotifications();
+        onNotificationOpenedAppFromBackground();
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    });
-
-    return unsubscribe;
+    listenToNotifications();
   }, []);
-  async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  }
-
-  const getToken = async () => {
-    const token = await messaging().getToken();
-    console.log('this id my token:',token);
-  }
-
-  useEffect(()=>{
-    requestUserPermission();
-    getToken();
-  },[])
 
   return (
     <Provider store={store}>
