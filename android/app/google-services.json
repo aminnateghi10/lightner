@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "990646067771",
+    "project_id": "lightner2",
+    "storage_bucket": "lightner2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990646067771:android:d2fa16ae7fd97514cf321e",
+        "android_client_info": {
+          "package_name": "com.lightner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQcbim6hJcbOq3cq_qbhC00ABuwdyo-xY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -166,7 +166,7 @@ const Index = ({ navigation }: PropsInterface) => {
 
   const deleteHistory = async () => {
     setDeleteHistoryModal(false);
-    AsyncStorage.removeItem("translatorHistory");
+    await AsyncStorage.removeItem("translatorHistory");
     setHistory([]);
 
   };

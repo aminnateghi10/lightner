@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View,ToastAndroid } from "react-native";
+import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View, ToastAndroid } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
@@ -112,10 +112,16 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   const [deleteHistoryModal, setDeleteHistoryModal] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem("translatorHistory").then(res => {
-      if (res) setHistory(JSON.parse(res));
+    const unsubscribe = navigation.addListener("focus", () => {
+      AsyncStorage.getItem("translatorHistory").then(res => {
+        if (res) setHistory(JSON.parse(res))
+        else setHistory([]);
+      });
     });
-  }, []);
+
+    return unsubscribe;
+  }, [navigation]);
+
 
   let speak = (text: string) => Tts.speak(text);
   const handleTranslate = async () => {
@@ -166,7 +172,7 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   };
 
   const copyToClipboard = () => {
-    ToastAndroid.show('متن کپی شد', ToastAndroid.SHORT);
+    ToastAndroid.show("متن کپی شد", ToastAndroid.SHORT);
     Clipboard.setString(translation);
   };
 
@@ -232,7 +238,7 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
                 <ActivityIndicator size="small" color="#ffffff" />
                 :
                 <>
-                  <MyText style={{color:"white"}}> ترجمه</MyText>
+                  <MyText style={{ color: "white" }}> ترجمه</MyText>
                   <TranslateIcon name="translate" color="white" size={25} />
                 </>
               }
