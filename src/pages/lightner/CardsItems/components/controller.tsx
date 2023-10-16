@@ -105,13 +105,21 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
   };
   const removeAllCardsModalHandler = () => {
     dispatch(removeAllCards(listName));
-    setRemoveAllCardsModal(false)
+    setRemoveAllCardsModal(false);
   };
 
   const editListNameHandler = () => {
     dispatch(editListName({ oldName: listName, newName: name }));
     navigation.navigate("Lightner");
-    ToastAndroid.show('تغییر اسم لیست انجام شد.', ToastAndroid.SHORT);
+    ToastAndroid.show("تغییر اسم لیست انجام شد.", ToastAndroid.SHORT);
+  };
+
+  const reviewHandler = () => {
+    const singleBrowseList: any = {
+      cards: browseList,
+      name: "مرور"
+    };
+    navigation.navigate("Review", { data: singleBrowseList });
   };
 
   return (
@@ -127,7 +135,8 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
           <ReaderOutline name="reader-outline" style={[{ marginLeft: 5 }, Styles.textColor]} size={25} />
         </>
       </TouchableOpacity>
-      <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexGrow: 8 }}>
+      <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexGrow: 8 }}
+                        onPress={reviewHandler}>
         <>
           <MyText style={Styles.textColor}>آماده مرور</MyText>
           <MyText style={Styles.textColor}>{browseList?.length} کارت</MyText>
@@ -152,7 +161,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
               <MyText style={Styles.dropDownText}>حذف دسته</MyText>
             </>
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.dropDownBtn} onPress={()=>setRemoveAllCardsModal(true)}>
+          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => setRemoveAllCardsModal(true)}>
             <>
               <Delete style={Styles.dropDownIcon} name="delete" size={20} />
               <MyText style={Styles.dropDownText}>حذف همه کارت ها</MyText>
@@ -176,7 +185,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
         removeAllCardsModal &&
         <MyModal
           submit={removeAllCardsModalHandler}
-          cancel={()=>setRemoveAllCardsModal(false)} title="حذف همه کارت ها" body="همه کارت های داخل جعبه حذف شود؟" />
+          cancel={() => setRemoveAllCardsModal(false)} title="حذف همه کارت ها" body="همه کارت های داخل جعبه حذف شود؟" />
       }
       {/* end Remove all cards Modal */}
 

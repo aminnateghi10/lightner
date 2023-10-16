@@ -30,6 +30,7 @@ interface PropsInterface {
 const ShowCard = ({route, navigation}: PropsInterface) => {
     const dispatch = useAppDispatch();
     const {data} = route.params;
+    console.log(data,'data');
     const [count, setCount] = useState(0);
     const nowData = data.cards[count];
     const [lang, setLang] = useState(true);
