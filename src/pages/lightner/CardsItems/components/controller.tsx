@@ -126,6 +126,18 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
     }
   };
 
+  const practiceHandler = () => {
+    if (cards?.length) {
+      const singleBrowseList: any = {
+        cards: cards,
+        name: "تمرین"
+      };
+      navigation.navigate("Review", { data: singleBrowseList });
+    } else {
+      ToastAndroid.show("کارتی برای تمرین وجود ندارد.", ToastAndroid.SHORT);
+    }
+  };
+
   return (
     <View style={Styles.container}>
       <EllipsisVertical
@@ -133,7 +145,7 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
         onPress={() => setDropdown(!dropdown)}
         style={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 10, color: "white" }}
         name="md-ellipsis-vertical-sharp" />
-      <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexGrow: 8 }}>
+      <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexGrow: 8 }} onPress={practiceHandler}>
         <>
           <MyText style={Styles.textColor}>تمرین</MyText>
           <ReaderOutline name="reader-outline" style={[{ marginLeft: 5 }, Styles.textColor]} size={25} />
