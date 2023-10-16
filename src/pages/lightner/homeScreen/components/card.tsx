@@ -12,7 +12,7 @@ interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
 }
 
-const Card = ({ data, navigation ,setAddNew}: PropsInterface) => {
+const Card = ({ data, navigation}: PropsInterface) => {
   const { currentTheme } = useTheme();
   let allLevels = 0;
   data.cards?.forEach(item => allLevels += item.level);
@@ -36,7 +36,6 @@ const Card = ({ data, navigation ,setAddNew}: PropsInterface) => {
   });
 
   const goToPage = () => {
-    setAddNew(false);
     navigation.navigate("CardsItems", { listName: data.name });
   }
   return (

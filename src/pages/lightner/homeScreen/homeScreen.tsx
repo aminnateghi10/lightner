@@ -117,6 +117,14 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
     save();
   }, [cards]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+        setAddNew(false);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   let addNewListHandler = () => {
     if (name) {
       dispatch(addNewList(name));
@@ -145,7 +153,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
           <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", paddingBottom: 80 }}>
             {
               cards.list.map((item) => (
-                <Card navigation={navigation} data={item} setAddNew={setAddNew}/>
+                <Card navigation={navigation} data={item}/>
               ))
             }
           </ScrollView>
