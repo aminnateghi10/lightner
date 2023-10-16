@@ -115,11 +115,15 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
   };
 
   const reviewHandler = () => {
-    const singleBrowseList: any = {
-      cards: browseList,
-      name: "مرور"
-    };
-    navigation.navigate("Review", { data: singleBrowseList });
+    if (browseList?.length) {
+      const singleBrowseList: any = {
+        cards: browseList,
+        name: "مرور"
+      };
+      navigation.navigate("Review", { data: singleBrowseList });
+    } else {
+      ToastAndroid.show("کارتی برای مرور وجود ندارد.", ToastAndroid.SHORT);
+    }
   };
 
   return (
