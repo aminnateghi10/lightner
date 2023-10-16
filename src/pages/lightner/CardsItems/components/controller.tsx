@@ -164,20 +164,22 @@ const Controller = ({ cards, listName, navigation }: PropsInterface) => {
       {
         dropdown &&
         <View style={Styles.dropDown}>
-          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => setEditModal(true)}>
+          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => {setEditModal(true);setDropdown(false)}}>
             <>
               <FolderEditOutline style={Styles.dropDownIcon} size={25} name="folder-edit-outline" />
               <MyText style={Styles.dropDownText}>ویرایش نام دسته</MyText>
             </>
           </TouchableOpacity>
           <TouchableOpacity style={Styles.dropDownBtn} onPress={toggleDeleteModal}>
-            {/*<TouchableOpacity style={Styles.dropDownBtn} onPress={() => dispatch(deleteList(listName))}>*/}
             <>
               <FolderRemoveOutline style={Styles.dropDownIcon} size={25} name="folder-remove-outline" />
               <MyText style={Styles.dropDownText}>حذف دسته</MyText>
             </>
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => setRemoveAllCardsModal(true)}>
+          <TouchableOpacity style={Styles.dropDownBtn} onPress={() => {
+            setRemoveAllCardsModal(true);
+            setDropdown(false);
+          }}>
             <>
               <Delete style={Styles.dropDownIcon} name="delete" size={20} />
               <MyText style={Styles.dropDownText}>حذف همه کارت ها</MyText>
