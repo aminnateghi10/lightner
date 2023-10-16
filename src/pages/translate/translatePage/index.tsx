@@ -208,11 +208,11 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
         </View>
         <View
           style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
-          <View><MyText>فارسی</MyText></View>
-          <TouchableOpacity onPress={changeTranslatedLang}>
+          <View style={{width:'33%',alignItems:'center'}}><MyText>فارسی</MyText></View>
+          <TouchableOpacity style={{width:'33%',alignItems:'center'}} onPress={changeTranslatedLang}>
             <ArrowSwitchIcon name="arrow-switch" size={25} />
           </TouchableOpacity>
-          <View><MyText>انگلیسی</MyText></View>
+          <View style={{width:'33%',alignItems:'center'}}><MyText>انگلیسی</MyText></View>
         </View>
         <View style={Styles.languageTypeBox}>
           {
