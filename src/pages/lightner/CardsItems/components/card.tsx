@@ -29,10 +29,6 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
     },
     icon: {
       color: currentTheme.text,
-      bottom: 0,
-      left: 2,
-      padding: 0,
-      zIndex: 2
     },
     dropDown: {
       position: "absolute",
@@ -72,7 +68,7 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
           <MyText style={{ textAlign: "left" }}>{data.english}</MyText>
           <MyText style={{ opacity: .5 }}>{data.persian}</MyText>
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-            <Icon name="ellipsis-horizontal" size={27} onPress={toggleDropDown}
+            <Icon name="ellipsis-vertical" size={25} onPress={toggleDropDown}
                   style={Styles.icon} />
             <MyText style={{ fontSize: 11, color: currentTheme.button }}>{`جعبه ${data.level}`}</MyText>
           </View>

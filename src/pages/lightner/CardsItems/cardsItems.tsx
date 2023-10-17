@@ -19,13 +19,14 @@ const CardsItems = ({ route, navigation }: any) => {
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
+      alignItems:'center',
       backgroundColor:currentTheme.card,
       height: 55,
       padding: 12,
       borderColor: "red"
     },
     headerTitle: {
-      fontSize: 18
+      fontSize: 17,
     }
   });
 
@@ -39,13 +40,7 @@ const CardsItems = ({ route, navigation }: any) => {
       <View style={Styles.headerContainer}>
         <ArrowLeft style={{ textAlign: "left" }} name="arrowleft" size={27} onPress={() => navigation.goBack()} />
         <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
-          <MyText style={Styles.headerTitle}>دسته: {listName}</MyText>
-          <MyText style={{
-            marginHorizontal: 10,
-            padding: 4,
-            backgroundColor: Colors.button,
-            borderRadius: 5
-          }}>{list?.cards.length}</MyText>
+          <MyText style={Styles.headerTitle}>{`دسته: ${listName} (${list?.cards.length} کارت)`}</MyText>
         </View>
       </View>
     )
