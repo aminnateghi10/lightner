@@ -17,20 +17,18 @@ const App = () => {
   } = usePushNotification();
 
   useEffect(() => {
-    const listenToNotifications = () => {
+    (async () => {
       try {
-        getFCMToken();
-        requestUserPermission();
-        onNotificationOpenedAppFromQuit();
-        listenToBackgroundNotifications();
-        listenToForegroundNotifications();
-        onNotificationOpenedAppFromBackground();
+        await getFCMToken();
+        await requestUserPermission();
+        await onNotificationOpenedAppFromQuit();
+        await listenToBackgroundNotifications();
+        await listenToForegroundNotifications();
+        await onNotificationOpenedAppFromBackground();
       } catch (error) {
         console.log(error);
       }
-    };
-
-    listenToNotifications();
+    })();
   }, []);
 
   return (
