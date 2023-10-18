@@ -1,5 +1,9 @@
 import { useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
+import ChartLineIcon from "react-native-vector-icons/FontAwesome5";
+import MoveIcon from "react-native-vector-icons/Ionicons";
+import EditIcon from "react-native-vector-icons/MaterialIcons";
+import DeleteIcon from "react-native-vector-icons/MaterialIcons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
@@ -7,6 +11,7 @@ import MyText from "../../../../shared/myText";
 import { deleteCard } from "../../../../store/cards";
 import { useTheme } from "../../../../context/themeContext";
 import { LightnerParamList } from "../../../../contracts/rootParamList";
+import { useEffect, useRef } from "react";
 
 interface PropsInterface {
   data: any,
@@ -28,26 +33,28 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
       elevation: 3
     },
     icon: {
-      color: currentTheme.text,
+      color: currentTheme.text
+    },
+    item: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingLeft:5,
     },
     dropDown: {
       position: "absolute",
-      top: 20,
+      top: "auto",
       left: 60,
       marginTop: 10,
-      backgroundColor: "#EAEAEA",
-      zIndex: 999
+      backgroundColor: currentTheme.card,
+      elevation: 6,
+      borderRadius: 4
     },
     dropDownText: {
       color: "black",
-      fontSize: 18,
-      marginHorizontal: 7,
-      marginVertical: 6,
-      borderColor: "rgb(75,74,74)",
-      borderWidth: 1,
+      fontSize: 14,
+      marginVertical: 4,
       padding: 10,
       borderRadius: 10,
-      textAlign: "center"
     }
   });
 
@@ -57,6 +64,24 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
     if (data.id === dropDown) setDropDown(null);
     else setDropDown(data.id);
   };
+
+  const myComponentRef = useRef(null);
+
+  useEffect(() => {
+    if (myComponentRef.current) {
+      console.log('myComponentRef');
+      myComponentRef.current.measure((fx, fy, width, height, px, py) => {
+        // Do positioning checks here using the measured values
+        console.log('Component dimensions and position:');
+        console.log('x:', fx);
+        console.log('y:', fy);
+        console.log('width:', width);
+        console.log('height:', height);
+        console.log('pageX:', px);
+        console.log('pageY:', py);
+      });
+    }
+  }, []);
 
   return (
     <View style={{ position: "relative", zIndex: -index }}>
@@ -77,11 +102,25 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
       {
         data.id === dropDown &&
         <View style={Styles.dropDown}>
-          <TouchableOpacity onPress={() => navigation.navigate("EditCard", { data, listName })}>
-            <Text style={Styles.dropDownText}>ویرایش</Text>
+          <TouchableOpacity style={Styles.item} onPress={() => navigation.navigate("EditCard", { data, listName })}  ref={myComponentRef}>
+            <>
+              <ChartLineIcon name="chart-line" size={25} style={Styles.icon} />
+              <Text style={Styles.dropDownText}>پیشرفت</Text>
+            </>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => dispatch(deleteCard({ listName, id: data.id }))}>
-            <Text style={Styles.dropDownText}>حذف</Text>
+          <TouchableOpacity style={Styles.item} onPress={() => navigation.navigate("EditCard", { data, listName })}>
+            <>
+              <MoveIcon name="move" size={25} style={Styles.icon} />
+              <Text style={Styles.dropDownText}>انتقال به دسته دیگر</Text>
+            </>
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.item} onPress={() => navigation.navigate("EditCard", { data, listName })}>
+            <EditIcon name="edit" size={25} style={Styles.icon} />
+            <Text style={Styles.dropDownText}>ویرایش کارت</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.item} onPress={() => dispatch(deleteCard({ listName, id: data.id }))}>
+            <DeleteIcon name="delete" size={25} style={Styles.icon} />
+            <Text style={Styles.dropDownText}>حذف کارت</Text>
           </TouchableOpacity>
         </View>
       }
