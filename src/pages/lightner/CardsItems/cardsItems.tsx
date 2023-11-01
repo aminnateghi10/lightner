@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SearchIcon from "react-native-vector-icons/Feather";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
 import { FlatList, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
@@ -8,6 +9,7 @@ import { useAppSelector } from "../../../store";
 import { Colors } from "../../../constants/colors";
 import Controller from "./components/controller";
 import EmptyList from "../../../shared/emptyList";
+import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
 
 const CardsItems = ({ route, navigation }: any) => {
@@ -19,29 +21,58 @@ const CardsItems = ({ route, navigation }: any) => {
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems:'center',
-      backgroundColor:currentTheme.card,
+      alignItems: "center",
+      backgroundColor: currentTheme.card,
       height: 55,
       padding: 12,
       borderColor: "red"
     },
     headerTitle: {
-      fontSize: 17,
+      fontSize: 17
+    },
+    search: {
+      borderBottomColor: currentTheme.border,
+      borderBottomWidth: .5,
+      flex: 1,
+      marginTop: 0,
+      paddingHorizontal: 10,
+      marginHorizontal: 40,
+      paddingBottom: 5,
+      height: 35
     }
   });
 
   const { listName } = route.params;
   const [dropDown, setDropDown] = useState(null);
+  const [search, setSearch] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const cards = useAppSelector(state => state.cards);
   let list = cards.list.find(item => item.name == listName);
+
+  let filterList = list?.cards?.filter((item) => {
+    // Check if either "english" or "persian" property contains the query
+    if (searchText) {
+      if (item.english?.toLowerCase()?.includes(searchText.toLowerCase()) || item.persian?.includes(searchText.toLowerCase())) {
+        return item;
+      } else {
+        return null;
+      }
+    } else return item;
+  });
+
   navigation.setOptions({
     header: () => (
       <View style={Styles.headerContainer}>
         <ArrowLeft style={{ textAlign: "left" }} name="arrowleft" size={27} onPress={() => navigation.goBack()} />
-        <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
-          <MyText style={Styles.headerTitle}>{`دسته: ${listName} (${list?.cards.length} کارت)`}</MyText>
-        </View>
+        {
+          search ? <MyTextInput value={searchText} onChangeText={setSearchText} style={Styles.search}
+                                placeholder="جستجو..." /> :
+            <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
+              <MyText style={Styles.headerTitle}>{`دسته: ${listName} (${list?.cards.length} کارت)`}</MyText>
+            </View>
+        }
+        <SearchIcon style={{ textAlign: "left" }} name="search" size={27} onPress={() => setSearch(!search)} />
       </View>
     )
   });
@@ -49,10 +80,10 @@ const CardsItems = ({ route, navigation }: any) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {
-        list?.cards.length ?
+        filterList?.length ?
           <ScrollView style={Styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
             {
-              list?.cards.map((item, index) => (
+              filterList.map((item, index) => (
                 <Card dropDown={dropDown} setDropDown={setDropDown} index={index} navigation={navigation} data={item}
                       listName={list?.name ?? ""} />
               ))
