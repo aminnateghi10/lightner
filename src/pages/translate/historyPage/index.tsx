@@ -162,6 +162,7 @@ const Index = ({ navigation }: PropsInterface) => {
     setTranslation(item.sentences);
     if (item.target === "en") setTranslatedLang("fa");
     else setTranslatedLang("en");
+    navigation.navigate('Translate', { data: item })
   };
 
   const deleteHistory = async () => {

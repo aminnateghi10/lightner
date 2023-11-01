@@ -20,12 +20,14 @@ import MyCard from "../../../shared/myCard";
 import { Colors } from "../../../constants/colors";
 import { useTheme } from "../../../context/themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RouteProp } from "@react-navigation/native";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
+  route: RouteProp<LightnerParamList, "Translate">
 }
 
-const TranslatePage = ({ navigation }: PropsInterface) => {
+const TranslatePage = ({ navigation, route }: PropsInterface) => {
   const { currentTheme } = useTheme();
 
   const Styles = StyleSheet.create({
@@ -103,6 +105,8 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
     }
   });
 
+  const { data } = route.params;
+
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
   const [textToTranslation, setTextToTranslation] = useState<string>("");
@@ -114,14 +118,19 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       AsyncStorage.getItem("translatorHistory").then(res => {
-        if (res) setHistory(JSON.parse(res))
+        if (res) setHistory(JSON.parse(res));
         else setHistory([]);
+
+        // handle add history to Translation
+        setTextToTranslation(data.text);
+        setTranslation(data.sentences);
+        if (data.target === "en") setTranslatedLang("fa");
+        else setTranslatedLang("en");
       });
     });
 
     return unsubscribe;
   }, [navigation]);
-
 
   let speak = (text: string) => Tts.speak(text);
   const handleTranslate = async () => {
@@ -208,11 +217,11 @@ const TranslatePage = ({ navigation }: PropsInterface) => {
         </View>
         <View
           style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
-          <View style={{width:'33%',alignItems:'center'}}><MyText>فارسی</MyText></View>
-          <TouchableOpacity style={{width:'33%',alignItems:'center'}} onPress={changeTranslatedLang}>
+          <View style={{ width: "33%", alignItems: "center" }}><MyText>فارسی</MyText></View>
+          <TouchableOpacity style={{ width: "33%", alignItems: "center" }} onPress={changeTranslatedLang}>
             <ArrowSwitchIcon name="arrow-switch" size={25} />
           </TouchableOpacity>
-          <View style={{width:'33%',alignItems:'center'}}><MyText>انگلیسی</MyText></View>
+          <View style={{ width: "33%", alignItems: "center" }}><MyText>انگلیسی</MyText></View>
         </View>
         <View style={Styles.languageTypeBox}>
           {
