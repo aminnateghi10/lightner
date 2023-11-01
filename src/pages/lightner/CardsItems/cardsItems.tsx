@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SearchIcon from "react-native-vector-icons/Feather";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
+import CloseIcon from "react-native-vector-icons/AntDesign";
 import { FlatList, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 import Card from "./components/card";
@@ -38,7 +39,7 @@ const CardsItems = ({ route, navigation }: any) => {
       paddingHorizontal: 10,
       marginHorizontal: 40,
       paddingBottom: 5,
-      height: 35
+      height: 35,
     }
   });
 
@@ -66,8 +67,13 @@ const CardsItems = ({ route, navigation }: any) => {
       <View style={Styles.headerContainer}>
         <ArrowLeft style={{ textAlign: "left" }} name="arrowleft" size={27} onPress={() => navigation.goBack()} />
         {
-          search ? <MyTextInput value={searchText} onChangeText={setSearchText} style={Styles.search}
-                                placeholder="جستجو..." /> :
+          search ?
+            <View style={{flexDirection:"row",flex:1,alignItems:'center',marginLeft:20}}>
+              <CloseIcon name="close" size={24} onPress={() => setSearch(false)} />
+              <MyTextInput value={searchText} onChangeText={setSearchText} style={Styles.search}
+                           placeholder="جستجو..." />
+            </View>
+            :
             <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
               <MyText style={Styles.headerTitle}>{`دسته: ${listName} (${list?.cards.length} کارت)`}</MyText>
             </View>
@@ -84,7 +90,8 @@ const CardsItems = ({ route, navigation }: any) => {
           <ScrollView style={Styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
             {
               filterList.map((item, index) => (
-                <Card dropDown={dropDown} setDropDown={setDropDown} index={index} navigation={navigation} data={item}
+                <Card dropDown={dropDown} setDropDown={setDropDown} key={index} index={index} navigation={navigation}
+                      data={item}
                       listName={list?.name ?? ""} />
               ))
             }
