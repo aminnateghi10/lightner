@@ -97,7 +97,7 @@ const Index = () => {
       }}>
         <Stack.Screen name="TabBar" options={{headerShown: false}} component={TabBar}/>
         <Stack.Screen name="CardsItems" component={CardsItems}/>
-        <Stack.Screen name="ShowCard" options={{title: "نمایش کارت"}} component={ShowCard}/>
+        <Stack.Screen name="ShowCard" options={{title:"نمایش کارت", headerShadowVisible: false}} component={ShowCard}/>
         <Stack.Screen name="EditCard" options={{title: "ویرایش کارت"}} component={EditCard}/>
         <Stack.Screen name="Review" options={{title: "جعبه لایتنر"}} component={Review}/>
         <Stack.Screen name="AddNewCard" options={{title: "افزودن کارت جدید"}} component={AddNewCard}/>

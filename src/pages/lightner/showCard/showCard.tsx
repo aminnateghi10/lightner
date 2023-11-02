@@ -8,11 +8,9 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Edit from "react-native-vector-icons/Feather";
 import Refresh from "react-native-vector-icons/Ionicons";
 import Delete from "react-native-vector-icons/AntDesign";
-import DoubleArrowRight from "react-native-vector-icons/FontAwesome";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { LightnerParamList } from "../../../contracts/rootParamList";
 // reducx
@@ -32,8 +30,8 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
   const Styles = StyleSheet.create({
     card: {
       backgroundColor: currentTheme.modalCard,
-      width: "80%",
-      height: "80%",
+      width: "85%",
+      height: "85%",
       borderRadius: 20,
       alignItems: "center",
       justifyContent: "center",
@@ -50,8 +48,8 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
       padding: 10,
       marginHorizontal: 5,
       borderRadius: 50,
-      borderColor:currentTheme.modalBorder,
-      borderWidth:1
+      borderColor: currentTheme.modalBorder,
+      borderWidth: 1
     },
     centeredView: {
       flex: 1,
@@ -90,6 +88,14 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
       flexDirection: "row",
       alignItems: "center",
       alignContent: "center"
+    },
+    levelItem: {
+      borderWidth: .2,
+      borderRadius: 3,
+      marginHorizontal: 1,
+      borderColor: currentTheme.border,
+      flex: 1,
+      textAlign: "center"
     }
   });
 
@@ -97,6 +103,7 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
   const { data, listName } = route.params;
   const [lang, setLang] = useState(true);
   const [show, setShow] = useState(false);
+  const levels = [1, 2, 3, 4, 5, 6];
 
   let sayAgain = () => Tts.speak(data.english);
 
@@ -110,17 +117,15 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
   };
 
   return (
-    <SafeAreaView>
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        colors={["rgb(114,72,72)", "rgb(0,178,0)"]}
-        style={Styles.chartProgress}>
-        <MyText>نمودار پیشرفت</MyText>
-        <Text style={{ position: "absolute", left: `${data.level * 13}%`, width: 50, bottom: -4 }}>
-          <DoubleArrowRight name="angle-double-right" size={30} color="blue" />
-        </Text>
-      </LinearGradient>
+    <SafeAreaView style={{flex:1}}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", height: 25 , marginTop:3 }}>
+        {
+          levels.map((item) => (
+            <MyText
+              style={[Styles.levelItem, item <= data?.level && { backgroundColor: "#1CA3DE", color: "white" }]}>{item}</MyText>
+          ))
+        }
+      </View>
       <View style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
         <TouchableOpacity style={Styles.card} onPress={() => setLang(!lang)}>
           <MyText style={{ fontSize: 30 }}>{lang ? data.english : data.persian}</MyText>
