@@ -105,7 +105,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     }
   });
 
-  const { data } = route.params;
+  const params = route?.params;
 
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -122,10 +122,14 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
         else setHistory([]);
 
         // handle add history to Translation
-        setTextToTranslation(data.text);
-        setTranslation(data.sentences);
-        if (data.target === "en") setTranslatedLang("fa");
-        else setTranslatedLang("en");
+        if (params?.data) {
+          let { data } = params?.data;
+          setTextToTranslation(data.text);
+          setTranslation(data.sentences);
+          if (data.target === "en") setTranslatedLang("fa");
+          else setTranslatedLang("en");
+        }
+
       });
     });
 
