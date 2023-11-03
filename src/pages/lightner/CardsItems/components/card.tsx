@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import ChartLineIcon from "react-native-vector-icons/FontAwesome5";
@@ -5,13 +6,12 @@ import MoveIcon from "react-native-vector-icons/Ionicons";
 import EditIcon from "react-native-vector-icons/MaterialIcons";
 import DeleteIcon from "react-native-vector-icons/MaterialIcons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
+import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import MyText from "../../../../shared/myText";
 import { deleteCard } from "../../../../store/cards";
 import { useTheme } from "../../../../context/themeContext";
 import { LightnerParamList } from "../../../../contracts/rootParamList";
-import { useEffect, useRef } from "react";
 
 interface PropsInterface {
   data: any,
@@ -19,8 +19,19 @@ interface PropsInterface {
   listName: string
 }
 
-const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: PropsInterface) => {
+const Card = ({
+                data,
+                navigation,
+                listName,
+                index,
+                setDropDown,
+                dropDown,
+                onCardPress,
+                elementsRef,
+                top
+              }: PropsInterface) => {
   const { currentTheme } = useTheme();
+  const { height } = useWindowDimensions();
 
   const Styles = StyleSheet.create({
     card: {
@@ -38,12 +49,12 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
     item: {
       flexDirection: "row",
       alignItems: "center",
-      paddingLeft:5,
+      paddingLeft: 5
     },
     dropDown: {
       position: "absolute",
-      top: "auto",
-      left: 60,
+      top: top > height - 300 ? -100 : 80,
+      left: 40,
       marginTop: 10,
       backgroundColor: currentTheme.card,
       elevation: 6,
@@ -54,37 +65,22 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
       fontSize: 14,
       marginVertical: 4,
       padding: 10,
-      borderRadius: 10,
+      borderRadius: 10
     }
   });
 
   const dispatch = useDispatch();
 
   const toggleDropDown = () => {
+    onCardPress(index);
     if (data.id === dropDown) setDropDown(null);
     else setDropDown(data.id);
   };
 
   const myComponentRef = useRef(null);
 
-  useEffect(() => {
-    if (myComponentRef.current) {
-      console.log('myComponentRef');
-      myComponentRef.current.measure((fx, fy, width, height, px, py) => {
-        // Do positioning checks here using the measured values
-        console.log('Component dimensions and position:');
-        console.log('x:', fx);
-        console.log('y:', fy);
-        console.log('width:', width);
-        console.log('height:', height);
-        console.log('pageX:', px);
-        console.log('pageY:', py);
-      });
-    }
-  }, []);
-
   return (
-    <View style={{ position: "relative", zIndex: -index }}>
+    <View style={{ position: "relative", zIndex: data.id === dropDown ? 10 : 0 }} ref={elementsRef?.current[index]}>
       <TouchableHighlight
         style={Styles.card}
         onPress={() => navigation.navigate("ShowCard", { data: data, listName })}>
@@ -102,7 +98,8 @@ const Card = ({ data, navigation, listName, index, setDropDown, dropDown }: Prop
       {
         data.id === dropDown &&
         <View style={Styles.dropDown}>
-          <TouchableOpacity style={Styles.item} onPress={() => navigation.navigate("EditCard", { data, listName })}  ref={myComponentRef}>
+          <TouchableOpacity style={Styles.item} onPress={() => navigation.navigate("EditCard", { data, listName })}
+                            ref={myComponentRef}>
             <>
               <ChartLineIcon name="chart-line" size={25} style={Styles.icon} />
               <Text style={Styles.dropDownText}>پیشرفت</Text>

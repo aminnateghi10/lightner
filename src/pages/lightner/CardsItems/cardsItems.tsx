@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { createRef, useRef, useState } from "react";
 import SearchIcon from "react-native-vector-icons/Feather";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
 import CloseIcon from "react-native-vector-icons/AntDesign";
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 import Card from "./components/card";
 import MyText from "../../../shared/myText";
 import { useAppSelector } from "../../../store";
-import { Colors } from "../../../constants/colors";
 import Controller from "./components/controller";
 import EmptyList from "../../../shared/emptyList";
 import MyTextInput from "../../../shared/myTextInput";
@@ -62,6 +61,17 @@ const CardsItems = ({ route, navigation }: any) => {
     } else return item;
   });
 
+  const [top,setTop] = useState(0);
+
+  const elementsRef = useRef(filterList.map(() => createRef()));
+
+  const onCardPress = (index) => {
+    let newRef = elementsRef?.current[index];
+    newRef?.current?.measureInWindow( (fx, fy, width, height, px, py) => {
+      setTop(fy)
+    })
+  }
+
   navigation.setOptions({
     header: () => (
       <View style={Styles.headerContainer}>
@@ -90,8 +100,9 @@ const CardsItems = ({ route, navigation }: any) => {
           <ScrollView style={Styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
             {
               filterList.map((item, index) => (
-                <Card dropDown={dropDown} setDropDown={setDropDown} key={index} index={index} navigation={navigation}
+                <Card top={top} dropDown={dropDown} onCardPress={onCardPress} setDropDown={setDropDown} key={index} index={index}  navigation={navigation}
                       data={item}
+                      elementsRef={elementsRef}
                       listName={list?.name ?? ""} />
               ))
             }
