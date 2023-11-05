@@ -27,6 +27,8 @@ import RobotPage from "../pages/robot/robotPage";
 import SettingPage from "../pages/setting/SettingPage";
 import SupportPage from "../pages/setting/supportPage";
 import FeedbackPage from "../pages/setting/feedbackPage";
+import Login from "../pages/auth/login";
+import Otp from "../pages/auth/otp";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -95,6 +97,8 @@ const Index = () => {
         headerStyle: HeaderStyles.headerStyle,
         headerTitleStyle: HeaderStyles.headerTitleStyle
       }}>
+        <Stack.Screen name="Login" options={{headerShown: false}} component={Login}/>
+        <Stack.Screen name="Otp" options={{headerShown: false}} component={Otp}/>
         <Stack.Screen name="TabBar" options={{headerShown: false}} component={TabBar}/>
         <Stack.Screen name="CardsItems" component={CardsItems}/>
         <Stack.Screen name="ShowCard" options={{title:"نمایش کارت", headerShadowVisible: false}} component={ShowCard}/>
