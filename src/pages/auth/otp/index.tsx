@@ -1,53 +1,12 @@
-import React, { useState, useRef } from "react";
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from "react-native";
+import OtpInputs from "react-native-otp-inputs";
+import React, { useState, useEffect } from "react";
+import { RouteProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { View, StyleSheet, TouchableOpacity, Vibration } from "react-native";
 
 import MyText from "../../../shared/myText";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import callApi from "../../../helpers/callApi";
 import { LightnerParamList } from "../../../contracts/rootParamList";
-import { RouteProp } from "@react-navigation/native";
-
-
-const OTPInput = ({ setOpt, otp }) => {
-  const inputRefs = [useRef(), useRef(), useRef(), useRef()]; // Refs for individual OTP input fields
-
-
-  const handleInputChange = (index, value) => {
-    if (isNaN(value)) {
-      return; // Only allow numeric input
-    }
-
-    const newOTP = [...otp];
-    newOTP[index] = value;
-    setOpt(newOTP);
-
-    // Move to the next input field if a digit is entered
-    if (index < 3 && value !== "") {
-      inputRefs[index + 1].current.focus();
-    }
-  };
-  const handleInputKeyPress = (index, event) => {
-    if (event.nativeEvent.key === "Backspace" && index > 0 && !otp[index]) {
-      inputRefs[index - 1].current.focus();
-    }
-  };
-
-  return (
-    <View style={styles.inputContainer}>
-      {otp.map((digit, index) => (
-        <TextInput
-          key={index}
-          style={styles.input}
-          value={digit}
-          onChangeText={(value) => handleInputChange(index, value)}
-          onKeyPress={(e) => handleInputKeyPress(index, e)}
-          ref={inputRefs[index]}
-          maxLength={1}
-          keyboardType="numeric"
-        />
-      ))}
-    </View>
-  );
-};
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
@@ -56,24 +15,68 @@ interface PropsInterface {
 
 const Index = ({ navigation, route }: PropsInterface) => {
   let { cellPhone } = route.params;
-  const [otp, setOpt] = useState(["", "", "", "", "", ""]); // Initialize with 4 empty strings
 
-  const handleSubmit = () => {
-    const enteredOTP = otp.join("");
+  const [otp, setOpt] = useState("");
+  const [time, setTime] = useState(5);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime((prev) => {
+        if (prev === 1) clearInterval(timer);
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleSubmit = async () => {
+    if (otp.length === 6) {
+      try {
+        let res = await callApi().post("/api/v1/auth/verify", { "code": otp });
+        console.log(res, 'my otp res');
+      } catch (err) {
+      }
+    }else{
+      Vibration.vibrate(10);
+    }
+  };
+  const reSend = () => {
+    console.log("submit 444");
   };
 
   return (
     <View style={styles.container}>
-      <MyText style={styles.title}>هم اکنون یک کد 6 رقمی برای شماره 09389857755 ارسال شد</MyText>
-      <OTPInput setOpt={setOpt} otp={otp} />
+      <MyText style={styles.title}>هم اکنون یک کد 6 رقمی برای شماره {cellPhone} ارسال شد</MyText>
+      <OtpInputs
+        handleChange={(code) => setOpt(code)}
+        numberOfInputs={6}
+        style={{ flexDirection: "row", height: 100 }}
+        inputStyles={{
+          borderBottomWidth: 3,
+          borderBottomColor: "blue",
+          marginHorizontal: 3,
+          width: 40,
+          textAlign: "center"
+        }}
+      />
       <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
         <MyText style={styles.buttonText}>تایید</MyText>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.outlineButton} onPress={handleSubmit}>
-        <MyText style={[styles.buttonText,{color:'blue'}]}>تلاش مجدد</MyText>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.outlineButton} onPress={handleSubmit}>
-        <MyText style={[styles.buttonText,{color:'blue'}]}>تغییر شماره</MyText>
+      {
+        time ?
+
+          <TouchableOpacity style={styles.outlineButton}>
+            <MyText style={[styles.buttonText, { color: "blue" }]}>{time}</MyText>
+          </TouchableOpacity>
+          :
+          <TouchableOpacity style={styles.outlineButton} onPress={reSend}>
+            <MyText style={[styles.buttonText, { color: "blue" }]}>تلاش مجدد</MyText>
+          </TouchableOpacity>
+      }
+
+      <TouchableOpacity style={styles.outlineButton} onPress={() => navigation.navigate("Login")}>
+        <MyText style={[styles.buttonText, { color: "blue" }]}>تغییر شماره</MyText>
       </TouchableOpacity>
     </View>
   );
@@ -84,20 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor:'#f0f0f0'
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
-  input: {
-    width: "10%",
-    height: 40,
-    borderWidth: 1,
-    borderColor: "black",
-    textAlign: "center",
-    margin: 5,
-    marginBottom: 25
+    backgroundColor: "#f0f0f0"
   },
   buttonText: {
     color: "white",
@@ -115,12 +105,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     width: "80%",
     height: 50,
-    borderColor: "blue",      // Border color
-    borderWidth: 2,           // Border width
+    borderColor: "blue",
+    borderWidth: 2,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    marginTop:5
+    marginTop: 5
   },
   title: {
     fontSize: 20,

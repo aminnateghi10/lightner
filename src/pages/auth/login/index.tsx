@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { RouteProp } from "@react-navigation/native";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { View, TouchableOpacity, StyleSheet, Vibration } from "react-native";
 
 import MyText from "../../../shared/myText";
+import callApi from "../../../helpers/callApi";
 import MyTextInput from "../../../shared/myTextInput";
 import { LightnerParamList } from "../../../contracts/rootParamList";
+import { validateCellphoneNumber } from "../../../utils/validateCellphoneNumber";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
@@ -13,13 +14,26 @@ interface PropsInterface {
 
 const Index = ({ navigation }: PropsInterface) => {
   const [cellPhone, setCellPhone] = useState("");
+  const [errMassage, setErrMassage] = useState("");
 
   const handleLogin = async () => {
-    if (cellPhone) {
-      navigation.navigate("Home");
-      navigation.navigate("Otp", { cellPhone });
+    if (validateCellphoneNumber(cellPhone)) {
+      try {
+        let res = await callApi().post("/api/v1/auth/login", { "mobile": cellPhone });
+        navigation.navigate("Otp", { cellPhone });
+      } catch (err) {
+        console.log(err,'sdsd');
+      }
+    } else {
+      setErrMassage("شماره خود را صحیح وارد نمایید.");
+      Vibration.vibrate(10);
     }
   };
+
+  const consthandleChangeCellPhone = (text: string) => {
+    setCellPhone(text);
+    setErrMassage('');
+  }
 
   return (
     <View style={styles.container}>
@@ -28,14 +42,19 @@ const Index = ({ navigation }: PropsInterface) => {
         style={styles.input}
         placeholder="مثال: 09xxxxxxxxx"
         value={cellPhone}
-        onChangeText={(text) => setCellPhone(text)}
+        onChangeText={consthandleChangeCellPhone}
       />
+      <MyText style={{ color: 'red', textAlign: 'right', width: '80%' }}>{errMassage}</MyText>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <MyText style={styles.buttonText}>ادامه</MyText>
       </TouchableOpacity>
     </View>
   );
 };
+
+
+
+export default Index;
 
 const styles = StyleSheet.create({
   container: {
@@ -53,10 +72,11 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "white",
     borderRadius: 10,
-    marginBottom: 20,
-    padding: 10
+    padding: 10,
+    textAlign: "left"
   },
   loginButton: {
+    marginTop: 20,
     backgroundColor: "blue",
     width: "80%",
     height: 50,
@@ -69,5 +89,3 @@ const styles = StyleSheet.create({
     fontSize: 18
   }
 });
-
-export default Index;
