@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 import AddFolderIcon from "react-native-vector-icons/AntDesign";
 import PostAddIcon from "react-native-vector-icons/MaterialIcons";
-import { Colors } from "../../../constants/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
@@ -19,12 +18,14 @@ import {
 // redux
 import { RootState } from "../../../store";
 import { addNewList, initCardsData } from "../../../store/cards";
-// components
+
 import Card from "./components/card";
 import MyText from "../../../shared/myText";
-import { LightnerParamList } from "../../../contracts/rootParamList";
 import BrowseBar from "./components/browseBar";
+import { Colors } from "../../../constants/colors";
+import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
@@ -186,7 +187,7 @@ const HomeScreen = ({ navigation }: PropsInterface) => {
               <View style={Styles.centeredView}>
                 <View style={Styles.modalView}>
                   <MyText style={{ marginTop: 10, color: currentTheme.text }}>نام لیست را وارد کنید:</MyText>
-                  <TextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
+                  <MyTextInput style={Styles.addNewListInput} onChangeText={(e) => setName(e)} placeholder="لیست جدید" />
                   <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
                     <TouchableOpacity onPress={() => setAddNew(false)}
                                       style={{ width: "50%", height: 40, justifyContent: "center" }}>
