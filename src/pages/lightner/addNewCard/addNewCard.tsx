@@ -33,7 +33,7 @@ const AddNewCard = ({route}: PropsInterface) => {
     return (
         <InnerChangeCard
             btnText="ذخیره"
-            list={list}Ï
+            list={list}
             newCard={newCard}
             listName={listName}
             setNewCard={setNewCard}
