@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
+import { useEffect, useState } from "react";
+import { RouteProp } from "@react-navigation/native";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { ActivityIndicator, Modal, StyleSheet, TextInput, TouchableOpacity, View, ToastAndroid } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ActivityIndicator, Modal, StyleSheet, TouchableOpacity, View, ToastAndroid } from "react-native";
 // Icons
 import CloseIcon from "react-native-vector-icons/AntDesign";
 import ArrowSwitchIcon from "react-native-vector-icons/Octicons";
@@ -10,17 +12,16 @@ import TranslateIcon from "react-native-vector-icons/MaterialIcons";
 import CopyOutlineIcon from "react-native-vector-icons/Ionicons";
 import Volume2Icon from "react-native-vector-icons/Feather";
 import HistoryIcon from "react-native-vector-icons/FontAwesome";
-
 import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
+
 import MyText from "../../../shared/myText";
-import { translate } from "../../../utils/translate";
-import MyTextInput from "../../../shared/myTextInput";
-import { LightnerParamList } from "../../../contracts/rootParamList";
 import MyCard from "../../../shared/myCard";
 import { Colors } from "../../../constants/colors";
+import { translate } from "../../../utils/translate";
+import MyTextInput from "../../../shared/myTextInput";
 import { useTheme } from "../../../context/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RouteProp } from "@react-navigation/native";
+import { LightnerParamList } from "../../../contracts/rootParamList";
+import HistoreyItems from "../../../components/translate/historeyItems";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
@@ -112,7 +113,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
   const [textToTranslation, setTextToTranslation] = useState<string>("");
   const [translationIcon, setTranslationIcon] = useState<boolean>(false);
   const [translatedLang, setTranslatedLang] = useState<"en" | "fa">("en");
-  const [history, setHistory] = useState<[]>([]);
+  const [history, setHistory] = useState([]);
   const [deleteHistoryModal, setDeleteHistoryModal] = useState(false);
 
   useEffect(() => {
@@ -123,7 +124,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
 
         // handle add history to Translation
         if (params?.data) {
-          let { data } = params?.data;
+          let { data } = params;
+          console.log(params, "dd33ddddddddddddddd");
           setTextToTranslation(data.text);
           setTranslation(data.sentences);
           if (data.target === "en") setTranslatedLang("fa");
@@ -135,6 +137,11 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
 
     return unsubscribe;
   }, [navigation]);
+
+
+  useEffect(() => {
+    AsyncStorage.setItem("translatorHistory", JSON.stringify(history));
+  }, [history]);
 
   let speak = (text: string) => Tts.speak(text);
   const handleTranslate = async () => {
@@ -148,8 +155,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
       const sentences = res?.sentences;
       setTranslation(sentences);
       if (res) {
-        const newHistory = [{ text, sentences, target }, ...history];
-        await AsyncStorage.setItem("translatorHistory", JSON.stringify(newHistory));
+        const newHistory = [{ text, sentences, target, id: Date.now() }, ...history];
         setHistory(newHistory);
       }
     } catch (err) {
@@ -279,17 +285,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
             </View>
           </MyCard>
           :
-          <View style={{ marginTop: 25 }}>
-            {
-              history.map((item, index) => (
-                <TouchableOpacity key={index} style={Styles.historyCard} onPress={() => historyToTranslator(item)}>
-                  <>
-                    <MyText style={{ fontSize: 14, color: "black" }}>{item?.text}</MyText>
-                    <MyText>{item?.sentences}</MyText>
-                  </>
-                </TouchableOpacity>
-              ))
-            }
+          <View style={{ marginTop: 20 }}>
+            <HistoreyItems navigation={navigation} style={{ marginTop: 5 }} history={history} historyToTranslator={historyToTranslator} setHistory={setHistory} />
             {
               history.length ?
                 <MyText style={{ textAlign: "center", marginTop: 5, paddingVertical: 8 }}
