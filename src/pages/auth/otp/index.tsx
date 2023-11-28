@@ -1,12 +1,13 @@
 import OtpInputs from "react-native-otp-inputs";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View, StyleSheet, TouchableOpacity, Vibration } from "react-native";
 
 import MyText from "../../../shared/myText";
-import callApi from "../../../helpers/callApi";
 import { LightnerParamList } from "../../../contracts/rootParamList";
+import callApi from "../../../helpers/callApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<LightnerParamList>,
@@ -17,40 +18,53 @@ const Index = ({ navigation, route }: PropsInterface) => {
   let { cellPhone } = route.params;
 
   const [otp, setOpt] = useState("");
-  const [time, setTime] = useState(5);
+  const [time, setTime] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prev) => {
-        if (prev === 1) clearInterval(timer);
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+  const otpInputRef = useRef(null);
+  //
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setTime((prev) => {
+  //       if (prev === 1) clearInterval(timer);
+  //       return prev - 1;
+  //     });
+  //   }, 1000);
+  //
+  //   return () => clearInterval(timer);
+  // }, []);
 
   const handleSubmit = async () => {
+    console.log(otp,'otppp');
     if (otp.length === 6) {
       try {
-        let res = await callApi().post("/api/v1/auth/verify", { "code": otp });
-        console.log(res, 'my otp res');
+        let {data} = await callApi().post("/api/v1/auth/verify", { "code": otp });
+        console.log(data.data.access_token,'token');
+        await AsyncStorage.setItem('token',`Bearer ${data.data.access_token}`);
+        navigation.navigate('TabBar');
       } catch (err) {
       }
     }else{
+      setOpt('');
       Vibration.vibrate(10);
     }
   };
-  const reSend = () => {
-    console.log("submit 444");
+  const reSend = async () => {
+    if (otpInputRef.current){
+        let res = await callApi().post("/api/v1/auth/login", { "mobile": cellPhone });
+        otpInputRef.current.reset();
+        setOpt('');
+    }
   };
 
   return (
     <View style={styles.container}>
       <MyText style={styles.title}>هم اکنون یک کد 6 رقمی برای شماره {cellPhone} ارسال شد</MyText>
       <OtpInputs
+        autoFocusOnLoad
         handleChange={(code) => setOpt(code)}
         numberOfInputs={6}
+        value={+otp}
+        ref={otpInputRef}
         style={{ flexDirection: "row", height: 100 }}
         inputStyles={{
           borderBottomWidth: 3,

@@ -86,7 +86,7 @@ const historeyItems = ({ history, setHistory, style, navigation, historyToTransl
       backgroundColor: currentTheme.card,
       borderBottomColor: currentTheme.modalBorder,
       marginBottom: 4,
-      padding: 5,
+      padding: 6,
       borderBottomWidth: 1,
       marginHorizontal: 10,
       borderRadius: 4

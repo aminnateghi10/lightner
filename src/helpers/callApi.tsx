@@ -1,12 +1,15 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const callApi = () => {
   const axiosInstance = axios.create({
-    baseURL: 'http://192.168.1.102'
+    baseURL: 'http://192.168.1.105'
   })
   axiosInstance.interceptors.request.use(
-    (config) => {
-      config.withCredentials = true;
+    async (config) => {
+      config.withCredentials = false;
+      const token = await AsyncStorage.getItem('token');
+      config.headers.Authorization = token;
       return config
     },
     err => {

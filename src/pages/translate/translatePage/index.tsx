@@ -42,7 +42,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     },
     headerTitle: {
       fontSize: 18,
-      color: currentTheme.text
+      color: currentTheme.text,
+      marginVertical:5,
     },
     languageChangeBox: {
       width: "100%",
@@ -60,7 +61,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
       flexDirection: "row-reverse",
       backgroundColor: "rgb(0,130,255)",
       width: 65,
-      height: 46,
+      height: 40,
       marginRight: 10,
       justifyContent: "center",
       borderRadius: 20,
@@ -69,7 +70,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     answerBox: {
       marginTop: 15,
       marginHorizontal: 6,
-      paddingVertical: 30,
+      paddingVertical: 15,
       paddingHorizontal: 10,
       elevation: 30
     },
@@ -220,18 +221,18 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     <View>
       <MyCard style={Styles.container}>
         <TouchableOpacity style={Styles.history} onPress={() => navigation.navigate("HistoryPage")}>
-          <HistoryIcon name="history" size={28} />
+          <HistoryIcon name="history" size={24} />
         </TouchableOpacity>
         <View style={Styles.header}>
           <MyText style={Styles.headerTitle}>ترجمه</MyText>
         </View>
         <View
           style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
-          <View style={{ width: "33%", alignItems: "center" }}><MyText>فارسی</MyText></View>
+          <View style={{ width: "33%", alignItems: "center" }}><MyText style={{opacity:.6}}>فارسی</MyText></View>
           <TouchableOpacity style={{ width: "33%", alignItems: "center" }} onPress={changeTranslatedLang}>
             <ArrowSwitchIcon name="arrow-switch" size={25} />
           </TouchableOpacity>
-          <View style={{ width: "33%", alignItems: "center" }}><MyText>انگلیسی</MyText></View>
+          <View style={{ width: "33%", alignItems: "center" }}><MyText style={{opacity:.6}}>انگلیسی</MyText></View>
         </View>
         <View style={Styles.languageTypeBox}>
           {
@@ -257,8 +258,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
                 <ActivityIndicator size="small" color="#ffffff" />
                 :
                 <>
-                  <MyText style={{ color: "white" }}> ترجمه</MyText>
-                  <TranslateIcon name="translate" color="white" size={25} />
+                  <MyText style={{ color: "white",fontSize:12}}> ترجمه</MyText>
+                  <TranslateIcon name="translate" color="white" size={20} />
                 </>
               }
             </TouchableOpacity>

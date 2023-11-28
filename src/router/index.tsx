@@ -29,6 +29,8 @@ import SupportPage from "../pages/setting/supportPage";
 import FeedbackPage from "../pages/setting/feedbackPage";
 import Login from "../pages/auth/login";
 import Otp from "../pages/auth/otp";
+import Messages from "../pages/setting/messages";
+import SingleMassage from "../pages/setting/singleMassage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -97,13 +99,15 @@ const Index = () => {
         headerStyle: HeaderStyles.headerStyle,
         headerTitleStyle: HeaderStyles.headerTitleStyle
       }}>
+        <Stack.Screen name="TabBar" options={{headerShown: false}} component={TabBar}/>
         <Stack.Screen name="Login" options={{headerShown: false}} component={Login}/>
         <Stack.Screen name="Otp" options={{headerShown: false}} component={Otp}/>
-        <Stack.Screen name="TabBar" options={{headerShown: false}} component={TabBar}/>
         <Stack.Screen name="CardsItems" component={CardsItems}/>
         <Stack.Screen name="ShowCard" options={{title:"نمایش کارت", headerShadowVisible: false}} component={ShowCard}/>
         <Stack.Screen name="EditCard" options={{title: "ویرایش کارت"}} component={EditCard}/>
         <Stack.Screen name="Review" options={{title: "جعبه لایتنر"}} component={Review}/>
+        <Stack.Screen name="Messages" options={{title: "پیام ها"}} component={Messages}/>
+        <Stack.Screen name="SingleMassage" options={{title: "پیام ها"}} component={SingleMassage}/>
         <Stack.Screen name="AddNewCard" options={{title: "افزودن کارت جدید"}} component={AddNewCard}/>
         <Stack.Screen name="HistoryPage" options={{title: "تاریخچه"}} component={HistoryPage}/>
         <Stack.Screen name="SupportPage" options={{title: "پشتیبانی"}} component={SupportPage}/>

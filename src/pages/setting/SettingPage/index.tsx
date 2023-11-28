@@ -51,7 +51,7 @@ const SettingPage = ({ navigation }: PropsInterface) => {
           <ArrowLeftIcon name="arrow-left" size={20} />
         </>
       </TouchableHighlight>
-      <TouchableHighlight style={Styles.card}>
+      <TouchableHighlight style={Styles.card} onPress={()=>navigation.navigate('Messages')}>
         <>
           <MyText>پیام ها</MyText>
           <ArrowLeftIcon name="arrow-left" size={20} />
