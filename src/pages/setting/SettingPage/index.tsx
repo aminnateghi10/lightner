@@ -39,7 +39,7 @@ const SettingPage = ({ navigation }: PropsInterface) => {
         </>
       </TouchableHighlight>
       <DarkMode />
-      <TouchableHighlight style={Styles.card} onPress={() => navigation.navigate("SupportPage")}>
+      <TouchableHighlight style={Styles.card} onPress={()=>navigation.navigate("Backup")}>
         <>
           <MyText>پشتیبان گیری و بازیابی</MyText>
           <ArrowLeftIcon name="arrow-left" size={20} />
@@ -57,7 +57,7 @@ const SettingPage = ({ navigation }: PropsInterface) => {
           <ArrowLeftIcon name="arrow-left" size={20} />
         </>
       </TouchableHighlight>
-      <TouchableHighlight style={Styles.card}>
+      <TouchableHighlight style={Styles.card} onPress={() => navigation.navigate("SupportPage")}>
         <>
           <MyText>پشتیبانی</MyText>
           <ArrowLeftIcon name="arrow-left" size={20} />

@@ -31,6 +31,7 @@ import Login from "../pages/auth/login";
 import Otp from "../pages/auth/otp";
 import Messages from "../pages/setting/messages";
 import SingleMassage from "../pages/setting/singleMassage";
+import Backup from "../pages/setting/backup";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -100,6 +101,7 @@ const Index = () => {
         headerTitleStyle: HeaderStyles.headerTitleStyle
       }}>
         <Stack.Screen name="TabBar" options={{headerShown: false}} component={TabBar}/>
+        <Stack.Screen name="Backup" options={{title: "پشتیبان گیری و بازیابی"}} component={Backup}/>
         <Stack.Screen name="Login" options={{headerShown: false}} component={Login}/>
         <Stack.Screen name="Otp" options={{headerShown: false}} component={Otp}/>
         <Stack.Screen name="CardsItems" component={CardsItems}/>
