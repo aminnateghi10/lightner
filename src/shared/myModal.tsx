@@ -25,9 +25,9 @@ const MyModal = ({ submit, cancel, title, body }: PropsInterface) => {
       backgroundColor: currentTheme.modalCard,
       borderRadius: 10,
       width: 300,
-      height: 130,
+      height: "auto",
       alignItems: "center",
-      elevation: 3
+      elevation: 3,
     }
   });
   return (
@@ -39,7 +39,7 @@ const MyModal = ({ submit, cancel, title, body }: PropsInterface) => {
         <View style={Styles.modalView}>
           <View style={{ paddingHorizontal: 8 }}>
             <MyText style={{ marginTop: 8, color: currentTheme.text, textAlign: "center" }}>{title}</MyText>
-            <MyText style={{ marginTop: 10, fontSize: 13, color: currentTheme.text, opacity: .6 }}>{body}</MyText>
+            <MyText style={{ marginTop: 10,marginBottom:10, fontSize: 13, color: currentTheme.text, opacity: .6 }}>{body}</MyText>
           </View>
           <View style={{ flexDirection: "row", borderTopColor: currentTheme.modalBorder, borderTopWidth: 1 }}>
             <TouchableOpacity onPress={cancel} style={{ width: "50%", height: 40, justifyContent: "center" }}>
