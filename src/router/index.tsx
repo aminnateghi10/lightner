@@ -113,7 +113,6 @@ const Index = () => {
         <Stack.Screen name="AddNewCard" options={{title: "افزودن کارت جدید"}} component={AddNewCard}/>
         <Stack.Screen name="HistoryPage" options={{title: "تاریخچه"}} component={HistoryPage}/>
         <Stack.Screen name="SupportPage" options={{title: "پشتیبانی"}} component={SupportPage}/>
-        <Stack.Screen name="FeedbackPage" options={{title: "ارسال بازخورد"}} component={FeedbackPage}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

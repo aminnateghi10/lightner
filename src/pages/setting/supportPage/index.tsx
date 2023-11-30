@@ -57,15 +57,9 @@ const SettingPage = ({ navigation }: PropsInterface) => {
   return (
     <SafeAreaView>
       <View style={Styles.container}>
-        <TouchableHighlight style={Styles.card} onPress={() => navigation.navigate("FeedbackPage")}>
-          <>
-            <FeedbackIcon name="feedback" size={30} />
-            <MyText>ارسال بازخورد</MyText>
-          </>
-        </TouchableHighlight>
         <TouchableHighlight style={Styles.card} onPress={() => openURL("mailto:aminnateghi10@gmail.com")}>
           <>
-            <EmailIcon name="email" size={30} />
+            <EmailIcon name="email" size={30} color="red" />
             <MyText>ارسال ایمیل</MyText>
           </>
         </TouchableHighlight>
