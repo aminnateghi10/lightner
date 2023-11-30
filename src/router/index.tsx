@@ -26,7 +26,7 @@ import HomeScreen from "../pages/lightner/homeScreen/homeScreen";
 import RobotPage from "../pages/robot/robotPage";
 import SettingPage from "../pages/setting/SettingPage";
 import SupportPage from "../pages/setting/supportPage";
-import FeedbackPage from "../pages/setting/feedbackPage";
+import Me from "../pages/setting/me";
 import Login from "../pages/auth/login";
 import Otp from "../pages/auth/otp";
 import Messages from "../pages/setting/messages";
@@ -109,6 +109,7 @@ const Index = () => {
         <Stack.Screen name="EditCard" options={{title: "ویرایش کارت"}} component={EditCard}/>
         <Stack.Screen name="Review" options={{title: "جعبه لایتنر"}} component={Review}/>
         <Stack.Screen name="Messages" options={{title: "پیام ها"}} component={Messages}/>
+        <Stack.Screen name="Me" options={{title: "حساب کاربری"}} component={Me}/>
         <Stack.Screen name="SingleMassage" options={{title: "پیام ها"}} component={SingleMassage}/>
         <Stack.Screen name="AddNewCard" options={{title: "افزودن کارت جدید"}} component={AddNewCard}/>
         <Stack.Screen name="HistoryPage" options={{title: "تاریخچه"}} component={HistoryPage}/>

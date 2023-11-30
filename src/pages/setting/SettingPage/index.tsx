@@ -32,7 +32,7 @@ const SettingPage = ({ navigation }: PropsInterface) => {
 
   return (
     <View style={{marginTop:10}}>
-      <TouchableHighlight style={Styles.card}>
+      <TouchableHighlight style={Styles.card} onPress={()=>navigation.navigate("Me")}>
         <>
           <MyText>حساب کاربری</MyText>
           <ArrowLeftIcon name="arrow-left" size={20} />
@@ -42,12 +42,6 @@ const SettingPage = ({ navigation }: PropsInterface) => {
       <TouchableHighlight style={Styles.card} onPress={()=>navigation.navigate("Backup")}>
         <>
           <MyText>پشتیبان گیری و بازیابی</MyText>
-          <ArrowLeftIcon name="arrow-left" size={20} />
-        </>
-      </TouchableHighlight>
-      <TouchableHighlight style={Styles.card}>
-        <>
-          <MyText>جعبه لایتنر</MyText>
           <ArrowLeftIcon name="arrow-left" size={20} />
         </>
       </TouchableHighlight>
