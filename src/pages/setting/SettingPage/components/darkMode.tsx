@@ -1,6 +1,15 @@
 import { useState } from "react";
-import { Modal, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import {
+  Modal,
+  StyleSheet,
+  ViewStyle,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View
+} from "react-native";
 
+import MoonIcon from "react-native-vector-icons/Feather";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
 
@@ -9,7 +18,11 @@ import { initTheme } from "../../../../store/theme";
 import { useTheme } from "../../../../context/themeContext";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 
-const DarkMode = () => {
+interface PropsInterface {
+  parentStyle: any;
+}
+
+const DarkMode = ({ parentStyle }: PropsInterface) => {
   const { currentTheme } = useTheme();
   const Styles = StyleSheet.create({
     card: {
@@ -62,8 +75,9 @@ const DarkMode = () => {
     <>
       <TouchableHighlight style={Styles.card} onPress={() => setShow(true)}>
         <>
+          <MoonIcon name="moon" style={parentStyle.icon} size={25} />
           <MyText>حالت تاریک</MyText>
-          <ArrowLeftIcon name="arrow-left" size={20} />
+          <ArrowLeftIcon name="arrow-left" size={20} style={parentStyle.arrowIcon} />
         </>
       </TouchableHighlight>
       {
@@ -88,9 +102,9 @@ const DarkMode = () => {
                         borderColor: `${item.value === activeBox ? "blue" : "rgb(126,118,118)"}`,
                         borderWidth: 1,
                         paddingVertical: 3,
-                        paddingHorizontal:5,
+                        paddingHorizontal: 5,
                         marginVertical: 3,
-                        alignItems:'center'
+                        alignItems: "center"
                       }}>
                       <>
                         <MyText>{item.text}</MyText>
@@ -99,7 +113,7 @@ const DarkMode = () => {
                           height: 20,
                           borderColor: `${item.value === activeBox ? "blue" : "rgb(199,199,199)"}`,
                           backgroundColor: `${item.value === activeBox ? "blue" : "rgba(0,0,0,0)"}`,
-                          borderWidth:1,
+                          borderWidth: 1,
                           borderRadius: 50
                         }}></Text>
                       </>
