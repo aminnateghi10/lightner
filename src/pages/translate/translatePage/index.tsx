@@ -221,7 +221,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     <View>
       <MyCard style={Styles.container}>
         <TouchableOpacity style={Styles.history} onPress={() => navigation.navigate("HistoryPage")}>
-          <HistoryIcon name="history" size={24} />
+          <HistoryIcon name="history" style={{color:currentTheme.text}} size={24} />
         </TouchableOpacity>
         <View style={Styles.header}>
           <MyText style={Styles.headerTitle}>ترجمه</MyText>
@@ -230,7 +230,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
           style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
           <View style={{ width: "33%", alignItems: "center" }}><MyText style={{opacity:.6}}>فارسی</MyText></View>
           <TouchableOpacity style={{ width: "33%", alignItems: "center" }} onPress={changeTranslatedLang}>
-            <ArrowSwitchIcon name="arrow-switch" size={25} />
+            <ArrowSwitchIcon name="arrow-switch" style={{color:currentTheme.text}} size={25} />
           </TouchableOpacity>
           <View style={{ width: "33%", alignItems: "center" }}><MyText style={{opacity:.6}}>انگلیسی</MyText></View>
         </View>
@@ -238,10 +238,10 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
           {
             textToTranslation &&
             <View style={{ flexDirection: "row" }}>
-              <CloseIcon name="close" style={{ marginLeft: 5 }} size={24} onPress={handleClose} />
+              <CloseIcon name="close" style={{ marginLeft: 5 ,color:currentTheme.text}} size={24}  onPress={handleClose} />
               {
                 translatedLang === "en" &&
-                <Volume2Icon onPress={() => speak(textToTranslation)} name="volume-2" size={26} />
+                <Volume2Icon onPress={() => speak(textToTranslation)} name="volume-2" style={{color:currentTheme.text}} size={26} />
               }
             </View>
 

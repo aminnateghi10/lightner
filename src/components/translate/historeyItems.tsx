@@ -84,10 +84,9 @@ const historeyItems = ({ history, setHistory, style, navigation, historyToTransl
     },
     historyCard: {
       backgroundColor: currentTheme.card,
-      borderBottomColor: currentTheme.modalBorder,
       marginBottom: 4,
       padding: 6,
-      borderBottomWidth: 1,
+      paddingBottom:7,
       marginHorizontal: 10,
       borderRadius: 4
     }
@@ -106,7 +105,7 @@ const historeyItems = ({ history, setHistory, style, navigation, historyToTransl
       <TouchableOpacity activeOpacity={1} key={rowData} style={styles.historyCard}
                         onPress={() => historyToTranslator(item)}>
         <>
-          <MyText style={{ fontSize: 14, color: "black" }}>{item?.text}</MyText>
+          <MyText>{item?.text}</MyText>
           <MyText>{item?.sentences}</MyText>
         </>
       </TouchableOpacity>

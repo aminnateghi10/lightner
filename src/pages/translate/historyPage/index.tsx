@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import Tts from "react-native-tts";
-import Clipboard from "@react-native-clipboard/clipboard";
+
 import { Modal, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import DeleteEmptyIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import MyText from "../../../shared/myText";
 import { LightnerParamList } from "../../../contracts/rootParamList";
-import { Colors } from "../../../constants/colors";
 import { useTheme } from "../../../context/themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ArrowLeft from "react-native-vector-icons/AntDesign";
@@ -29,13 +27,12 @@ const Index = ({ navigation }: PropsInterface) => {
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      backgroundColor: Colors.card,
+      backgroundColor: currentTheme.card,
       height: 55,
       padding: 12,
-      borderColor: "red"
     },
     headerTitle: {
-      fontSize: 18
+      fontSize: 18,
     },
     centeredView: {
       flex: 1,
@@ -58,11 +55,11 @@ const Index = ({ navigation }: PropsInterface) => {
   navigation.setOptions({
     header: () => (
       <View style={Styles.headerContainer}>
-        <ArrowLeft style={{ textAlign: "left" }} name="arrowleft" size={27} onPress={() => navigation.goBack()} />
-        <View style={{ flexDirection: "row-reverse", alignItems: "center" }}>
+        <ArrowLeft style={{ textAlign: "left",color:currentTheme.text }} name="arrowleft" size={27} onPress={() => navigation.goBack()} />
+        <View style={{ flexDirection: "row-reverse", alignItems: "center"}}>
           <MyText style={Styles.headerTitle}>تاریخچه</MyText>
         </View>
-        <DeleteEmptyIcon name="delete-empty" color={currentTheme.textIcon} size={30}
+        <DeleteEmptyIcon name="delete-empty" color={currentTheme.text} size={30}
                          onPress={() => setDeleteHistoryModal(true)} />
       </View>
     )
