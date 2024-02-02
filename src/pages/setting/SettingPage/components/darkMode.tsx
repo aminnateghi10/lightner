@@ -47,7 +47,7 @@ const DarkMode = ({ parentStyle }: PropsInterface) => {
     },
     modalView: {
       backgroundColor: currentTheme.card,
-      borderRadius: 20,
+      borderRadius: 10,
       width: 300,
       elevation: 300,
       alignItems: "center"
@@ -98,7 +98,7 @@ const DarkMode = ({ parentStyle }: PropsInterface) => {
                       style={{
                         flexDirection: "row-reverse",
                         justifyContent: "space-between",
-                        borderRadius: 50,
+                        borderRadius: 7,
                         borderColor: `${item.value === activeBox ? "blue" : "rgb(126,118,118)"}`,
                         borderWidth: 1,
                         paddingVertical: 3,
