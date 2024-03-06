@@ -1,5 +1,6 @@
 import Tts from "react-native-tts";
 import { useEffect, useState } from "react";
+import Voice from '@react-native-voice/voice';
 import { RouteProp } from "@react-navigation/native";
 import Clipboard from "@react-native-clipboard/clipboard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,6 +14,7 @@ import CopyOutlineIcon from "react-native-vector-icons/Ionicons";
 import Volume2Icon from "react-native-vector-icons/Feather";
 import HistoryIcon from "react-native-vector-icons/FontAwesome";
 import BoxOpenIcon from "react-native-vector-icons/FontAwesome5";
+import MicrophoneIcon from "react-native-vector-icons/FontAwesome5";
 
 import MyText from "../../../shared/myText";
 import MyCard from "../../../shared/myCard";
@@ -110,6 +112,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
   const params = route?.params;
 
   const [translation, setTranslation] = useState("");
+  const [recognizedText, setRecognizedText] = useState('');
   const [loading, setLoading] = useState(false);
   const [textToTranslation, setTextToTranslation] = useState<string>("");
   const [translationIcon, setTranslationIcon] = useState<boolean>(false);
@@ -163,6 +166,30 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
       console.log(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+
+
+
+  useEffect(() => {
+    // Set up event listener for speech recognition results
+    Voice.onSpeechResults = (e) => {
+      console.log(e.value,'vvvvvvv');
+      setTextToTranslation(e.value[0]);
+    };
+
+    // Clean up event listener when component unmounts
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
+
+  const startRecognition = async () => {
+    try {
+      await Voice.start('en-US');
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -220,6 +247,9 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
   return (
     <View>
       <MyCard style={Styles.container}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <MyText>{recognizedText}</MyText>
+        </View>
         <TouchableOpacity style={Styles.history} onPress={() => navigation.navigate("HistoryPage")}>
           <HistoryIcon name="history" style={{color:currentTheme.text}} size={24} />
         </TouchableOpacity>
@@ -251,6 +281,9 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
                          setTextToTranslation(e);
                          setTranslationIcon(true);
                        }} />
+          <TouchableOpacity style={{ flexDirection:'row',justifyContent:'center' }} onPress={startRecognition}>
+            <MicrophoneIcon name="microphone" size={24} />
+          </TouchableOpacity>
           {
             translationIcon &&
             <TouchableOpacity style={Styles.translationIcon} onPress={handleTranslate}>
