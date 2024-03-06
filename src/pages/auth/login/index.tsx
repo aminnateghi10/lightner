@@ -5,6 +5,8 @@ import { View, TouchableOpacity, StyleSheet, Vibration } from "react-native";
 import MyText from "../../../shared/myText";
 import callApi from "../../../helpers/callApi";
 import MyTextInput from "../../../shared/myTextInput";
+import { useTheme } from "../../../context/themeContext";
+
 import { LightnerParamList } from "../../../contracts/rootParamList";
 import { validateCellphoneNumber } from "../../../utils/validateCellphoneNumber";
 
@@ -13,6 +15,42 @@ interface PropsInterface {
 }
 
 const Index = ({ navigation }: PropsInterface) => {
+  const { currentTheme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor:currentTheme.background
+    },
+    title: {
+      fontSize: 20,
+      marginBottom: 20
+    },
+    input: {
+      width: "80%",
+      height: 50,
+      backgroundColor: currentTheme.card,
+      borderRadius: 10,
+      padding: 10,
+      textAlign: "left"
+    },
+    loginButton: {
+      marginTop: 20,
+      backgroundColor: "blue",
+      width: "80%",
+      height: 50,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    buttonText: {
+      color: "white",
+      fontSize: 18
+    }
+  });
+
   const [cellPhone, setCellPhone] = useState("");
   const [errMassage, setErrMassage] = useState("");
 
@@ -20,6 +58,7 @@ const Index = ({ navigation }: PropsInterface) => {
     if (validateCellphoneNumber(cellPhone)) {
       try {
         let res = await callApi().post("/api/v1/auth/login", { "mobile": cellPhone });
+        console.log(res,'rrr');
         navigation.navigate("Otp", { cellPhone });
       } catch (err) {
         console.log(err,'sdsd');
@@ -56,36 +95,3 @@ const Index = ({ navigation }: PropsInterface) => {
 
 export default Index;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f0f0f0"
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20
-  },
-  input: {
-    width: "80%",
-    height: 50,
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 10,
-    textAlign: "left"
-  },
-  loginButton: {
-    marginTop: 20,
-    backgroundColor: "blue",
-    width: "80%",
-    height: 50,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 18
-  }
-});

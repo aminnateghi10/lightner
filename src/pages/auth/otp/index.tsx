@@ -5,8 +5,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View, StyleSheet, TouchableOpacity, Vibration } from "react-native";
 
 import MyText from "../../../shared/myText";
-import { LightnerParamList } from "../../../contracts/rootParamList";
 import callApi from "../../../helpers/callApi";
+import { useTheme } from "../../../context/themeContext";
+import { LightnerParamList } from "../../../contracts/rootParamList";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface PropsInterface {
@@ -15,6 +16,46 @@ interface PropsInterface {
 }
 
 const Index = ({ navigation, route }: PropsInterface) => {
+  const { currentTheme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: currentTheme.background
+    },
+    buttonText: {
+      color: "white",
+      fontSize: 18
+    },
+    loginButton: {
+      backgroundColor: "blue",
+      width: "80%",
+      height: 50,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    outlineButton: {
+      backgroundColor: currentTheme.card,
+      width: "80%",
+      height: 50,
+      borderColor: currentTheme.modalBorder,
+      borderWidth: 2,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 5
+    },
+    title: {
+      fontSize: 20,
+      width: "80%",
+      marginBottom: 20,
+      textAlign: "center"
+    }
+  });
+
   let { cellPhone } = route.params;
 
   const [otp, setOpt] = useState("");
@@ -34,7 +75,6 @@ const Index = ({ navigation, route }: PropsInterface) => {
   // }, []);
 
   const handleSubmit = async () => {
-    console.log(otp,'otppp');
     if (otp.length === 6) {
       try {
         let {data} = await callApi().post("/api/v1/auth/verify", { "code": otp });
@@ -81,57 +121,19 @@ const Index = ({ navigation, route }: PropsInterface) => {
         time ?
 
           <TouchableOpacity style={styles.outlineButton}>
-            <MyText style={[styles.buttonText, { color: "blue" }]}>{time}</MyText>
+            <MyText style={[styles.buttonText, { color: "white" }]}>{time}</MyText>
           </TouchableOpacity>
           :
           <TouchableOpacity style={styles.outlineButton} onPress={reSend}>
-            <MyText style={[styles.buttonText, { color: "blue" }]}>تلاش مجدد</MyText>
+            <MyText style={[styles.buttonText, { color: currentTheme.text  }]}>تلاش مجدد</MyText>
           </TouchableOpacity>
       }
 
       <TouchableOpacity style={styles.outlineButton} onPress={() => navigation.navigate("Login")}>
-        <MyText style={[styles.buttonText, { color: "blue" }]}>تغییر شماره</MyText>
+        <MyText style={[styles.buttonText, { color: currentTheme.text }]}>تغییر شماره</MyText>
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f0f0f0"
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 18
-  },
-  loginButton: {
-    backgroundColor: "blue",
-    width: "80%",
-    height: 50,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  outlineButton: {
-    backgroundColor: "#f0f0f0",
-    width: "80%",
-    height: 50,
-    borderColor: "blue",
-    borderWidth: 2,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 5
-  },
-  title: {
-    fontSize: 20,
-    width: "80%",
-    marginBottom: 20,
-    textAlign: "center"
-  }
-});
 
 export default Index;
