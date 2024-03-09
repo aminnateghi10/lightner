@@ -1,6 +1,6 @@
 import Tts from "react-native-tts";
 import { useEffect, useState } from "react";
-import Voice from '@react-native-voice/voice';
+import Voice from "@react-native-voice/voice";
 import { RouteProp } from "@react-navigation/native";
 import Clipboard from "@react-native-clipboard/clipboard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -45,7 +45,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     headerTitle: {
       fontSize: 18,
       color: currentTheme.text,
-      marginVertical:5,
+      marginVertical: 5
     },
     languageChangeBox: {
       width: "100%",
@@ -112,7 +112,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
   const params = route?.params;
 
   const [translation, setTranslation] = useState("");
-  const [recognizedText, setRecognizedText] = useState('');
+  const [recognizedText, setRecognizedText] = useState("");
   const [loading, setLoading] = useState(false);
   const [textToTranslation, setTextToTranslation] = useState<string>("");
   const [translationIcon, setTranslationIcon] = useState<boolean>(false);
@@ -170,13 +170,11 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
   };
 
 
-
-
   useEffect(() => {
     // Set up event listener for speech recognition results
     Voice.onSpeechResults = (e) => {
-      console.log(e.value,'vvvvvvv');
       setTextToTranslation(e.value[0]);
+      setTranslationIcon(true);
     };
 
     // Clean up event listener when component unmounts
@@ -187,7 +185,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
 
   const startRecognition = async () => {
     try {
-      await Voice.start('en-US');
+      await Voice.start("en-US");
     } catch (e) {
       console.error(e);
     }
@@ -247,31 +245,33 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
   return (
     <View>
       <MyCard style={Styles.container}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
           <MyText>{recognizedText}</MyText>
         </View>
         <TouchableOpacity style={Styles.history} onPress={() => navigation.navigate("HistoryPage")}>
-          <HistoryIcon name="history" style={{color:currentTheme.text}} size={24} />
+          <HistoryIcon name="history" style={{ color: currentTheme.text }} size={24} />
         </TouchableOpacity>
         <View style={Styles.header}>
           <MyText style={Styles.headerTitle}>ترجمه</MyText>
         </View>
         <View
           style={[Styles.languageChangeBox, { flexDirection: `${translatedLang == "en" ? "row-reverse" : "row"}` }]}>
-          <View style={{ width: "33%", alignItems: "center" }}><MyText style={{opacity:.6}}>فارسی</MyText></View>
+          <View style={{ width: "33%", alignItems: "center" }}><MyText style={{ opacity: .6 }}>فارسی</MyText></View>
           <TouchableOpacity style={{ width: "33%", alignItems: "center" }} onPress={changeTranslatedLang}>
-            <ArrowSwitchIcon name="arrow-switch" style={{color:currentTheme.text}} size={25} />
+            <ArrowSwitchIcon name="arrow-switch" style={{ color: currentTheme.text }} size={25} />
           </TouchableOpacity>
-          <View style={{ width: "33%", alignItems: "center" }}><MyText style={{opacity:.6}}>انگلیسی</MyText></View>
+          <View style={{ width: "33%", alignItems: "center" }}><MyText style={{ opacity: .6 }}>انگلیسی</MyText></View>
         </View>
         <View style={Styles.languageTypeBox}>
           {
             textToTranslation &&
             <View style={{ flexDirection: "row" }}>
-              <CloseIcon name="close" style={{ marginLeft: 5 ,color:currentTheme.text}} size={24}  onPress={handleClose} />
+              <CloseIcon name="close" style={{ marginLeft: 5, color: currentTheme.text }} size={24}
+                         onPress={handleClose} />
               {
                 translatedLang === "en" &&
-                <Volume2Icon onPress={() => speak(textToTranslation)} name="volume-2" style={{color:currentTheme.text}} size={26} />
+                <Volume2Icon onPress={() => speak(textToTranslation)} name="volume-2"
+                             style={{ color: currentTheme.text }} size={26} />
               }
             </View>
 
@@ -281,8 +281,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
                          setTextToTranslation(e);
                          setTranslationIcon(true);
                        }} />
-          <TouchableOpacity style={{ flexDirection:'row',justifyContent:'center' }} onPress={startRecognition}>
-            <MicrophoneIcon name="microphone" size={24} />
+          <TouchableOpacity style={{ flexDirection: "row", justifyContent: "center" }} onPress={startRecognition}>
+            {!textToTranslation && translatedLang!== "fa" && <MicrophoneIcon color={currentTheme.text} name="microphone" size={24} />}
           </TouchableOpacity>
           {
             translationIcon &&
@@ -291,7 +291,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
                 <ActivityIndicator size="small" color="#ffffff" />
                 :
                 <>
-                  <MyText style={{ color: "white",fontSize:12}}> ترجمه</MyText>
+                  <MyText style={{ color: "white", fontSize: 12 }}> ترجمه</MyText>
                   <TranslateIcon name="translate" color="white" size={20} />
                 </>
               }
@@ -320,7 +320,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
           </MyCard>
           :
           <View style={{ marginTop: 20 }}>
-            <HistoreyItems navigation={navigation} style={{ marginTop: 5 }} history={history} historyToTranslator={historyToTranslator} setHistory={setHistory} />
+            <HistoreyItems navigation={navigation} style={{ marginTop: 5 }} history={history}
+                           historyToTranslator={historyToTranslator} setHistory={setHistory} />
             {
               history.length ?
                 <MyText style={{ textAlign: "center", marginTop: 5, paddingVertical: 8 }}

@@ -2,10 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList, TouchableOpacity, Image, ToastAndroid } from "react-native";
 import SendIcon from "react-native-vector-icons/Ionicons";
+import MicrophoneIcon from "react-native-vector-icons/FontAwesome5";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import BoxIcon from "react-native-vector-icons/Feather";
-import ArrowLeftIcon from "react-native-vector-icons/SimpleLineIcons";
+import ArrowLeftIcon from "react-native-vector-icons/AntDesign";
 
 import MyText from "../../../shared/myText";
 import MyTextInput from "../../../shared/myTextInput";
@@ -13,6 +13,7 @@ import { useTheme } from "../../../context/themeContext";
 
 import { RobotParamList } from "../../../contracts/rootParamList";
 import Clipboard from "@react-native-clipboard/clipboard";
+import Voice from "@react-native-voice/voice";
 
 interface PropsInterface {
   navigation: NativeStackNavigationProp<RobotParamList>,
@@ -74,7 +75,6 @@ const Index = ({ navigation }: PropsInterface) => {
       backgroundColor: currentTheme.card,
       height: 55,
       paddingTop: 4,
-      paddingHorizontal: 20,
       alignItems: "center"
     },
     headerTitle: {
@@ -87,8 +87,8 @@ const Index = ({ navigation }: PropsInterface) => {
   navigation.setOptions({
     header: () => (
       <View style={Styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeftIcon name="arrow-left" size={20} style={{ flexGrow: 0 }} color={currentTheme.text} />
+        <TouchableOpacity style={{ position: "absolute", left: 20, zIndex: 9 }} onPress={() => navigation.goBack()}>
+          <ArrowLeftIcon name="arrowleft" size={22} style={{ flexGrow: 0 }} color={currentTheme.text} />
         </TouchableOpacity>
         <MyText style={Styles.headerTitle}>ربات</MyText>
       </View>
@@ -104,7 +104,7 @@ const Index = ({ navigation }: PropsInterface) => {
   }, []);
 
   const copyToClipboard = (text) => {
-    ToastAndroid.show('متن کپی شد', ToastAndroid.SHORT);
+    ToastAndroid.show("متن کپی شد", ToastAndroid.SHORT);
     Clipboard.setString(text);
   };
 
@@ -149,7 +149,7 @@ const Index = ({ navigation }: PropsInterface) => {
           { messages: [{ role: "user", content: inputValue }], model: "gpt-3.5-turbo" },
           {
             headers: {
-              Authorization: `Bearer ${"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"}`,
+              Authorization: `Bearer ${"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"}`,
               "Content-Type": "application/json"
             }
           }
@@ -165,14 +165,36 @@ const Index = ({ navigation }: PropsInterface) => {
           return [{ role: "bot", content, time: getTime() }, ...newList];
         });
       } catch (err) {
+        console.log(err.response);
         const content = "لطفا اینترنت خود را بررسی کنید";
-        setMessages((prevMessages) =>{
+        setMessages((prevMessages) => {
           let newList = prevMessages.filter((item => item.role !== "isTyping"));
           return [{ role: "bot", content, time: getTime() }, ...newList];
-        })
+        });
       } finally {
         setIsTyping(false);
       }
+    }
+  };
+
+
+  useEffect(() => {
+    // Set up event listener for speech recognition results
+    Voice.onSpeechResults = (e) => {
+      setInputValue(e.value[0]);
+    };
+
+    // Clean up event listener when component unmounts
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
+
+  const startRecognition = async () => {
+    try {
+      await Voice.start("en-US");
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -197,7 +219,8 @@ const Index = ({ navigation }: PropsInterface) => {
                       <MyText style={{ fontSize: 9, textAlign: "right", opacity: 0.4 }}>
                         {item?.time}
                       </MyText>
-                      <TouchableOpacity style={[Styles.message, Styles.user]} onPress={()=>copyToClipboard(item.content)}>
+                      <TouchableOpacity style={[Styles.message, Styles.user]}
+                                        onPress={() => copyToClipboard(item.content)}>
                         <MyText style={{ color: "#e9eafd" }}>
                           {item.content}
                         </MyText>
@@ -208,7 +231,8 @@ const Index = ({ navigation }: PropsInterface) => {
                       <MyText style={{ fontSize: 9, textAlign: "left", opacity: 0.4 }}>
                         {item?.time}
                       </MyText>
-                      <TouchableOpacity onPress={()=>copyToClipboard(item.content)} style={[Styles.message, Styles.bot]}>
+                      <TouchableOpacity onPress={() => copyToClipboard(item.content)}
+                                        style={[Styles.message, Styles.bot]}>
                         <MyText style={{ color: "#1f2732" }}>
                           {item.content}
                         </MyText>
@@ -226,9 +250,14 @@ const Index = ({ navigation }: PropsInterface) => {
           onChangeText={handleInputChange}
         />
         {
-          isTyping ? <Image style={{ width: 40, height: 40 }} source={require("../../../../assets/gif/smallLoading.gif")} /> :
-            <SendIcon name="send" color={currentTheme.button} style={{ paddingRight: 10 }} onPress={handleInputSubmit}
-                      size={25} />
+          isTyping ?
+            <Image style={{ width: 40, height: 40 }} source={require("../../../../assets/gif/smallLoading.gif")} /> :
+            inputValue ?
+              <SendIcon name="send" color={currentTheme.button} style={{ paddingRight: 10 }} onPress={handleInputSubmit}
+                        size={25} />
+              :
+              <MicrophoneIcon name="microphone" color={currentTheme.button} style={{ paddingRight: 10 }}
+                              onPress={startRecognition} size={25} />
         }
       </View>
     </View>

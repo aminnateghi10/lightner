@@ -18,7 +18,7 @@ const AddNewCard = ({route}: PropsInterface) => {
     const dispatch = useDispatch();
     const initialState = route.params;
     const list = useSelector((state: RootState) => state.cards.list);
-    const [listName, setListName] = useState(list[0].name);
+    const [listName, setListName] = useState(list[0]?.name);
     const [newCard, setNewCard] = useState(initialState?.data ?? {persian: "", english: "", id: Date.now()});
 
     const windowWidth = Dimensions.get("window").width;
