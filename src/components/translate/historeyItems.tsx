@@ -32,10 +32,11 @@ interface PropsInterface {
   style: StyleProp<ViewStyle>,
   history: HistoryItemType[],
   setHistory: SetHistoryType,
-  historyToTranslator: (item:HistoryItemType) => void;
+  historyToTranslator: (item:HistoryItemType) => void,
+  syncHistory:()=>void
 }
 
-const historeyItems = ({ history, setHistory, style, navigation, historyToTranslator }: PropsInterface) => {
+const historeyItems = ({ history, setHistory, style, navigation, historyToTranslator,syncHistory }: PropsInterface) => {
   const { currentTheme } = useTheme();
 
   const copyToClipboard = (text: string) => {
@@ -97,6 +98,7 @@ const historeyItems = ({ history, setHistory, style, navigation, historyToTransl
     // Filter out the item with the specified key
     const updatedHistory = history.filter((item) => item.id !== id);
     setHistory(updatedHistory);
+    syncHistory(updatedHistory);
   };
 
   const renderItem = (rowData) => {

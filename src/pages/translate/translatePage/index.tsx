@@ -129,7 +129,6 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
         // handle add history to Translation
         if (params?.data) {
           let { data } = params;
-          console.log(params, "dd33ddddddddddddddd");
           setTextToTranslation(data.text);
           setTranslation(data.sentences);
           if (data.target === "en") setTranslatedLang("fa");
@@ -142,10 +141,9 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
     return unsubscribe;
   }, [navigation]);
 
-
-  useEffect(() => {
+  let syncHistory = (history: []) => {
     AsyncStorage.setItem("translatorHistory", JSON.stringify(history));
-  }, [history]);
+  };
 
   let speak = (text: string) => Tts.speak(text);
   const handleTranslate = async () => {
@@ -161,6 +159,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
       if (res) {
         const newHistory = [{ text, sentences, target, id: Date.now() }, ...history];
         setHistory(newHistory);
+        syncHistory(newHistory);
       }
     } catch (err) {
       console.log(err);
@@ -282,7 +281,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
                          setTranslationIcon(true);
                        }} />
           <TouchableOpacity style={{ flexDirection: "row", justifyContent: "center" }} onPress={startRecognition}>
-            {!textToTranslation && translatedLang!== "fa" && <MicrophoneIcon color={currentTheme.text} name="microphone" size={24} />}
+            {!textToTranslation && translatedLang !== "fa" &&
+              <MicrophoneIcon color={currentTheme.text} name="microphone" size={24} />}
           </TouchableOpacity>
           {
             translationIcon &&
@@ -321,7 +321,8 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
           :
           <View style={{ marginTop: 20 }}>
             <HistoreyItems navigation={navigation} style={{ marginTop: 5 }} history={history}
-                           historyToTranslator={historyToTranslator} setHistory={setHistory} />
+                           historyToTranslator={historyToTranslator} syncHistory={syncHistory}
+                           setHistory={setHistory} />
             {
               history.length ?
                 <MyText style={{ textAlign: "center", marginTop: 5, paddingVertical: 8 }}
