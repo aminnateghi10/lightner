@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { CardsInterface, listCardsInterface } from "../contracts/list";
 import MyText from "../shared/myText";
@@ -7,6 +7,8 @@ import MyTextInput from "../shared/myTextInput";
 import { Colors } from "../constants/colors";
 import PlusIcon from "react-native-vector-icons/AntDesign";
 import { useTheme } from "../context/themeContext";
+import { useAppDispatch } from "../store";
+import { addNewList } from "../store/cards";
 
 interface PropsInterface {
   listName: string,
@@ -20,6 +22,7 @@ interface PropsInterface {
 
 const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName, list, btnText }: PropsInterface) => {
   const { currentTheme } = useTheme();
+  const dispatch = useAppDispatch();
   const styles = StyleSheet.create({
     contener: {
       marginHorizontal: 10,
@@ -128,11 +131,11 @@ const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName
   });
 
   let addNewListHandler = () => {
-    // if (name) {
-    //   dispatch(addNewList(name));
-    //   setAddNew(false);
-    //   setName("");
-    // }
+    if (name) {
+      dispatch(addNewList(name));
+      setAddNew(false);
+      setName("");
+    }
   };
 
   const [side, setSide] = useState<"english" | "persian">("english");
@@ -141,7 +144,6 @@ const InnerChangeCard = ({ setNewCard, newCard, sumbitBtn, listName, setListName
   return (
     <SafeAreaView>
       <View style={styles.contener}>
-
         <MyText style={styles.title}>دسته بندی</MyText>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.pickerContener}>
