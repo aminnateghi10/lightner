@@ -22,7 +22,7 @@ const SettingPage = ({ navigation }: PropsInterface) => {
     card: {
       flexDirection: "row-reverse",
       justifyContent: "space-between",
-      margin: 10,
+      margin: 8,
       marginTop: 0,
       padding: 10, borderRadius: 5,
       shadowColor: "#000",

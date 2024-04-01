@@ -28,7 +28,7 @@ const DarkMode = ({ parentStyle }: PropsInterface) => {
     card: {
       flexDirection: "row-reverse",
       justifyContent: "space-between",
-      margin: 10,
+      margin: 8,
       marginTop: 0,
       backgroundColor: currentTheme.card,
       padding: 12,
