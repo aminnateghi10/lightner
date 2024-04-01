@@ -46,7 +46,7 @@ const Card = ({ data, navigation}: PropsInterface) => {
         <>
           <MyText style={Styles.title}>{data.name}</MyText>
           <MyText style={{ textAlign: "right", fontSize: 10,color:currentTheme.text,opacity:.6 }}>{data.cards.length} کارت</MyText>
-          <View style={{ backgroundColor: "white", borderRadius: 8,overflow:"hidden",marginTop:5 }}>
+          <View style={{ backgroundColor: currentTheme.border, borderRadius: 8,overflow:"hidden",marginTop:5 }}>
             <MyText style={{
               backgroundColor: currentTheme.button,
               height: 5,
