@@ -276,6 +276,7 @@ const TranslatePage = ({ navigation, route }: PropsInterface) => {
 
           }
           <MyTextInput placeholder="متن خود را وارد کنید..." value={textToTranslation}
+                       style={{ opacity: textToTranslation.length ? 1 : .5 }}
                        onChangeText={(e) => {
                          setTextToTranslation(e);
                          setTranslationIcon(true);
