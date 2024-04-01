@@ -8,14 +8,13 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Edit from "react-native-vector-icons/Feather";
 import Refresh from "react-native-vector-icons/Ionicons";
 import Delete from "react-native-vector-icons/AntDesign";
-import DoubleArrowRight from "react-native-vector-icons/FontAwesome";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { Colors } from "../../../constants/colors";
+import { useTheme } from "../../../context/themeContext";
 import { LightnerParamList } from "../../../contracts/rootParamList";
 // reducx
 import { useAppDispatch } from "../../../store";
@@ -28,10 +27,97 @@ interface PropsInterface {
 }
 
 const ShowCard = ({ route, navigation }: PropsInterface) => {
+  const { currentTheme } = useTheme();
+  const Styles = StyleSheet.create({
+    card: {
+      backgroundColor: Colors.card,
+      width: "80%",
+      height: "83%",
+      borderRadius: 20,
+      alignItems: "center",
+      justifyContent: "center",
+      elevation: 1,
+      opacity: .8
+    },
+    sayAgainCard: {
+      position: "absolute",
+      bottom: 20,
+      flexDirection: "row"
+    },
+    questionButtonBox: {
+      position: "absolute",
+      bottom: 0,
+      flexDirection: "row",
+      width: "100%",
+      borderBottomStartRadius: 20,
+      borderBottomEndRadius: 20,
+      overflow: "hidden"
+    },
+    questionButton: {
+      width: "50%",
+      backgroundColor: "red",
+      justifyContent: "center",
+      height: 45
+    },
+    icon: {
+      backgroundColor: Colors.background,
+      padding: 10,
+      marginHorizontal: 5,
+      borderRadius: 50
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      justifyContent: "center",
+      alignContent: "center",
+      margin: 20,
+      backgroundColor: "rgb(189,185,185)",
+      borderRadius: 20,
+      width: 240,
+      height: 150,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 50
+    },
+    btn: {
+      margin: 5,
+      backgroundColor: "rgb(126,118,118)",
+      padding: 10,
+      borderRadius: 10
+    },
+    chartProgress: {
+      height: 22,
+      position: "relative",
+      justifyContent: "center",
+      flexDirection: "row",
+      alignItems: "center",
+      alignContent: "center"
+    },
+    levelItem: {
+      borderWidth: .2,
+      borderRadius: 3,
+      marginHorizontal: 1,
+      borderColor: currentTheme.border,
+      flex: 1,
+      textAlign: "center"
+    }
+  });
+
   const dispatch = useAppDispatch();
   const { data } = route.params;
   const [count, setCount] = useState(0);
   const nowData = data.cards[count];
+  const levels = [1, 2, 3, 4, 5, 6];
   const [lang, setLang] = useState(true);
   const [show, setShow] = useState(false);
 
@@ -107,16 +193,14 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
 
   return (
     <SafeAreaView>
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        colors={["rgb(114,72,72)", "rgb(0,178,0)"]}
-        style={Styles.chartProgress}>
-        <MyText>نمودار پیشرفت</MyText>
-        <Text style={{ position: "absolute", left: `${nowData.level * 13}%`, width: 50, bottom: -4 }}>
-          <DoubleArrowRight name="angle-double-right" size={30} color="blue" />
-        </Text>
-      </LinearGradient>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", height: 25 , marginTop:3 }}>
+        {
+          levels.map((item) => (
+            <MyText
+              style={[Styles.levelItem, item <= nowData?.level && { backgroundColor: "#1CA3DE", color: "white" }]}>{item}</MyText>
+          ))
+        }
+      </View>
       <View style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
         {
           lang ?
@@ -172,80 +256,3 @@ const ShowCard = ({ route, navigation }: PropsInterface) => {
 };
 
 export default ShowCard;
-
-const Styles = StyleSheet.create({
-  card: {
-    backgroundColor: Colors.card,
-    width: "80%",
-    height: "83%",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 1,
-    opacity: .8
-  },
-  sayAgainCard: {
-    position: "absolute",
-    bottom: 20,
-    flexDirection: "row"
-  },
-  questionButtonBox: {
-    position: "absolute",
-    bottom: 0,
-    flexDirection: "row",
-    width: "100%",
-    borderBottomStartRadius: 20,
-    borderBottomEndRadius: 20,
-    overflow: "hidden"
-  },
-  questionButton: {
-    width: "50%",
-    backgroundColor: "red",
-    justifyContent: "center",
-    height: 45
-  },
-  icon: {
-    backgroundColor: Colors.background,
-    padding: 10,
-    marginHorizontal: 5,
-    borderRadius: 50
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    justifyContent: "center",
-    alignContent: "center",
-    margin: 20,
-    backgroundColor: "rgb(189,185,185)",
-    borderRadius: 20,
-    width: 240,
-    height: 150,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 50
-  },
-  btn: {
-    margin: 5,
-    backgroundColor: "rgb(126,118,118)",
-    padding: 10,
-    borderRadius: 10
-  },
-  chartProgress: {
-    height: 22,
-    position: "relative",
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "center",
-    alignContent: "center"
-  }
-});
